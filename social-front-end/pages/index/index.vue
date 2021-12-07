@@ -17,11 +17,11 @@
 			}
 		},
 		onLoad() {
-			request('https://unidemo.dcloud.net.cn/api/news', 'GET').then((data) => {
-				console.log('data1=', data)
-			}).finally(() => {
-				console.log('end11')
-			})
+			// request('/users/codePhoneLogin?phone=18018751313&code=316782', 'GET').then((data) => {
+			// 	console.log('data1=', data)
+			// }).finally(() => {
+			// 	console.log('end11')
+			// })
 			// uni.request({
 			// 	url: 'https://unidemo.dcloud.net.cn/api/news',
 			// 	method: 'GET',

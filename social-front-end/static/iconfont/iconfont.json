@@ -1,0 +1,23 @@
+{
+  "id": "2995107",
+  "name": "social",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "社交软件",
+  "glyphs": [
+    {
+      "icon_id": "15167893",
+      "name": "手机",
+      "font_class": "yepian",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "15933094",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    }
+  ]
+}
