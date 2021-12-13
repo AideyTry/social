@@ -1,6 +1,8 @@
 const Core = require('@alicloud/pop-core')
 const moment = require('moment')
 const fs = require('fs')
+const jwt = require('jsonwebtoken');
+
 const aliconfig = require('../util/aliconfig')
 const dbconfig = require('../util/dbConfig')
 
@@ -40,6 +42,10 @@ const sendCode = (req, res) => {
     })
   }
   const code = rand(100000, 999999)
+  global.redis.hset('user','code', code);
+  // global.redis.lpush('users', {
+
+  // })
   validatePhoneCode.push({
     phone,
     code,
@@ -147,6 +153,8 @@ const phoneLoginBind = async (phone) => {
   const res = await dbconfig.SySqlConnect(sql, sqlArr)
   console.log('res==', res)
   if (res.length) {
+    const token = jwt.sign({ id: String(res[0].id) }, 'shhhhh');
+    global.redis.set('token', token)
     res[0].userinfo = await getUserInfo(res[0].id)
     return res
   } else {
@@ -154,6 +162,8 @@ const phoneLoginBind = async (phone) => {
     // 1.用户注册
     const res = await regUser(phone)
     console.log('regUser res=', res)
+    const token = jwt.sign({ id: String(res[0].id) }, 'shhhhh');
+    global.redis.set('token', token)
     // 2.获取用户详情
     res[0].userinfo = await getUserInfo(res[0].id)
     return res
@@ -167,10 +177,14 @@ codePhoneLogin = async (req, res) => {
   console.log('validatePhoneCode===', validatePhoneCode)
   if (sendCodeP(phone)) {
     let status = findCodeAndPhone(phone, code)
-    if (status === 1) {
-      console.log('phone===', phone)
+    const rCode = await global.redis.hget('user','code')
+    if (rCode === code) {
       // 登录成功
       const user = await phoneLoginBind(phone)
+
+      const token = await global.redis.get('token')
+      console.log('token====================11=', token)
+
       res.send({
         code: 200,
         msg: '登录成功',

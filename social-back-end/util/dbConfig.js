@@ -1,4 +1,14 @@
+/*
+ * @Author: Aiden(戴林波)
+ * @Date: 2021-12-02 16:56:10
+ * @LastEditTime: 2021-12-13 17:54:25
+ * @LastEditors: Aiden(戴林波)
+ * @Description: 
+ * @Email: jason_dlb@sina.cn
+ */
 const mysql = require('mysql')
+const Redis = require('ioredis')
+
 module.exports = {
     // 数据库配置
     config: {
@@ -28,5 +38,38 @@ module.exports = {
             });
             pool.end()
         }).catch(err => console.log('err=',err))
+    },
+    redisConnect: function(){
+        // const redis = new Redis("/tmp/redis.sock");
+        // return function(){
+            return new Redis({
+                port: 6379, // Redis port
+                host: "1.15.247.162", // Redis host
+                family: 4, // 4 (IPv4) or 6 (IPv6)
+                // username: 'root',
+                password: "aiden235",
+                db: 0,
+              });
+        // }
+    //    try {
+    //     // const redis = new Redis(6379, "1.15.247.162");
+    //     const redis = new Redis({
+    //         port: 6379, // Redis port
+    //         host: "1.15.247.162", // Redis host
+    //         family: 4, // 4 (IPv4) or 6 (IPv6)
+    //         // username: 'root',
+    //         password: "aiden235",
+    //         db: 0,
+    //       });
+        //   redis.get("token", function (err, result) {
+        //     if (err) {
+        //       console.error('err======',err);
+        //     } else {
+        //       console.log('token===',result); // Promise resolves to "bar"
+        //     }
+        //   });
+    //    } catch (error) {
+    //        console.log('catch error=', error)
+    //    }
     }
 }

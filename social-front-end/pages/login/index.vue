@@ -7,11 +7,11 @@
             <form @submit="formSubmit" @reset="formReset" class="login-in">
                 <view class="row uni-form-item uni-column">
                     <text class="col-8 title">手机号：</text>
-                    <input class="col-16 uni-input" name="username" placeholder="请输入手机号" @input="onInput"/>
+                    <input class="col-16 uni-input" name="phone" placeholder="请输入手机号" @input="onInput"/>
                 </view>
                 <view class="row uni-form-item uni-column">
                     <text class="col-8 title">验证码：</text>
-                    <input class="col-8 uni-input" name="password" placeholder="请输入验证码" @input="onInputCode"/>
+                    <input class="col-8 uni-input" name="code" placeholder="请输入验证码" @input="onInputCode"/>
 					<button class="col-8 code" v-if="codeVisible" :disabled="!sendCaptchaEnabled" @click="sendCaptcha">{{codeMessage}}<text v-if="!sendCaptchaEnabled">({{counterTimer}}s)</text></button>
                 </view>
                 <view class="uni-btn-v">
@@ -44,6 +44,7 @@
     </view>
 </template>
 <script>
+	import { sendCode, codePhoneLogin } from '../../api/user.js'
     export default {
         data() {
             return {
@@ -51,7 +52,8 @@
 				loginVisible: true,
 				sendCaptchaEnabled: true,
 				codeMessage: '获取验证码',
-				counterTimer: 60
+				counterTimer: 60,
+				phoneNumber: null
             }
         },
         methods: {
@@ -59,6 +61,7 @@
 				console.log('input e=', e)
 				if((/^1[3456789]\d{9}$/.test(e.detail.value))){
 					this.codeVisible = true
+					this.phoneNumber = e.detail.value
 				} else {
 					this.codeVisible = false
 				}
@@ -77,6 +80,12 @@
 					return
 				}
 				this.sendCaptchaEnabled = false
+				const params = {
+					phone: this.phoneNumber
+				}
+				sendCode(params).then(res => {
+					console.log('res=', res)
+				})
 				this.codeMessage = '重新发送'
 				const timer = setInterval(() => {
 					if(this.counterTimer <= 0){
@@ -92,11 +101,28 @@
             formSubmit: function(e) {
 				console.log('e=', e)
                 console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
-                var formdata = e.detail.value
-                uni.showModal({
-                    content: '表单数据内容：' + JSON.stringify(formdata),
-                    showCancel: false
-                });
+				const params = e.detail.value
+			    
+				console.log('window.navigator=', window.navigator.userAgent)
+				window.navigator.__defineGetter__('userAgent', () => 'myBroser')
+				setTimeout(() => {
+					console.log('window.navigator1=', window.navigator.userAgent)
+				}, 200)
+				codePhoneLogin(params).then(res => {
+					console.log('res========', res)
+					const { code } = res.data
+					if(code === 200){
+						console.log('成功')
+						uni.switchTab({
+						    url: '/pages/index/index'
+						});
+					}	
+				})
+                // var formdata = e.detail.value
+                // uni.showModal({
+                //     content: '表单数据内容：' + JSON.stringify(formdata),
+                //     showCancel: false
+                // });
             },
             formReset: function(e) {
                 console.log('清空数据')

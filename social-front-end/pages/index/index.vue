@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import {request} from '../../common/request.js'
+	import {request} from '../../utils/request.js'
 	export default {
 		data() {
 			return {
