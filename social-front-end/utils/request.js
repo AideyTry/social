@@ -1,3 +1,5 @@
+import { getToken } from './auth.js'
+
 // 显示加载loading
 function showLoading(title) {
   uni.showLoading({
@@ -25,6 +27,10 @@ export const request = (url, method, data = {}) => {
 			url,
 			method,
 			data,
+			header: {
+			  'Content-Type': 'application/json',
+			  'token': getToken()
+			},
 			success: res => {
 				resolve(res)
 				showToast('成功')

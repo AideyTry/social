@@ -1,10 +1,17 @@
 <script>
+	import {
+		getToken
+	} from './utils/auth.js'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
 			let info = uni.getSystemInfoSync()
 			console.log('info===', info)
-			uni.navigateTo({url: "pages/login/index"});
+			if (!getToken()) {
+				uni.navigateTo({
+					url: "pages/login/index"
+				});
+			}
 		},
 		onShow: function() {
 			console.log('App Show')

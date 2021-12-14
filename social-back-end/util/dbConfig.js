@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-02 16:56:10
- * @LastEditTime: 2021-12-13 17:54:25
+ * @LastEditTime: 2021-12-14 15:01:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -10,6 +10,9 @@ const mysql = require('mysql')
 const Redis = require('ioredis')
 
 module.exports = {
+    rConfig: {
+        secret: 'abcdefg12329183928931'
+    },
     // 数据库配置
     config: {
         connectionLimit: 10,

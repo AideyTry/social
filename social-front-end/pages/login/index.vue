@@ -45,6 +45,7 @@
 </template>
 <script>
 	import { sendCode, codePhoneLogin } from '../../api/user.js'
+	import { setToken } from '../../utils/auth.js'
     export default {
         data() {
             return {
@@ -52,7 +53,7 @@
 				loginVisible: true,
 				sendCaptchaEnabled: true,
 				codeMessage: '获取验证码',
-				counterTimer: 60,
+				counterTimer: 30,
 				phoneNumber: null
             }
         },
@@ -89,7 +90,7 @@
 				this.codeMessage = '重新发送'
 				const timer = setInterval(() => {
 					if(this.counterTimer <= 0){
-						this.counterTimer = 60
+						this.counterTimer = 30
 						this.sendCaptchaEnabled = true
 						clearInterval(timer)
 						this.codeMessage = '获取验证码'
@@ -110,9 +111,10 @@
 				}, 200)
 				codePhoneLogin(params).then(res => {
 					console.log('res========', res)
-					const { code } = res.data
+					const { code, token } = res.data
 					if(code === 200){
 						console.log('成功')
+						setToken(token)
 						uni.switchTab({
 						    url: '/pages/index/index'
 						});

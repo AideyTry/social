@@ -10,6 +10,7 @@
 
 <script>
 	import {request} from '../../utils/request.js'
+	import { getUserInfo } from '../../api/user.js'
 	export default {
 		data() {
 			return {
@@ -17,6 +18,7 @@
 			}
 		},
 		onLoad() {
+			this.getUserInfo()
 			// request('/users/codePhoneLogin?phone=18018751313&code=316782', 'GET').then((data) => {
 			// 	console.log('data1=', data)
 			// }).finally(() => {
@@ -38,7 +40,11 @@
 			// })
 		},
 		methods: {
-
+			getUserInfo(){
+				getUserInfo().then(res => {
+					console.log('userInfo========', res)
+				})
+			}
 		}
 	}
 </script>

@@ -7,3 +7,7 @@ export const sendCode = (params) => {
 export const codePhoneLogin = (params) => {
 	return request(`/users/codePhoneLogin`,'GET',params)
 }
+
+export const getUserInfo = () => {
+	return request(`/users/userInfo`,'GET')
+}
