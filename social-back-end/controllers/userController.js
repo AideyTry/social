@@ -1,21 +1,10 @@
-const Core = require('@alicloud/pop-core')
 const moment = require('moment')
-const fs = require('fs')
 const jwt = require('jsonwebtoken');
 const dbconfig = require('../util/dbConfig')
+const databaseConfig = require('../database.config')
 
 const rand = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
-}
-
-// 检验的方法
-const sendCodeP = async(phone) => {
-  const code = await global.redis.get(phone);
-  if(code){
-    return true
-  } 
-  return false
-
 }
 
 // 验证码发送接口
@@ -59,7 +48,7 @@ const createUserInfo = (user_id, phone) => {
 // 获取用户的详情
 const getUserInfo = (user_id) => {
   const sql =
-    'select age, gender, job, path, birthday, phone from userinfo where user_id=?'
+    'select username, gender, age, phone, birthday, location,job from userinfo where user_id=?'
   const sqlArr = [user_id]
   return dbconfig.SySqlConnect(sql, sqlArr)
 }
@@ -73,8 +62,7 @@ const getUserInfo = (user_id) => {
 const auth = (req, res, next) => {
   const { headers: { token } } = req
   console.log('token auth=', token)
-  const { id } = jwt.verify(token, dbconfig.rConfig.secret)
-  console.log('id=========', id)
+  const { id } = jwt.verify(token, databaseConfig.redisSecret)
   req.userId = id
   next()
 }
@@ -109,13 +97,13 @@ const phoneLoginBind = async (phone) => {
   const sqlArr = [phone]
   const res = await dbconfig.SySqlConnect(sql, sqlArr)
   if (res.length) {
-    const token = jwt.sign({ id: String(res[0].id) }, dbconfig.rConfig.secret);
+    const token = jwt.sign({ id: String(res[0].id) }, databaseConfig.redisSecret);
     global.redis.set('token', token)
   } else {
     // 用户第一次注册，绑定表
     // 1.用户注册
     const res = await regUser(phone)
-    const token = jwt.sign({ id: String(res[0].id) }, dbconfig.rConfig.secret);
+    const token = jwt.sign({ id: String(res[0].id) }, databaseConfig.redisSecret);
     global.redis.set('token', token)
   }
 }
