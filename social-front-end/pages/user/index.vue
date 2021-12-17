@@ -1,6 +1,6 @@
 <template>
-	<view>
-	    <view>
+	<view class="userinfo-wraper">
+	    <view >
 			<text>用户名：</text>
 			<text></text>
 		</view>

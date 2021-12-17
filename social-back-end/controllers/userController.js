@@ -48,7 +48,7 @@ const createUserInfo = (user_id, phone) => {
 // 获取用户的详情
 const getUserInfo = (user_id) => {
   const sql =
-    'select username, gender, age, phone, birthday, location,job from userinfo where user_id=?'
+    'select username, gender, age, phone, birthday, location, avatar, job from userinfo where user_id=?'
   const sqlArr = [user_id]
   return dbconfig.SySqlConnect(sql, sqlArr)
 }

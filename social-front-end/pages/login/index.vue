@@ -28,24 +28,20 @@
 			<view class="other-login">
 				<button open-type="getUserInfo" @getuserinfo="getuserinfo" withCredentials="true"
 					class="login-way wechat">
-					<image scr="../../static/images/wechat.jpeg"></image>
+					<image src="/static/images/wechat.jpeg" class="image"></image>
 <!-- 					<svg class="icon login-icon" aria-hidden="true">
 						<use xlink:href="#icon-weixin"></use>
 					</svg> -->
 				</button>
 				<!-- </view> -->
-				<view class="login-way qq">
-					QQ
-<!-- 					<svg class="icon login-icon" aria-hidden="true">
-						<use xlink:href="#icon-QQ"></use>
-					</svg> -->
-				</view>
-				<view class="login-way weibo">
-					微博
-<!-- 					<svg class="icon login-icon" aria-hidden="true">
-						<use xlink:href="#icon-weibo"></use>
-					</svg> -->
-				</view>
+				<button open-type="getUserInfo" @getuserinfo="getuserinfo" withCredentials="true"
+					class="login-way wechat">
+					<image src="/static/images/qq.jfif" class="image"></image>
+				</button>
+				<button open-type="getUserInfo" @getuserinfo="getuserinfo" withCredentials="true"
+					class="login-way wechat">
+					<image src="/static/images/weibo.jfif" class="image"></image>
+				</button>
 			</view>
 		</view>
 	</view>
@@ -279,4 +275,12 @@
 		width: 100upx;
 		height: 100upx;
 	}
+	.other-login .image {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    overflow: hidden;
+    left: -13px;
+    position: relative;
+}
 </style>

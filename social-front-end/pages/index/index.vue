@@ -1,3 +1,11 @@
+<!--
+ * @Author: Aiden(戴林波)
+ * @Date: 2021-12-01 16:48:06
+ * @LastEditTime: 2021-12-17 16:08:06
+ * @LastEditors: Aiden(戴林波)
+ * @Description: 
+ * @Email: jason_dlb@sina.cn
+-->
 <template>
 	<view class="content">
 	  <view class="list-wraper">
@@ -9,8 +17,6 @@
 </template>
 
 <script>
-	import {request} from '../../utils/request.js'
-	import { getUserInfo } from '../../api/user.js'
 	export default {
 		data() {
 			return {
@@ -18,33 +24,8 @@
 			}
 		},
 		onLoad() {
-			this.getUserInfo()
-			// request('/users/codePhoneLogin?phone=18018751313&code=316782', 'GET').then((data) => {
-			// 	console.log('data1=', data)
-			// }).finally(() => {
-			// 	console.log('end11')
-			// })
-			// uni.request({
-			// 	url: 'https://unidemo.dcloud.net.cn/api/news',
-			// 	method: 'GET',
-			// 	data: {},
-			// 	success: res => {
-			// 		console.log('res===', res)
-			// 	},
-			// 	fail: (err) => {
-			// 		console.log('err=', err)
-			// 	},
-			// 	complete: () => {
-			// 		console.log('complete')
-			// 	}
-			// })
 		},
 		methods: {
-			getUserInfo(){
-				getUserInfo().then(res => {
-					console.log('userInfo========', res)
-				})
-			}
 		}
 	}
 </script>
