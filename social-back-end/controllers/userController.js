@@ -21,6 +21,7 @@ const sendCode = async(req, res) => {
     return
   }
   const code = rand(100000, 999999)
+  console.log('code======', code)
   // 设置手机号对应的验证码过期时间为5分钟
   global.redis.set(phone, code, "EX", 300);
   res.send({

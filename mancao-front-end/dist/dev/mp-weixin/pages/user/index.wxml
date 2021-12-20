@@ -1,0 +1,1 @@
+<view class="userinfo-wraper"><view><text>用户名：</text><text></text></view><button bindtap="{{a}}">退出</button></view>

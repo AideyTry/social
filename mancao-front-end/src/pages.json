@@ -3,10 +3,75 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "social"
 			}
+		}, {
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "user",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/find/index",
+			"style": {
+				"navigationBarTitleText": "find",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/message/index",
+			"style": {
+				"navigationBarTitleText": "message",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/hobby/index",
+			"style": {
+				"navigationBarTitleText": "hobby",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+
 		}
 	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"height": "50px",
+		"fontSize": "10px",
+		"iconWidth": "24px",
+		"spacing": "3px",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "兴趣"
+			},
+			{
+				"pagePath": "pages/find/index",
+				"text": "发现"
+			},
+			{
+				"pagePath": "pages/message/index",
+				"text": "消息"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"text": "我的"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

@@ -1,0 +1,57 @@
+
+.image {
+		height: 600rpx;
+}
+.login {
+		padding: 20rpx;
+}
+.login-in {
+		display: flex;
+		justify-content: center;
+}
+.uni-form-item .title {
+		padding: 20rpx 0;
+}
+.code {
+		font-size: 14rpx;
+}
+.uni-btn-v {
+		margin-top: 20rpx;
+}
+.cut-off-line {
+		padding: 60rpx 0;
+		display: flex;
+		justify-content: center;
+}
+.line-left {
+		border: 2rpx solid #3F536E
+}
+.line-right {
+		border: 2rpx solid #3F536E
+}
+.other-login {
+		/* padding-top: 40upx; */
+		display: flex;
+		justify-content: center;
+}
+.wechat,
+	.qq {
+		margin-right: 100rpx;
+}
+.login-way {
+		width: 100rpx;
+		height: 100rpx;
+		border-radius: 50%;
+}
+.login-icon {
+		width: 100rpx;
+		height: 100rpx;
+}
+.other-login .image {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    overflow: hidden;
+    left: -13px;
+    position: relative;
+}
