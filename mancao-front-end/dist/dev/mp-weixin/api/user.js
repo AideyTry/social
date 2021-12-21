@@ -1,6 +1,7 @@
 "use strict";
 var utils_request = require("../utils/request.js");
 const sendCode = (params) => {
+  console.log("send params=", params);
   return utils_request.request(`/users/sendCode`, "GET", params);
 };
 const codePhoneLogin = (params) => {

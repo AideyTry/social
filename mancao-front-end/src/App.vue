@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2021-12-20 18:02:55
+ * @LastEditTime: 2021-12-21 09:56:27
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -10,7 +10,6 @@
 	import {
 		getToken
 	} from './utils/auth.js'
-	import { store } from './store'
 export default {
   onLaunch: function () {
     console.log('App Launch')
@@ -19,7 +18,7 @@ export default {
 					url: "pages/login/index"
 				});
 			} else {
-             store.dispatch('user/GetUserInfo')
+             this.$store.dispatch('user/GetUserInfo')
 			}
   },
   onShow: function () {

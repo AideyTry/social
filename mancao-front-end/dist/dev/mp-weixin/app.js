@@ -2,9 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports[Symbol.toStringTag] = "Module";
 var common_vendor = require("./common/vendor.js");
+var store_index = require("./store/index.js");
 var utils_auth = require("./utils/auth.js");
-var api_user = require("./api/user.js");
+require("./store/module/user.js");
+require("./api/user.js");
 require("./utils/request.js");
+require("./utils/validate.js");
 if (!Math) {
   "./pages/index/index.js";
   "./pages/user/index.js";
@@ -20,10 +23,9 @@ const _sfc_main = {
       common_vendor.index.navigateTo({
         url: "pages/login/index"
       });
+    } else {
+      this.$store.dispatch("user/GetUserInfo");
     }
-    api_user.getUserInfo().then((res) => {
-      console.log("userInfo========", res);
-    });
   },
   onShow: function() {
     console.log("App Show");
@@ -34,6 +36,7 @@ const _sfc_main = {
 };
 function createApp() {
   const app = common_vendor.createSSRApp(_sfc_main);
+  app.use(store_index.store);
   return {
     app
   };

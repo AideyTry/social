@@ -9,7 +9,10 @@
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "user",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": false
+				}
 			}
 
 		}, {

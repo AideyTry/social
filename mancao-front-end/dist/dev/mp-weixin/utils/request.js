@@ -17,6 +17,7 @@ function showToast(title) {
   });
 }
 const request = (url, method, data = {}) => {
+  console.log("url===", url);
   return new Promise((resolve, reject) => {
     showLoading();
     common_vendor.index.request({

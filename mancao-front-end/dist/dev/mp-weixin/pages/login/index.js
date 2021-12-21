@@ -41,6 +41,7 @@ const _sfc_main = {
       const params = {
         phone: this.phoneNumber
       };
+      console.log("params===", params);
       api_user.sendCode(params).then((res) => {
         console.log("res=", res);
       });
@@ -74,7 +75,7 @@ const _sfc_main = {
         if (code === 200) {
           console.log("\u6210\u529F");
           utils_auth.setToken(token);
-          common_vendor.index.switchTab({
+          common_vendor.index.reLaunch({
             url: "/pages/index/index"
           });
         }
@@ -111,9 +112,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     i: $data.loginVisible,
     j: common_vendor.o((...args) => $options.formSubmit && $options.formSubmit(...args)),
     k: common_vendor.o((...args) => $options.formReset && $options.formReset(...args)),
-    l: common_vendor.o((...args) => $options.getuserinfo && $options.getuserinfo(...args)),
-    m: common_vendor.o((...args) => $options.getuserinfo && $options.getuserinfo(...args)),
-    n: common_vendor.o((...args) => $options.getuserinfo && $options.getuserinfo(...args))
+    l: common_vendor.o((...args) => $options.getuserinfo && $options.getuserinfo(...args))
   });
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);
