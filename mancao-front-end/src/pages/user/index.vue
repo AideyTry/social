@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2021-12-21 17:23:34
+ * @LastEditTime: 2021-12-22 16:16:29
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,13 +9,16 @@
 <template>
   <view class="userinfo-wraper">
     <view class="userinfo">
-      <view class="avatar-warper">
-		  <image :src="userInfo.avatar ? userInfo.avatar : defaultAvatar" class="avatar"></image>
-		  <text class="avatar-title">请上传图片</text>
-	  </view>
+      <view class="avatar-warper" @click="onUserInfo">
+        <image
+          :src="userInfo.avatar ? userInfo.avatar : defaultAvatar"
+          class="avatar"
+        ></image>
+        <text class="avatar-title">请上传图片</text>
+      </view>
       <view class="userinfo-detail">
         <text>用户名：{{ userInfo.username }}</text>
-        <text>签名{{userInfo.motto}}</text>
+        <text>签名{{ userInfo.motto }}</text>
       </view>
     </view>
     <button @click="onLogout">退出</button>
@@ -26,7 +29,8 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { removeToken } from "../../utils/auth";
-const defaultAvatar = '/static/images/default_avatar.png'
+
+const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
 const userInfo = computed(() => store.state.user.userInfo).value;
 
@@ -38,34 +42,67 @@ const onLogout = () => {
     location.reload();
   });
 };
+
+const onUserInfo = () => {
+  uni.navigateTo({
+    url: '/pages/user/info/index'
+});
+}
+
+/**
+ * @description: 头像上传
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const onUpload = (e) => {
+  uni.chooseImage({
+    success: (chooseImageRes) => {
+      console.log("chooseImageRes===", chooseImageRes);
+      const { tempFilePaths, tempFiles } = chooseImageRes;
+      console.log('tempFilePaths[0]===', tempFilePaths[0])
+      uni.uploadFile({
+        url: "http://127.0.0.1:3000/users/uploadFile",
+        filePath: tempFilePaths[0],
+        name: "file",
+        formData: {
+          user: "test",
+        },
+        success: (uploadFileRes) => {
+          console.log("uploadFileRes===", uploadFileRes);
+        },
+      });
+    },
+  });
+};
 </script>
 
 <style lang="scss" scoped>
-.userinfo-wraper{
+.userinfo-wraper {
   padding: 40rpx;
 }
-.userinfo{
+.userinfo {
   display: flex;
-  .userinfo-detail{
+  .userinfo-detail {
     padding-left: 20rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
   }
 }
-.avatar-warper{
-	position: relative;
+.avatar-warper {
+  position: relative;
 }
-.avatar{
-	width: 150rpx;
-	height: 150rpx;
-	border-radius: 50%;
+.avatar {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
 }
-.avatar-title{
-	position: absolute;
-	left: 6%;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 12rpx;
+.avatar-title {
+  position: absolute;
+  left: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12rpx;
 }
 </style>

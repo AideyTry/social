@@ -1,5 +1,7 @@
 const moment = require('moment')
 const jwt = require('jsonwebtoken')
+const COS = require('cos-nodejs-sdk-v5')
+
 const dbconfig = require('../util/dbConfig')
 const databaseConfig = require('../database.config')
 
@@ -54,6 +56,42 @@ const getUserInfo = async (user_id) => {
   const sqlArr = [user_id]
   const result = await dbconfig.SySqlConnect(sql, sqlArr)
   return result[0]
+}
+
+/**
+ * @description: 修改用户信息
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const setUserInfo = async(
+  user_id,
+  username,
+  gender,
+  age,
+  phone,
+  birthday,
+  location,
+  avatar,
+  job,
+  motto
+) => {
+  const sql =
+    'update userinfo set username=?, gender=?, age=?, phone=?, birthday=?, location=?, avatar=?, job=?, motto=? where user_id=?'
+  const sqlArr = [
+    username,
+    gender,
+    age,
+    phone,
+    birthday,
+    location,
+    avatar,
+    job,
+    motto,
+    user_id,
+  ]
+  const result = await dbconfig.SySqlConnect(sql, sqlArr)
+  console.log('result=', result)
 }
 
 /**
@@ -157,9 +195,113 @@ userInfo = async (req, res) => {
   }
 }
 
+/**
+ * @description: 修改用户信息
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const editUserInfo = async (req, res) => {
+  const {
+    userId,
+    body: {
+      username,
+      gender,
+      age,
+      phone,
+      birthday,
+      location,
+      avatar,
+      job,
+      motto,
+    },
+  } = req
+  const userInfo = await getUserInfo(userId)
+  console.log('userInfo===', userInfo)
+  if (result) {
+    const r = await setUserInfo(
+      userId,
+      username,
+      gender,
+      age,
+      phone,
+      birthday,
+      location,
+      avatar,
+      job,
+      motto
+    )
+    console.log('r=', r)
+    if (r.length) {
+      res.send({
+        code: 200,
+        data: r[0],
+      })
+    } else {
+      res.send({
+        code: 400,
+        msg: '修改失败',
+      })
+    }
+  } else {
+    res.send({
+      code: 400,
+      msg: '失败',
+    })
+  }
+}
+
+/**
+ * @description: 文件上传
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const uploadFile = (req, res) => {
+  console.log('req=====', req)
+  const {
+    files: { file },
+  } = req
+  const cos = new COS({
+    SecretId: 'AKIDub2D7k6ByVquhETR8ZjdHelbASTDgsmR', // 腾讯云份识别ID自己扫码查询
+    SecretKey: 'PZS5RWKs99rITN0MSIr9BwRfcIhoeEXY', // 身份秘钥
+  })
+  cos.putObject(
+    {
+      Bucket: 'social-1308251497' /* 存储桶 */,
+      Region: 'ap-guangzhou' /* 存储桶所在地域，必须字段 */,
+      Key: file.name /* 文件名 */,
+      StorageClass: 'STANDARD', // 上传模式, 标准模式
+      Body: file.data, // 上传文件对象
+      onProgress: (progressData) => {
+        console.log('上传的进度', JSON.stringify(progressData))
+      },
+    },
+    (err, data) => {
+      console.log('err===', err)
+      console.log('data.location===', data.Location)
+      if (err) {
+        res.send({
+          code: 400,
+          msg: '失败',
+        })
+      } else {
+        res.send({
+          code: 200,
+          url: data.Location,
+          msg: '成功',
+        })
+      }
+      console.log('data===', data)
+    }
+  )
+}
+
 module.exports = {
   auth,
   sendCode,
   codePhoneLogin,
   userInfo,
+  editUserInfo,
+  uploadFile,
 }
