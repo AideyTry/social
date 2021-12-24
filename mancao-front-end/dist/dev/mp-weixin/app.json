@@ -5,7 +5,8 @@
     "pages/find/index",
     "pages/message/index",
     "pages/hobby/index",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/user/info/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

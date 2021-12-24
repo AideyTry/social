@@ -61,6 +61,7 @@ const _sfc_main = {
       console.log("e=", e);
       console.log("form\u53D1\u751F\u4E86submit\u4E8B\u4EF6\uFF0C\u643A\u5E26\u6570\u636E\u4E3A\uFF1A" + JSON.stringify(e.detail.value));
       const params = e.detail.value;
+      const that = this;
       console.log("window.navigator=", window.navigator.userAgent);
       window.navigator.__defineGetter__("userAgent", () => "myBroser");
       setTimeout(() => {
@@ -75,21 +76,10 @@ const _sfc_main = {
         if (code === 200) {
           console.log("\u6210\u529F");
           utils_auth.setToken(token);
+          that.$store.dispatch("user/GetUserInfo");
           common_vendor.index.reLaunch({
             url: "/pages/index/index"
           });
-        }
-      });
-    },
-    formReset: function(e) {
-      console.log("\u6E05\u7A7A\u6570\u636E");
-    },
-    getuserinfo: function(res1) {
-      console.log(res1);
-      wx.login({
-        success: function(res2) {
-          console.log("res1=", res1);
-          console.log("res2=", res2);
         }
       });
     }
@@ -111,9 +101,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }) : {}, {
     i: $data.loginVisible,
     j: common_vendor.o((...args) => $options.formSubmit && $options.formSubmit(...args)),
-    k: common_vendor.o((...args) => $options.formReset && $options.formReset(...args)),
-    l: common_vendor.o((...args) => $options.getuserinfo && $options.getuserinfo(...args))
+    k: common_vendor.o((...args) => _ctx.formReset && _ctx.formReset(...args)),
+    l: common_vendor.o((...args) => _ctx.getuserinfo && _ctx.getuserinfo(...args)),
+    m: common_vendor.o((...args) => _ctx.getuserinfo && _ctx.getuserinfo(...args)),
+    n: common_vendor.o((...args) => _ctx.getuserinfo && _ctx.getuserinfo(...args))
   });
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-247e7dd8"]]);
 wx.createPage(MiniProgramPage);

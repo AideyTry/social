@@ -28,19 +28,17 @@
 			<view class="other-login">
 				<button open-type="getUserInfo" @getuserinfo="getuserinfo" withCredentials="true"
 					class="login-way wechat">
-					<image src="/static/images/wechat.jpeg" class="image"></image>
-					<!-- <svg class="icon login-icon" aria-hidden="true">
-						<use xlink:href="#icon-weixin"></use>
-					</svg> -->
+					<view class="m-icon m-icon-weixin"></view>
 				</button>
 				<!-- </view> -->
 				<button open-type="getUserInfo" @getuserinfo="getuserinfo" withCredentials="true"
 					class="login-way wechat">
-					<image src="/static/images/qq.png" class="image"></image>
+
+						<view class="m-icon m-icon-QQ"></view>
 				</button>
 				<button open-type="getUserInfo" @getuserinfo="getuserinfo" withCredentials="true"
 					class="login-way wechat">
-					<image src="/static/images/weibo.png" class="image"></image>
+					<view class="m-icon m-icon-weibo"></view>
 				</button>
 			</view>
 		</view>
@@ -138,13 +136,14 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import url("../../static/iconfont/iconfont-mc/iconfont.css");
 	.image {
-		height: 600upx;
+		height: 600rpx;
 	}
 
 	.login {
-		padding: 20upx;
+		padding: 20rpx;
 	}
 
 	.login-in {
@@ -153,15 +152,15 @@
 	}
 
 	.uni-form-item .title {
-		padding: 20upx 0;
+		padding: 20rpx 0;
 	}
 
 	.code {
-		font-size: 14upx;
+		font-size: 14rpx;
 	}
 
 	.uni-btn-v {
-		margin-top: 20upx;
+		margin-top: 20rpx;
 	}
 
 	.cut-off-line {
@@ -186,25 +185,23 @@
 
 	.wechat,
 	.qq {
-		margin-right: 100upx;
+		margin-right: 100rpx;
 	}
 
 	.login-way {
-		width: 100upx;
-		height: 100upx;
+		width: 100rpx;
+		height: 100rpx;
 		border-radius: 50%;
+		padding-left: 0;
+		background-color: #ededed;
 	}
 
 	.login-icon {
-		width: 100upx;
-		height: 100upx;
+		width: 100rpx;
+		height: 100rpx;
 	}
-	.other-login .image {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    overflow: hidden;
-    left: -13px;
-    position: relative;
+.m-icon{
+	width: 50px;
+	height: 50px;
 }
 </style>

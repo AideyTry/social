@@ -41,6 +41,10 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
+				"mp-weixin": {
+					"usingComponents": {
+					}
+				  },
 				"app-plus": {
 					"titleNView": false
 				}
