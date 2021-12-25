@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-22 18:16:36
+ * @LastEditTime: 2021-12-25 23:13:24
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -38,6 +38,33 @@ let userInfo = computed(() => store.state.user.userInfo).value;
 if(!userInfo.photos){
 userInfo.photos = new Array(5)
 }
+
+/**
+ * @description: 头像上传
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const onUpload = (e) => {
+  uni.chooseImage({
+    success: (chooseImageRes) => {
+      console.log("chooseImageRes===", chooseImageRes);
+      const { tempFilePaths, tempFiles } = chooseImageRes;
+      console.log('tempFilePaths[0]===', tempFilePaths[0])
+      uni.uploadFile({
+        url: "http://127.0.0.1:3000/users/uploadFile",
+        filePath: tempFilePaths[0],
+        name: "file",
+        formData: {
+          user: "test",
+        },
+        success: (uploadFileRes) => {
+          console.log("uploadFileRes===", uploadFileRes);
+        },
+      });
+    },
+  });
+};
 </script>
 
 <style lang="scss" scoped>

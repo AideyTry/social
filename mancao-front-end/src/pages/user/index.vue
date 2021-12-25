@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2021-12-22 16:16:29
+ * @LastEditTime: 2021-12-25 23:13:11
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -48,33 +48,6 @@ const onUserInfo = () => {
     url: '/pages/user/info/index'
 });
 }
-
-/**
- * @description: 头像上传
- * @param {*}
- * @Author:
- * @return {*}
- */
-const onUpload = (e) => {
-  uni.chooseImage({
-    success: (chooseImageRes) => {
-      console.log("chooseImageRes===", chooseImageRes);
-      const { tempFilePaths, tempFiles } = chooseImageRes;
-      console.log('tempFilePaths[0]===', tempFilePaths[0])
-      uni.uploadFile({
-        url: "http://127.0.0.1:3000/users/uploadFile",
-        filePath: tempFilePaths[0],
-        name: "file",
-        formData: {
-          user: "test",
-        },
-        success: (uploadFileRes) => {
-          console.log("uploadFileRes===", uploadFileRes);
-        },
-      });
-    },
-  });
-};
 </script>
 
 <style lang="scss" scoped>
