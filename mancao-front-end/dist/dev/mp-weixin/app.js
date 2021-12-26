@@ -16,6 +16,7 @@ if (!Math) {
   "./pages/hobby/index.js";
   "./pages/login/index.js";
   "./pages/user/info/index.js";
+  "./pages/user/info/Editor.js";
 }
 const _sfc_main = {
   onLaunch: function() {

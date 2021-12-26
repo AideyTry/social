@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-26 17:08:05
+ * @LastEditTime: 2021-12-26 22:41:14
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -11,7 +11,7 @@
     <view class="userinfo">
       <image
         mode="aspectFill"
-        :src="userInfo.avatar ? userInfo.avatar : defaultAvatar"
+        :src="avatar ? avatar : defaultAvatar"
         class="avatar"
       ></image>
       <text class="basic-info">
@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { computed, reactive } from "vue";
+import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
@@ -47,6 +47,8 @@ let images = reactive(userInfo.photos);
 
 
 console.log('images===', images)
+
+const avatar = ref(userInfo.avatar)
 // if (!userInfo.photos) {
 //   for(let i = 0; i<5; i++){
 //     images.push('')

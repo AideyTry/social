@@ -6,7 +6,8 @@
     "pages/message/index",
     "pages/hobby/index",
     "pages/login/index",
-    "pages/user/info/index"
+    "pages/user/info/index",
+    "pages/user/info/Editor"
   ],
   "window": {
     "navigationBarTextStyle": "black",

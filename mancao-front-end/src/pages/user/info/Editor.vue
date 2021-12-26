@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-26 20:34:50
+ * @LastEditTime: 2021-12-26 22:50:01
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -10,7 +10,7 @@
   <view class="userinfo-wraper">
     <view class="userinfo">
       <image
-        :src="userInfo.avatar ? userInfo.avatar : defaultAvatar"
+        :src="avatar ? avatar : defaultAvatar"
         class="avatar"
       ></image>
     </view>
@@ -55,11 +55,11 @@
       </view>
       <view class="base-item">
         <text>昵称</text>
-        <input type="text" placeholder="请输入个人签名" />
+        <input type="text" placeholder="请输入昵称" />
       </view>
       <view class="base-item">
         <text>性别</text>
-        <input type="text" placeholder="请输入个人签名" />
+        <view @click="changeGender">{{ gender }}</view>
       </view>
       <view class="base-item">
         <text>出生日期</text>
@@ -75,19 +75,19 @@
       </view>
       <view class="base-item">
         <text>所在地</text>
-        <input type="text" placeholder="请输入个人签名" />
+        <view @click="onLocation">位置</view>
       </view>
       <view class="base-item">
         <text>家乡</text>
-        <input type="text" placeholder="请输入个人签名" />
+        <input type="text" placeholder="请选择家乡" />
       </view>
       <view class="base-item">
         <text>学校</text>
-        <input type="text" placeholder="请输入个人签名" />
+        <input type="text" placeholder="请选择学校" />
       </view>
       <view class="base-item">
         <text>职业</text>
-        <input type="text" placeholder="请输入个人签名" />
+        <input type="text" placeholder="请选择职业" />
       </view>
     </view>
   </view>
@@ -113,6 +113,8 @@ console.log("images===", images);
 //     images.push('')
 //   }
 // }
+
+const avatar = ref(userInfo.avatar)
 
 /**
  * @description: 提交图片
@@ -173,6 +175,7 @@ const onUpload = (item, index) => {
         if (res.tapIndex === 0) {
           images[index] = images[0];
           images[0] = item;
+          avatar.value = item
         }
 
         if (res.tapIndex === 1) {
@@ -209,14 +212,40 @@ const getDate = (type) => {
 const currentDate = getDate({
   format: true,
 });
-console.log('currentDate===', currentDate)
+console.log("currentDate===", currentDate);
 let date = ref(currentDate);
 let startDate = getDate("start");
 let endDate = getDate("end");
 
 const bindDateChange = (e) => {
   date.value = e.detail.value;
-  console.log('date======', date.value)
+  console.log("date======", date.value);
+};
+
+/* 添加地址 */
+const onLocation = () => {
+  uni.chooseLocation({
+    success: function (res) {
+      console.log("位置名称：" + res.name);
+      console.log("详细地址：" + res.address);
+      console.log("纬度：" + res.latitude);
+      console.log("经度：" + res.longitude);
+    },
+  });
+};
+
+/* 性别 */
+const gender = ref("1");
+const changeGender = () => {
+  uni.showActionSheet({
+    itemList: ["男", "女"],
+    success: function (res) {
+      console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
+    },
+    fail: function (res) {
+      console.log(res.errMsg);
+    },
+  });
 };
 </script>
 
