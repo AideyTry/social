@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-26 20:01:44
+ * @LastEditTime: 2021-12-26 20:34:50
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -63,7 +63,15 @@
       </view>
       <view class="base-item">
         <text>出生日期</text>
-        <input type="text" placeholder="请输入个人签名" />
+        <picker
+          mode="date"
+          :value="date"
+          :start="startDate"
+          :end="endDate"
+          @change="bindDateChange"
+        >
+          <view class="uni-input">{{ date }}</view>
+        </picker>
       </view>
       <view class="base-item">
         <text>所在地</text>
@@ -86,7 +94,7 @@
 </template>
 
 <script setup>
-import { computed, reactive } from "vue";
+import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
@@ -178,6 +186,37 @@ const onUpload = (item, index) => {
     return;
   }
   chooseImage(index);
+};
+
+/** 一下为日期基本信息 */
+
+const getDate = (type) => {
+  const date = new Date();
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+
+  if (type === "start") {
+    year = year - 60;
+  } else if (type === "end") {
+    year = year + 2;
+  }
+  month = month > 9 ? month : "0" + month;
+  day = day > 9 ? day : "0" + day;
+  return `${year}-${month}-${day}`;
+};
+
+const currentDate = getDate({
+  format: true,
+});
+console.log('currentDate===', currentDate)
+let date = ref(currentDate);
+let startDate = getDate("start");
+let endDate = getDate("end");
+
+const bindDateChange = (e) => {
+  date.value = e.detail.value;
+  console.log('date======', date.value)
 };
 </script>
 
