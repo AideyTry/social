@@ -44,15 +44,16 @@ const getUser = (phone) => {
 
 // 创建用户副表
 const createUserInfo = (user_id, phone) => {
-  const sql = 'insert into userinfo(user_id, phone) values(?,?)'
-  const sqlArr = [user_id, phone]
+  const sql = 'insert into userinfo(user_id, phone, photos) values(?,?,?)'
+  const arr = new Array(5)
+  const sqlArr = [user_id, phone, JSON.stringify(arr)]
   return dbconfig.SySqlConnect(sql, sqlArr)
 }
 
 // 获取用户的详情
 const getUserInfo = async (user_id) => {
   const sql =
-    'select username, gender, age, phone, birthday, location, avatar, job, motto from userinfo where user_id=?'
+    'select username, gender, age, phone, birthday, location, avatar, job, motto, photos from userinfo where user_id=?'
   const sqlArr = [user_id]
   const result = await dbconfig.SySqlConnect(sql, sqlArr)
   return result[0]
@@ -180,6 +181,7 @@ userInfo = async (req, res) => {
   console.log('req=======', req)
   const { userId } = req
   const userInfo = await getUserInfo(userId)
+  userInfo.photos = JSON.parse(userInfo.photos)
   console.log('userInfo===', userInfo)
   if (userInfo) {
     res.send({
