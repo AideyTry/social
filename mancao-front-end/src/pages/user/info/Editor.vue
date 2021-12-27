@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-27 21:48:49
+ * @LastEditTime: 2021-12-28 07:31:07
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -289,8 +289,8 @@ let finalCity = reactive(['市辖区'])
 let multiArray = reactive([province, finalCity])
 let multiIndex = reactive([0,0])
 console.log('province, city===', province, city)
-const multiChange = () => {
-
+const multiChange = (e) => {
+  console.log('e==', e)
 }
 const findCity = (p) => {
   return city.filter(element => element.province === p)

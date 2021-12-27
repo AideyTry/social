@@ -105,7 +105,8 @@ const _sfc_main = {
     let multiArray = common_vendor.reactive([common_vendor.data.province, finalCity]);
     let multiIndex = common_vendor.reactive([0, 0]);
     console.log("province, city===", common_vendor.data.province, common_vendor.data.city);
-    const multiChange = () => {
+    const multiChange = (e) => {
+      console.log("e==", e);
     };
     const findCity = (p) => {
       return common_vendor.data.city.filter((element) => element.province === p);
