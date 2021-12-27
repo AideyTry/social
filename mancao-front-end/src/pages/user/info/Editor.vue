@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-26 22:50:01
+ * @LastEditTime: 2021-12-27 12:24:36
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -90,6 +90,7 @@
         <input type="text" placeholder="请选择职业" />
       </view>
     </view>
+    <button @click="onSave">保存</button>
   </view>
 </template>
 
@@ -247,6 +248,9 @@ const changeGender = () => {
     },
   });
 };
+
+/* 保存 */
+const onSave = () => {}
 </script>
 
 <style lang="scss" scoped>
