@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-27 12:24:36
+ * @LastEditTime: 2021-12-27 17:34:44
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,10 +9,7 @@
 <template>
   <view class="userinfo-wraper">
     <view class="userinfo">
-      <image
-        :src="avatar ? avatar : defaultAvatar"
-        class="avatar"
-      ></image>
+      <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
     </view>
     <view class="info-item">
       <view class="title-wraper">
@@ -79,7 +76,9 @@
       </view>
       <view class="base-item">
         <text>家乡</text>
-        <input type="text" placeholder="请选择家乡" />
+        <picker @change="bindHomeChange" :value="activeHomeIndex" :range="cityArray">
+          <view class="uni-input">{{ cityArray[activeHomeIndex] }}</view>
+        </picker>
       </view>
       <view class="base-item">
         <text>学校</text>
@@ -115,7 +114,7 @@ console.log("images===", images);
 //   }
 // }
 
-const avatar = ref(userInfo.avatar)
+const avatar = ref(userInfo.avatar);
 
 /**
  * @description: 提交图片
@@ -176,7 +175,7 @@ const onUpload = (item, index) => {
         if (res.tapIndex === 0) {
           images[index] = images[0];
           images[0] = item;
-          avatar.value = item
+          avatar.value = item;
         }
 
         if (res.tapIndex === 1) {
@@ -250,7 +249,14 @@ const changeGender = () => {
 };
 
 /* 保存 */
-const onSave = () => {}
+const onSave = () => {};
+
+/*  区域选择 */
+let activeHomeIndex = ref(0)
+let cityArray = ['中国', '美国', '巴西', '日本']
+const bindHomeChange = (e) => {
+  activeHomeIndex.value = e.target.value
+}
 </script>
 
 <style lang="scss" scoped>
