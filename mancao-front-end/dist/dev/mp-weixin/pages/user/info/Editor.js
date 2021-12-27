@@ -100,11 +100,28 @@ const _sfc_main = {
     };
     const onSave = () => {
     };
-    let activeHomeIndex = common_vendor.ref(0);
-    let cityArray = [["\u4E2D\u56FD", "\u4E0A\u6D77", "\u5317\u4EAC", "\u5E7F\u4E1C"], ["\u7F8E\u56FD"], ["\u5DF4\u897F"], ["\u65E5\u672C"]];
+    common_vendor.ref(0);
+    let finalCity = common_vendor.reactive(["\u5E02\u8F96\u533A"]);
+    let multiArray = common_vendor.reactive([common_vendor.data.province, finalCity]);
+    let multiIndex = common_vendor.reactive([0, 0]);
     console.log("province, city===", common_vendor.data.province, common_vendor.data.city);
-    const bindHomeChange = (e) => {
-      activeHomeIndex.value = e.target.value;
+    const multiChange = () => {
+    };
+    const findCity = (p) => {
+      return common_vendor.data.city.filter((element) => element.province === p);
+    };
+    const multiColumn = (e) => {
+      const { detail: { column, value } } = e;
+      console.log("column, value=", column, value);
+      if (column === 0) {
+        finalCity = findCity(common_vendor.data.province[value].province);
+        console.log("newCity=", finalCity);
+        if (finalCity.length === 0) {
+          finalCity = ["\u5E02\u8F96\u533A"];
+        }
+        multiArray[1] = finalCity;
+      }
+      console.log("province[value].province===", common_vendor.data.province[value].province);
     };
     return (_ctx, _cache) => {
       return {
@@ -128,11 +145,12 @@ const _sfc_main = {
         j: common_vendor.unref(endDate),
         k: common_vendor.o(bindDateChange),
         l: common_vendor.o(onLocation),
-        m: common_vendor.t(common_vendor.unref(cityArray)[common_vendor.unref(activeHomeIndex)]),
-        n: common_vendor.o(bindHomeChange),
-        o: common_vendor.unref(activeHomeIndex),
-        p: common_vendor.unref(cityArray),
-        q: common_vendor.o(onSave)
+        m: common_vendor.t("\u8BF7\u9009\u62E9\u7701"),
+        n: common_vendor.unref(multiArray),
+        o: common_vendor.unref(multiIndex),
+        p: common_vendor.o(multiColumn),
+        q: common_vendor.o(multiChange),
+        r: common_vendor.o(onSave)
       };
     };
   }

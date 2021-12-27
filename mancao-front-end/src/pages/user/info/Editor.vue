@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-27 21:09:28
+ * @LastEditTime: 2021-12-27 21:48:49
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,14 +9,20 @@
 <template>
   <view class="userinfo-wraper">
     <view class="userinfo">
-      <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
+      <image
+        :src="avatar ? avatar : defaultAvatar"
+        class="avatar"
+      ></image>
     </view>
     <view class="info-item">
       <view class="title-wraper">
         <text class="title">个人照片</text>
         <text>({{ quantity(images) }}/{{ images.length }})</text>
       </view>
-      <scroll-view scroll-x="true" class="photos">
+      <scroll-view
+        scroll-x="true"
+        class="photos"
+      >
         <view class="photos">
           <view
             class="photo-wraper"
@@ -32,8 +38,7 @@
             <text
               class="photo-add"
               v-if="(!item && images[index - 1]) || (index === 0 && !images[0])"
-              >+</text
-            >
+            >+</text>
           </view>
         </view>
       </scroll-view>
@@ -43,7 +48,10 @@
       <view class="title-wraper">
         <text class="title">个人签名</text>
       </view>
-      <input type="text" placeholder="请输入个人签名" />
+      <input
+        type="text"
+        placeholder="请输入个人签名"
+      />
     </view>
 
     <view class="info-item">
@@ -52,7 +60,10 @@
       </view>
       <view class="base-item">
         <text>昵称</text>
-        <input type="text" placeholder="请输入昵称" />
+        <input
+          type="text"
+          placeholder="请输入昵称"
+        />
       </view>
       <view class="base-item">
         <text>性别</text>
@@ -76,17 +87,35 @@
       </view>
       <view class="base-item">
         <text>家乡</text>
-        <picker @change="bindHomeChange" :value="activeHomeIndex" :range="cityArray">
-          <view class="uni-input">{{ cityArray[activeHomeIndex] }}</view>
+        <picker
+          mode="multiSelector"
+          :range="multiArray"
+          range-key="name"
+          :value="multiIndex"
+          @columnchange="multiColumn"
+          @change="multiChange"
+        >
+          <view>
+            {{'请选择省'}}
+          </view>
         </picker>
+        <!-- <picker @change="bindHomeChange" :value="activeHomeIndex" :range="cityArray">
+          <view class="uni-input">{{ cityArray[activeHomeIndex] }}</view>
+        </picker> -->
       </view>
       <view class="base-item">
         <text>学校</text>
-        <input type="text" placeholder="请选择学校" />
+        <input
+          type="text"
+          placeholder="请选择学校"
+        />
       </view>
       <view class="base-item">
         <text>职业</text>
-        <input type="text" placeholder="请选择职业" />
+        <input
+          type="text"
+          placeholder="请选择职业"
+        />
       </view>
     </view>
     <button @click="onSave">保存</button>
@@ -96,7 +125,7 @@
 <script setup>
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
-import { province, city} from 'province-city-china/data';
+import { province, city } from 'province-city-china/data';
 
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
@@ -251,12 +280,35 @@ const changeGender = () => {
 };
 
 /* 保存 */
-const onSave = () => {};
+const onSave = () => { };
 
 /*  区域选择 */
 let activeHomeIndex = ref(0)
-let cityArray = [['中国','上海','北京', '广东'], ['美国'], ['巴西'], ['日本']]
-console.log('province, city===', province, city )
+let cityArray = [['中国', '上海', '北京', '广东'], ['美国'], ['巴西'], ['日本']]
+let finalCity = reactive(['市辖区'])
+let multiArray = reactive([province, finalCity])
+let multiIndex = reactive([0,0])
+console.log('province, city===', province, city)
+const multiChange = () => {
+
+}
+const findCity = (p) => {
+  return city.filter(element => element.province === p)
+}
+const multiColumn = (e) => {
+  const { detail: {column, value} } = e
+  console.log('column, value=', column, value)
+  if(column === 0){
+  finalCity = findCity(province[value].province)
+  console.log('newCity=', finalCity)
+  if(finalCity.length === 0){
+    finalCity = ['市辖区']
+  }
+  multiArray[1] = finalCity
+  }
+  console.log('province[value].province===', province[value].province)
+
+}
 const bindHomeChange = (e) => {
   activeHomeIndex.value = e.target.value
 }
