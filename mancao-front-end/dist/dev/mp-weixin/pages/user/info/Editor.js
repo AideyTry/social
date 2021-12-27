@@ -98,6 +98,14 @@ const _sfc_main = {
         }
       });
     };
+    const onSave = () => {
+    };
+    let activeHomeIndex = common_vendor.ref(0);
+    let cityArray = [["\u4E2D\u56FD", "\u4E0A\u6D77", "\u5317\u4EAC", "\u5E7F\u4E1C"], ["\u7F8E\u56FD"], ["\u5DF4\u897F"], ["\u65E5\u672C"]];
+    console.log("province, city===", common_vendor.data.province, common_vendor.data.city);
+    const bindHomeChange = (e) => {
+      activeHomeIndex.value = e.target.value;
+    };
     return (_ctx, _cache) => {
       return {
         a: avatar.value ? avatar.value : defaultAvatar,
@@ -119,7 +127,12 @@ const _sfc_main = {
         i: common_vendor.unref(startDate),
         j: common_vendor.unref(endDate),
         k: common_vendor.o(bindDateChange),
-        l: common_vendor.o(onLocation)
+        l: common_vendor.o(onLocation),
+        m: common_vendor.t(common_vendor.unref(cityArray)[common_vendor.unref(activeHomeIndex)]),
+        n: common_vendor.o(bindHomeChange),
+        o: common_vendor.unref(activeHomeIndex),
+        p: common_vendor.unref(cityArray),
+        q: common_vendor.o(onSave)
       };
     };
   }

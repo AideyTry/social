@@ -1,8 +1,8 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-27 17:34:44
- * @LastEditors: Aiden(戴林波)
+ * @LastEditTime: 2021-12-27 21:09:28
+ * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
@@ -96,6 +96,8 @@
 <script setup>
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
+import { province, city} from 'province-city-china/data';
+
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
@@ -253,7 +255,8 @@ const onSave = () => {};
 
 /*  区域选择 */
 let activeHomeIndex = ref(0)
-let cityArray = ['中国', '美国', '巴西', '日本']
+let cityArray = [['中国','上海','北京', '广东'], ['美国'], ['巴西'], ['日本']]
+console.log('province, city===', province, city )
 const bindHomeChange = (e) => {
   activeHomeIndex.value = e.target.value
 }
