@@ -101,12 +101,19 @@ const _sfc_main = {
     const onSave = () => {
     };
     common_vendor.ref(0);
+    let provinceCode = common_vendor.ref("");
+    let cityCode = common_vendor.ref("");
     let finalCity = common_vendor.reactive(["\u5E02\u8F96\u533A"]);
     let multiArray = common_vendor.reactive([common_vendor.data.province, finalCity]);
     let multiIndex = common_vendor.reactive([0, 0]);
     console.log("province, city===", common_vendor.data.province, common_vendor.data.city);
     const multiChange = (e) => {
       console.log("e==", e);
+      const { detail: { value } } = e;
+      provinceCode.value = common_vendor.data.province[value[0]].code;
+      cityCode.value = finalCity[value[1]].code;
+      console.log("provinceCode=", provinceCode.value);
+      console.log("cityCode=", cityCode.value);
     };
     const findCity = (p) => {
       return common_vendor.data.city.filter((element) => element.province === p);

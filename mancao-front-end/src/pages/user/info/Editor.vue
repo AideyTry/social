@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-28 07:31:07
+ * @LastEditTime: 2021-12-28 07:41:10
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -284,13 +284,19 @@ const onSave = () => { };
 
 /*  区域选择 */
 let activeHomeIndex = ref(0)
-let cityArray = [['中国', '上海', '北京', '广东'], ['美国'], ['巴西'], ['日本']]
+let provinceCode = ref('')
+let cityCode = ref('')
 let finalCity = reactive(['市辖区'])
 let multiArray = reactive([province, finalCity])
 let multiIndex = reactive([0,0])
 console.log('province, city===', province, city)
 const multiChange = (e) => {
   console.log('e==', e)
+  const { detail: { value } } = e
+  provinceCode.value = province[value[0]].code
+  cityCode.value = finalCity[value[1]].code
+  console.log('provinceCode=', provinceCode.value)
+  console.log('cityCode=', cityCode.value)
 }
 const findCity = (p) => {
   return city.filter(element => element.province === p)
