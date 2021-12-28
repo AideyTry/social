@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-28 17:09:21
+ * @LastEditTime: 2021-12-28 17:17:15
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -87,18 +87,7 @@
       </view>
       <view class="base-item">
         <text>家乡</text>
-        <picker
-          mode="multiSelector"
-          :range="multiArray"
-          range-key="name"
-          :value="multiIndex"
-          @columnchange="multiColumn"
-          @change="multiChange"
-        >
-          <view>
-            {{provinceCode ? `${$filters.filterRegion(provinceCode, province)}/${$filters.filterRegion(cityCode, finalCity)}` : '请选择省'}}
-          </view>
-        </picker>
+        <PickerRegion propsProvinceCode="" propsCityCode="" @change="onChangeHome"/>
       </view>
       <view class="base-item">
         <text>学校</text>
@@ -122,7 +111,6 @@
 <script setup>
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
-import { province, city } from 'province-city-china/data';
 import PickerRegion from './PickerRegion.vue'
 
 const defaultAvatar = "/static/images/default_avatar.png";
@@ -269,43 +257,11 @@ const changeGender = () => {
 const onSave = () => { };
 
 /*  区域选择 */
-let activeHomeIndex = ref(0)
-let provinceCode = ref('')
-let cityCode = ref('')
-let finalCity = ref(['市辖区'])
-let multiArray = reactive([province, finalCity.value])
-let multiIndex = reactive([0,0])
-console.log('province, city===', province, city)
-console.log('finalCity===', finalCity.value)
-const multiChange = (e) => {
-  console.log('e==', e)
-  const { detail: { value } } = e
-  provinceCode.value = province[value[0]].code
-  cityCode.value = finalCity['value'][value[1]].code
-  console.log('provinceCode=', provinceCode.value)
-  console.log('cityCode=', cityCode.value)
-  console.log('finalCity=======', finalCity)
-}
-const findCity = (p) => {
-  return city.filter(element => element.province === p)
-}
-const multiColumn = (e) => {
-  const { detail: {column, value} } = e
-  console.log('column, value=', column, value)
-  if(column === 0){
-  finalCity.value = findCity(province[value].province)
-  console.log('finalCity=', finalCity)
-  if(finalCity['value'].length === 0){
-    finalCity.value = ['市辖区']
-  }
-  multiArray[1] = finalCity.value
-  }
-  console.log('province[value].province===', province[value].province)
-
-}
-
 const onChange = (obj) => {
   console.log('obj=====', obj)
+}
+const onChangeHome = (obj) => {
+    console.log('obj.home=====', obj)
 }
 </script>
 
