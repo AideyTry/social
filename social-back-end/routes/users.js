@@ -1,8 +1,8 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-02 16:34:10
- * @LastEditTime: 2021-12-22 15:42:15
- * @LastEditors: Aiden(戴林波)
+ * @LastEditTime: 2021-12-28 21:36:07
+ * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
  */
@@ -18,6 +18,7 @@ router.post('/codePhoneLogin', userC.codePhoneLogin)
 router.get('/userInfo', userC.auth, userC.userInfo)
 router.get('/editUserInfo', userC.auth, userC.editUserInfo)
 router.post('/uploadFile', userC.uploadFile)
+router.get('/getSchool', userC.getSchool)
 
 
 
