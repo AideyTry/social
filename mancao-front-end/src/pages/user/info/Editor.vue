@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-28 17:17:15
+ * @LastEditTime: 2021-12-28 17:30:40
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -87,7 +87,7 @@
       </view>
       <view class="base-item">
         <text>家乡</text>
-        <PickerRegion propsProvinceCode="" propsCityCode="" @change="onChangeHome"/>
+        <PickerRegion propsProvinceCode="430000" propsCityCode="430700" @change="onChangeHome"/>
       </view>
       <view class="base-item">
         <text>学校</text>
