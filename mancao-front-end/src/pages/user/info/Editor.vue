@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-28 12:28:27
+ * @LastEditTime: 2021-12-28 16:13:52
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -83,7 +83,7 @@
       </view>
       <view class="base-item">
         <text>所在地</text>
-        <view @click="onLocation">位置</view>
+        <PickerRegion />
       </view>
       <view class="base-item">
         <text>家乡</text>
@@ -99,9 +99,6 @@
             {{provinceCode ? `${$filters.filterRegion(provinceCode, province)}/${$filters.filterRegion(cityCode, finalCity)}` : '请选择省'}}
           </view>
         </picker>
-        <!-- <picker @change="bindHomeChange" :value="activeHomeIndex" :range="cityArray">
-          <view class="uni-input">{{ cityArray[activeHomeIndex] }}</view>
-        </picker> -->
       </view>
       <view class="base-item">
         <text>学校</text>
@@ -126,6 +123,7 @@
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 import { province, city } from 'province-city-china/data';
+import PickerRegion from './PickerRegion.vue'
 
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
@@ -253,18 +251,6 @@ const bindDateChange = (e) => {
   console.log("date======", date.value);
 };
 
-/* 添加地址 */
-const onLocation = () => {
-  uni.chooseLocation({
-    success: function (res) {
-      console.log("位置名称：" + res.name);
-      console.log("详细地址：" + res.address);
-      console.log("纬度：" + res.latitude);
-      console.log("经度：" + res.longitude);
-    },
-  });
-};
-
 /* 性别 */
 const gender = ref("1");
 const changeGender = () => {
@@ -286,17 +272,19 @@ const onSave = () => { };
 let activeHomeIndex = ref(0)
 let provinceCode = ref('')
 let cityCode = ref('')
-let finalCity = reactive(['市辖区'])
-let multiArray = reactive([province, finalCity])
+let finalCity = ref(['市辖区'])
+let multiArray = reactive([province, finalCity.value])
 let multiIndex = reactive([0,0])
 console.log('province, city===', province, city)
+console.log('finalCity===', finalCity.value)
 const multiChange = (e) => {
   console.log('e==', e)
   const { detail: { value } } = e
   provinceCode.value = province[value[0]].code
-  cityCode.value = finalCity[value[1]].code
+  cityCode.value = finalCity['value'][value[1]].code
   console.log('provinceCode=', provinceCode.value)
   console.log('cityCode=', cityCode.value)
+  console.log('finalCity=======', finalCity)
 }
 const findCity = (p) => {
   return city.filter(element => element.province === p)
@@ -306,17 +294,14 @@ const multiColumn = (e) => {
   console.log('column, value=', column, value)
   if(column === 0){
   finalCity.value = findCity(province[value].province)
-  console.log('newCity=', finalCity)
-  if(finalCity.length === 0){
+  console.log('finalCity=', finalCity)
+  if(finalCity['value'].length === 0){
     finalCity.value = ['市辖区']
   }
   multiArray[1] = finalCity.value
   }
   console.log('province[value].province===', province[value].province)
 
-}
-const bindHomeChange = (e) => {
-  activeHomeIndex.value = e.target.value
 }
 </script>
 
