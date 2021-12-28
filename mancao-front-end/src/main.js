@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2021-12-21 15:59:37
+ * @LastEditTime: 2021-12-28 12:26:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -15,6 +15,13 @@ import App from "./App.vue";
 export function createApp() {
 	const app = createSSRApp(App);
 	app.use(store)
+	app.config.globalProperties.$filters = {
+		filterRegion(value, array) {
+			console.log('value, array===', value, array)
+		  const proviceObj = array.find(element => element.code === value)
+		  return proviceObj.name
+		}
+	  }
 	return {
 		app,
 	};

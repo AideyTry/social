@@ -1,8 +1,8 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-28 07:41:10
- * @LastEditors: Aiden
+ * @LastEditTime: 2021-12-28 12:28:27
+ * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
@@ -96,7 +96,7 @@
           @change="multiChange"
         >
           <view>
-            {{'请选择省'}}
+            {{provinceCode ? `${$filters.filterRegion(provinceCode, province)}/${$filters.filterRegion(cityCode, finalCity)}` : '请选择省'}}
           </view>
         </picker>
         <!-- <picker @change="bindHomeChange" :value="activeHomeIndex" :range="cityArray">
@@ -305,12 +305,12 @@ const multiColumn = (e) => {
   const { detail: {column, value} } = e
   console.log('column, value=', column, value)
   if(column === 0){
-  finalCity = findCity(province[value].province)
+  finalCity.value = findCity(province[value].province)
   console.log('newCity=', finalCity)
   if(finalCity.length === 0){
-    finalCity = ['市辖区']
+    finalCity.value = ['市辖区']
   }
-  multiArray[1] = finalCity
+  multiArray[1] = finalCity.value
   }
   console.log('province[value].province===', province[value].province)
 
