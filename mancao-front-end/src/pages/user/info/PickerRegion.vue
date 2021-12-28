@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-28 15:48:57
- * @LastEditTime: 2021-12-28 16:17:39
+ * @LastEditTime: 2021-12-28 17:08:27
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -21,7 +21,7 @@
           ? `${$filters.filterRegion(
               provinceCode,
               province
-            )}/${$filters.filterRegion(cityCode, finalCity)}`
+            )}/${$filters.filterRegion(cityCode, city)}`
           : "请选择省"
       }}
     </view>
@@ -36,9 +36,23 @@ export default {
 import {  ref, reactive } from "vue";
 import { province, city } from "province-city-china/data";
 /*  区域选择 */
+const props = defineProps({
+  propsProvinceCode: {
+      type: String,
+      default: ''
+  },
+    propsCityCode: {
+      type: String,
+      default: ''
+  },
+})
+
+const emit = defineEmits(['change'])
+
+console.log('props=', props)
 let activeHomeIndex = ref(0);
-let provinceCode = ref("");
-let cityCode = ref("");
+let provinceCode = ref(props.propsProvinceCode);
+let cityCode = ref(props.propsCityCode);
 let finalCity = ref(["市辖区"]);
 let multiArray = reactive([province, finalCity.value]);
 let multiIndex = reactive([0, 0]);
@@ -54,6 +68,7 @@ const multiChange = (e) => {
   console.log("provinceCode=", provinceCode.value);
   console.log("cityCode=", cityCode.value);
   console.log("finalCity=======", finalCity);
+  emit('change', {provinceCode: provinceCode.value,  cityCode: cityCode.value})
 };
 const findCity = (p) => {
   return city.filter((element) => element.province === p);

@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-28 16:13:52
+ * @LastEditTime: 2021-12-28 17:09:21
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -83,7 +83,7 @@
       </view>
       <view class="base-item">
         <text>所在地</text>
-        <PickerRegion />
+        <PickerRegion propsProvinceCode="440000" propsCityCode="440300" @change="onChange"/>
       </view>
       <view class="base-item">
         <text>家乡</text>
@@ -302,6 +302,10 @@ const multiColumn = (e) => {
   }
   console.log('province[value].province===', province[value].province)
 
+}
+
+const onChange = (obj) => {
+  console.log('obj=====', obj)
 }
 </script>
 
