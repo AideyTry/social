@@ -306,18 +306,19 @@ const getSchool = (req, res) => {
   const {
     query: { name }
   } = req;
-  console.log('https====', https)
-  https.school_1.get(`https://qryschool.market.alicloudapi.com/lundroid/youeryuan?name=${name}`)
+  https.get(`https://qryschool.market.alicloudapi.com/lundroid/searchUniversity?name=${encodeURI(name)}`)
     .then(data => {
-      console.log("data===", data);
-    })
-    .then(function(response) {
-      // handle success
-      console.log(response);
+      res.send({
+        code: 200,
+        data: data.data,
+        msg: "成功"
+      });
     })
     .catch(function(error) {
-      // handle error
-      console.log(error);
+      res.send({
+        code: 500,
+        msg: "失败"
+      });
     });
 };
 
