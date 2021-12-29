@@ -1,14 +1,14 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-29 18:05:07
+ * @LastEditTime: 2021-12-29 18:07:24
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <div class="school">
-    <uni-search-bar placeholder="请输入学校" @confirm="search"></uni-search-bar>
+    <uni-search-bar placeholder="请输入学校名称" @confirm="search"></uni-search-bar>
     <uni-list>
       <uni-list-item
         v-for="item in schools"
