@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-28 17:30:40
+ * @LastEditTime: 2021-12-29 14:15:43
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -91,10 +91,7 @@
       </view>
       <view class="base-item">
         <text>学校</text>
-        <input
-          type="text"
-          placeholder="请选择学校"
-        />
+        <view @click="openSchool" @changeSchool="onChangeSchool">{{schoolName ? schoolName : '请选择学校'}}</view>
       </view>
       <view class="base-item">
         <text>职业</text>
@@ -263,6 +260,17 @@ const onChange = (obj) => {
 const onChangeHome = (obj) => {
     console.log('obj.home=====', obj)
 }
+
+/* 选择学校 */
+let schoolName = ref('')
+const openSchool = () => {
+  uni.navigateTo({
+    url: '/pages/user/info/School'
+});
+}
+const onChangeSchool = (name) => {
+schoolName.value = name
+} 
 </script>
 
 <style lang="scss" scoped>

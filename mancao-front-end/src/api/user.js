@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:41:15
- * @LastEditTime: 2021-12-22 10:56:06
+ * @LastEditTime: 2021-12-29 14:01:17
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,4 +19,8 @@ export const codePhoneLogin = (params) => {
 
 export const getUserInfo = () => {
 	return request(`/users/userInfo`,'GET')
+}
+
+export const getSchool = (params) => {
+	return request('/users/getSchool', 'GET', params)
 }

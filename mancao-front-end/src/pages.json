@@ -66,6 +66,14 @@
 				"enablePullDownRefresh": false
 			}
 
+		},
+		{
+			"path": "pages/user/info/School",
+			"style": {
+				"navigationBarTitleText": "学校",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"tabBar": {
