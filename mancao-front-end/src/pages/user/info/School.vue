@@ -1,14 +1,18 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-29 14:13:39
+ * @LastEditTime: 2021-12-29 15:11:00
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
     <div class="school">
-        
+      <uni-search-bar placeholder="请输入学校" @confirm="search"></uni-search-bar>
+        <uni-list>
+    <uni-list-item  title="列表文字" ></uni-list-item>
+    <uni-list-item :disabled="true" title="列表禁用状态" ></uni-list-item>
+</uni-list>
     </div>
 </template>
 
@@ -19,6 +23,9 @@ export default {
 </script>
 
 <script setup>
+const search = (e) => {
+  console.log('e===', e)
+}
 </script>
 
 <style lang="scss" scoped>
