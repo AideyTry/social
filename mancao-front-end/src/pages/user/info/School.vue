@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-29 18:07:24
+ * @LastEditTime: 2021-12-29 18:08:26
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -33,12 +33,13 @@ export default {
 </script>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { getSchool } from "../../../api/user";
 
 let schools = ref([]);
 let pageNum = ref(1)
 let queryString = ref('')
+let finalSchools = reactive([])
 
 const searchSchool = (query, page) => {
     const params = {
