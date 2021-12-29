@@ -310,7 +310,7 @@ const getSchool = (req, res) => {
     .then(data => {
       res.send({
         code: 200,
-        data: data.data,
+        data: data.data.data,
         msg: "成功"
       });
     })
