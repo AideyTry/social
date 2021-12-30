@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-30 10:59:28
+ * @LastEditTime: 2021-12-30 14:10:01
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -69,10 +69,11 @@ const onLoadMore = () => {
 
 }
 const onChecked = (item) => {
-  console.log('item===', item)
   schoolName.value = item.name
   schools.value = []
-  console.log('schoolName===', schoolName)
+    uni.navigateTo({
+    url: `/pages/user/info/Editor?schoolName=${schoolName.value}`
+});
 }
 </script>
 

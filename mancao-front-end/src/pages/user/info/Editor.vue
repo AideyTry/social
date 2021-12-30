@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-29 14:15:43
+ * @LastEditTime: 2021-12-30 14:52:48
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,20 +9,14 @@
 <template>
   <view class="userinfo-wraper">
     <view class="userinfo">
-      <image
-        :src="avatar ? avatar : defaultAvatar"
-        class="avatar"
-      ></image>
+      <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
     </view>
     <view class="info-item">
       <view class="title-wraper">
         <text class="title">个人照片</text>
         <text>({{ quantity(images) }}/{{ images.length }})</text>
       </view>
-      <scroll-view
-        scroll-x="true"
-        class="photos"
-      >
+      <scroll-view scroll-x="true" class="photos">
         <view class="photos">
           <view
             class="photo-wraper"
@@ -38,7 +32,8 @@
             <text
               class="photo-add"
               v-if="(!item && images[index - 1]) || (index === 0 && !images[0])"
-            >+</text>
+              >+</text
+            >
           </view>
         </view>
       </scroll-view>
@@ -48,10 +43,7 @@
       <view class="title-wraper">
         <text class="title">个人签名</text>
       </view>
-      <input
-        type="text"
-        placeholder="请输入个人签名"
-      />
+      <input type="text" placeholder="请输入个人签名" />
     </view>
 
     <view class="info-item">
@@ -60,10 +52,7 @@
       </view>
       <view class="base-item">
         <text>昵称</text>
-        <input
-          type="text"
-          placeholder="请输入昵称"
-        />
+        <input type="text" placeholder="请输入昵称" />
       </view>
       <view class="base-item">
         <text>性别</text>
@@ -83,36 +72,54 @@
       </view>
       <view class="base-item">
         <text>所在地</text>
-        <PickerRegion propsProvinceCode="440000" propsCityCode="440300" @change="onChange"/>
+        <PickerRegion
+          propsProvinceCode="440000"
+          propsCityCode="440300"
+          @change="onChange"
+        />
       </view>
       <view class="base-item">
         <text>家乡</text>
-        <PickerRegion propsProvinceCode="430000" propsCityCode="430700" @change="onChangeHome"/>
+        <PickerRegion
+          propsProvinceCode="430000"
+          propsCityCode="430700"
+          @change="onChangeHome"
+        />
       </view>
       <view class="base-item">
         <text>学校</text>
-        <view @click="openSchool" @changeSchool="onChangeSchool">{{schoolName ? schoolName : '请选择学校'}}</view>
+        <view @click="openSchool" @changeSchool="onChangeSchool">{{
+          schoolName ? schoolName : "请选择学校"
+        }}</view>
       </view>
       <view class="base-item">
         <text>职业</text>
-        <input
-          type="text"
-          placeholder="请选择职业"
-        />
+        <input type="text" placeholder="请选择职业" />
       </view>
     </view>
     <button @click="onSave">保存</button>
   </view>
 </template>
 
+
+<script>
+export default {
+  onLoad: function (options) {
+    const { schoolName } = options;
+  },
+};
+</script>
+
+
 <script setup>
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
-import PickerRegion from './PickerRegion.vue'
-
+import PickerRegion from "./PickerRegion.vue";
+console.log("location=", location);
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
+// let schoolName = ref('')
 
 let images = reactive(userInfo.photos);
 
@@ -251,26 +258,35 @@ const changeGender = () => {
 };
 
 /* 保存 */
-const onSave = () => { };
+const onSave = () => {};
 
 /*  区域选择 */
 const onChange = (obj) => {
-  console.log('obj=====', obj)
-}
+  console.log("obj=====", obj);
+};
 const onChangeHome = (obj) => {
-    console.log('obj.home=====', obj)
-}
+  console.log("obj.home=====", obj);
+};
 
 /* 选择学校 */
-let schoolName = ref('')
+let schoolName = ref("");
+const { hash } = location;
+const ops = hash.split("?")[1];
+if (ops) {
+  const opsSchoolName = ops.split("=")[1];
+  if (opsSchoolName) {
+    schoolName.value = decodeURI(opsSchoolName);
+  }
+}
+console.log("ops==", ops);
 const openSchool = () => {
   uni.navigateTo({
-    url: '/pages/user/info/School'
-});
-}
+    url: "/pages/user/info/School",
+  });
+};
 const onChangeSchool = (name) => {
-schoolName.value = name
-} 
+  schoolName.value = name;
+};
 </script>
 
 <style lang="scss" scoped>
