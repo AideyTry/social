@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 17:29:51
+ * @LastEditTime: 2021-12-30 17:35:22
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,10 +25,7 @@
           @input="binddata('email', $event.detail.value)"
         />
       </uni-forms-item>
-    </uni-forms>
-    <button @click="submit">Submit</button>
-    <!-- end -->
-    <view class="userinfo">
+          <view class="userinfo">
       <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
     </view>
     <view class="info-item">
@@ -123,7 +120,9 @@
         </picker>
       </view>
     </view>
-    <button @click="onSave">保存</button>
+    </uni-forms>
+    <button @click="submit">Submit</button>
+    <!-- end -->
   </view>
 </template>
 
