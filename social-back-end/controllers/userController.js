@@ -316,9 +316,9 @@ const getSchool = (req, res) => {
       console.log('data=====', data)
       console.log('data.data.data===', data.data.data)
       res.send({
-        code: 200,
+        code: data.data.code,
         data: data.data.data || [],
-        msg: '成功',
+        msg: data.data.desc,
       })
     })
     .catch(function (error) {

@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-30 15:19:27
+ * @LastEditTime: 2021-12-30 16:11:31
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,6 +19,7 @@
         style="text-align: center"
       ></uni-list-item>
       <uni-list-item
+        v-if="isShowMore"
         :clickable="true"
         title="加载更多..."
         style="text-align: center"
@@ -42,15 +43,21 @@ let schools = ref([]);
 let pageNum = ref(1)
 let queryString = ref('')
 let schoolName = ref('')
+let isShowMore = ref(false)
 
 const searchSchool = (query, page) => {
     const params = {
     name: query,
-    page,
+    page: String(page),
   }
   getSchool(params).then((data) => {
     console.log("data===", data);
     schools.value = [...schools.value, ...data.data.data];
+    console.log('schools.value=====', schools.value)
+    isShowMore.value = true
+    if(data.data.data.length < 10){
+      isShowMore.value = false
+    }
     if(page === 1 && schools.value.length === 0){
       schools.value = [{name: '其他学校'}]
     }
