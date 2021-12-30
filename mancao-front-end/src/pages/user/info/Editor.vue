@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 23:24:45
+ * @LastEditTime: 2021-12-30 23:27:45
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -13,28 +13,6 @@
       :modelValue="formData"
       :rules="rules"
     >
-      <uni-forms-item
-        label="姓名"
-        name="name"
-      >
-        <uni-easyinput
-          type="text"
-          v-model="formData.name"
-          placeholder="请输入姓名"
-        />
-      </uni-forms-item>
-      <uni-forms-item
-        label="邮箱"
-        name="email"
-      >
-        <input
-          class="input"
-          v-model="formData.email"
-          type="text"
-          placeholder="请输入用户名"
-          @input="binddata('email', $event.detail.value)"
-        />
-      </uni-forms-item>
       <view class="userinfo">
         <image
           :src="avatar ? avatar : defaultAvatar"
@@ -188,25 +166,9 @@ import PickerRegion from "./PickerRegion.vue";
 
 /* uni-forms */
 let formData = reactive({
-  name: "LiMing",
-  email: "dcloud@email.com",
   nickname: ''
 });
 let rules = {
-  // 对name字段进行必填验证
-  name: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请输入姓名",
-      },
-      {
-        minLength: 3,
-        maxLength: 5,
-        errorMessage: "姓名长度在 {minLength} 到 {maxLength} 个字符",
-      },
-    ],
-  },
   nickname: {
     rules: [
       {
@@ -214,15 +176,6 @@ let rules = {
         errorMessage: "请输入昵称",
       }
     ]
-  },
-  // 对email字段进行必填验证
-  email: {
-    rules: [
-      {
-        format: "email",
-        errorMessage: "请输入正确的邮箱地址",
-      },
-    ],
   },
 };
 const form = ref(null)
