@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 23:22:33
+ * @LastEditTime: 2021-12-30 23:23:45
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -131,14 +131,16 @@
             @change="onChange"
           />
         </uni-forms-item>
-        <view class="base-item">
-          <text>家乡</text>
+        <uni-forms-item
+          label="家乡"
+          name="homeTown"
+        >
           <PickerRegion
             propsProvinceCode="430000"
             propsCityCode="430700"
             @change="onChangeHome"
           />
-        </view>
+        </uni-forms-item>
         <view class="base-item">
           <text>学校</text>
           <view
