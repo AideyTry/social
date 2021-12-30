@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 17:35:22
+ * @LastEditTime: 2021-12-30 17:44:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -71,6 +71,14 @@
         <text>昵称</text>
         <input type="text" placeholder="请输入昵称" />
       </view>
+      <uni-forms-item label="昵称" name="nickname">
+        <input
+          class="input"
+          v-model="formData.nickname"
+          type="text"
+          placeholder="请输入昵称"
+        />
+      </uni-forms-item>
       <view class="base-item">
         <text>性别</text>
         <view @click="changeGender">{{ gender }}</view>
@@ -145,6 +153,7 @@ import PickerRegion from "./PickerRegion.vue";
 let formData = reactive({
   name: "LiMing",
   email: "dcloud@email.com",
+  nickname: ''
 });
 let rules = {
   // 对name字段进行必填验证
@@ -161,6 +170,14 @@ let rules = {
       },
     ],
   },
+  nickname: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请输入昵称",
+      }
+    ]
+  },
   // 对email字段进行必填验证
   email: {
     rules: [
@@ -172,6 +189,11 @@ let rules = {
   },
 };
 const form = ref(null)
+
+const binddata = (name, obj) => {
+  console.log('name, obj===', name, obj)
+}
+
 const submit = () => {
   console.log('form===', form)
   form
@@ -397,16 +419,16 @@ const changeProfession = (e) => {
   border-radius: 50%;
 }
 
-.info-item {
-  padding: 30rpx 0;
-  .base-item {
-    display: flex;
-    justify-content: space-between;
-    background-color: #fdfdfd;
-    padding: 20rpx 6rpx;
-    border-bottom: 1rpx solid #eee;
-  }
-}
+// .info-item {
+//   padding: 30rpx 0;
+//   .base-item {
+//     display: flex;
+//     justify-content: space-between;
+//     background-color: #fdfdfd;
+//     padding: 20rpx 6rpx;
+//     border-bottom: 1rpx solid #eee;
+//   }
+// }
 .title-wraper {
   padding: 20rpx 0;
   .title {
