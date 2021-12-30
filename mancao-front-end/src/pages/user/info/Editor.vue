@@ -152,8 +152,10 @@
           schoolName ? schoolName : "请选择学校"
         }}</view>
         </uni-forms-item>
-        <view class="base-item">
-          <text>职业</text>
+        <uni-forms-item
+          label="职业"
+          name="job"
+        >
           <picker
             :range="professions"
             :value="activeProfessionIndex"
@@ -161,7 +163,7 @@
           >
             <view class="uni-input">{{ job ? job : `请选择职业` }}</view>
           </picker>
-        </view>
+        </uni-forms-item>
       </view>
     </uni-forms>
     <button @click="submit">Submit</button>
