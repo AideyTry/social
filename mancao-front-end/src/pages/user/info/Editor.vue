@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 23:23:45
+ * @LastEditTime: 2021-12-30 23:24:45
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -141,15 +141,17 @@
             @change="onChangeHome"
           />
         </uni-forms-item>
-        <view class="base-item">
-          <text>学校</text>
+        <uni-forms-item
+          label="学校"
+          name="schoolName"
+        >
           <view
             @click="openSchool"
             @changeSchool="onChangeSchool"
           >{{
           schoolName ? schoolName : "请选择学校"
         }}</view>
-        </view>
+        </uni-forms-item>
         <view class="base-item">
           <text>职业</text>
           <picker
