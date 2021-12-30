@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 23:20:58
+ * @LastEditTime: 2021-12-30 23:22:33
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -121,14 +121,16 @@
             <view class="uni-input">{{ date }}</view>
           </picker>
         </uni-forms-item>
-        <view class="base-item">
-          <text>所在地</text>
+        <uni-forms-item
+          label="所在地"
+          name="loaction"
+        >
           <PickerRegion
             propsProvinceCode="440000"
             propsCityCode="440300"
             @change="onChange"
           />
-        </view>
+        </uni-forms-item>
         <view class="base-item">
           <text>家乡</text>
           <PickerRegion
