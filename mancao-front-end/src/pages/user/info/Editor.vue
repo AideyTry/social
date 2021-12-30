@@ -1,8 +1,8 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 17:44:58
- * @LastEditors: Aiden(戴林波)
+ * @LastEditTime: 2021-12-30 23:19:42
+ * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
@@ -67,10 +67,10 @@
       <view class="title-wraper">
         <text class="title">基础信息</text>
       </view>
-      <view class="base-item">
+      <!-- <view class="base-item">
         <text>昵称</text>
         <input type="text" placeholder="请输入昵称" />
-      </view>
+      </view> -->
       <uni-forms-item label="昵称" name="nickname">
         <input
           class="input"
@@ -79,10 +79,10 @@
           placeholder="请输入昵称"
         />
       </uni-forms-item>
-      <view class="base-item">
-        <text>性别</text>
+      <uni-forms-item label="性别" name="gender">
+        <!-- <text>性别</text> -->
         <view @click="changeGender">{{ gender }}</view>
-      </view>
+      </uni-forms-item>
       <view class="base-item">
         <text>出生日期</text>
         <picker
