@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 14:52:48
+ * @LastEditTime: 2021-12-30 16:59:54
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -94,7 +94,13 @@
       </view>
       <view class="base-item">
         <text>职业</text>
-        <input type="text" placeholder="请选择职业" />
+        <picker
+          :range="professions"
+          :value="activeProfessionIndex"
+          @change="changeProfession"
+        >
+          <view class="uni-input">{{ job ? job : `请选择职业` }}</view>
+        </picker>
       </view>
     </view>
     <button @click="onSave">保存</button>
@@ -287,6 +293,16 @@ const openSchool = () => {
 const onChangeSchool = (name) => {
   schoolName.value = name;
 };
+
+/* 职业 */
+let professions = ref(['IT/互联网/通信', '金融', '工业制造业', '教育/科研', '公共事业单位', '医药/健康', '媒体/公关','影视/娱乐', '零售', '餐饮/酒店', '其他'])
+let job = ref('')
+let activeProfessionIndex = ref(0)
+const changeProfession = (e) => {
+  const { detail: { value } } = e
+  activeProfessionIndex.value = value
+  job.value = professions['value'][value]
+}
 </script>
 
 <style lang="scss" scoped>
