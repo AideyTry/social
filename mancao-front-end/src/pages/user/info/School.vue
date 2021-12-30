@@ -1,19 +1,21 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-30 09:40:36
+ * @LastEditTime: 2021-12-30 10:59:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <div class="school">
-    <uni-search-bar placeholder="请输入学校名称" @confirm="search"></uni-search-bar>
-    <uni-list>
+    <uni-search-bar placeholder="请输入学校名称" @confirm="search" v-model="schoolName"></uni-search-bar>
+    <uni-list v-if="schools.length">
       <uni-list-item
         v-for="item in schools"
         :key="item.code"
         :title="item.name"
+        :clickable="true"
+        @click="onChecked(item)"
         style="text-align: center"
       ></uni-list-item>
       <uni-list-item
@@ -39,6 +41,7 @@ import { getSchool } from "../../../api/user";
 let schools = ref([]);
 let pageNum = ref(1)
 let queryString = ref('')
+let schoolName = ref('')
 
 const searchSchool = (query, page) => {
     const params = {
@@ -64,6 +67,12 @@ const onLoadMore = () => {
   console.log('pageNum.value===', pageNum.value)
   searchSchool(queryString.value, pageNum.value)
 
+}
+const onChecked = (item) => {
+  console.log('item===', item)
+  schoolName.value = item.name
+  schools.value = []
+  console.log('schoolName===', schoolName)
 }
 </script>
 
