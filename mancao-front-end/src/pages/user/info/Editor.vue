@@ -1,13 +1,33 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 16:59:54
+ * @LastEditTime: 2021-12-30 17:29:51
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <view class="userinfo-wraper">
+    <uni-forms ref="form" :modelValue="formData" :rules="rules">
+      <uni-forms-item label="姓名" name="name">
+        <uni-easyinput
+          type="text"
+          v-model="formData.name"
+          placeholder="请输入姓名"
+        />
+      </uni-forms-item>
+      <uni-forms-item label="邮箱" name="email">
+        <input
+          class="input"
+          v-model="formData.email"
+          type="text"
+          placeholder="请输入用户名"
+          @input="binddata('email', $event.detail.value)"
+        />
+      </uni-forms-item>
+    </uni-forms>
+    <button @click="submit">Submit</button>
+    <!-- end -->
     <view class="userinfo">
       <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
     </view>
@@ -121,7 +141,50 @@ export default {
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 import PickerRegion from "./PickerRegion.vue";
-console.log("location=", location);
+
+/* uni-forms */
+let formData = reactive({
+  name: "LiMing",
+  email: "dcloud@email.com",
+});
+let rules = {
+  // 对name字段进行必填验证
+  name: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请输入姓名",
+      },
+      {
+        minLength: 3,
+        maxLength: 5,
+        errorMessage: "姓名长度在 {minLength} 到 {maxLength} 个字符",
+      },
+    ],
+  },
+  // 对email字段进行必填验证
+  email: {
+    rules: [
+      {
+        format: "email",
+        errorMessage: "请输入正确的邮箱地址",
+      },
+    ],
+  },
+};
+const form = ref(null)
+const submit = () => {
+  console.log('form===', form)
+  form
+    .value.validate()
+    .then((res) => {
+      console.log("表单数据信息：", res);
+    })
+    .catch((err) => {
+      console.log("表单错误信息：", err);
+    });
+};
+
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
@@ -295,14 +358,28 @@ const onChangeSchool = (name) => {
 };
 
 /* 职业 */
-let professions = ref(['IT/互联网/通信', '金融', '工业制造业', '教育/科研', '公共事业单位', '医药/健康', '媒体/公关','影视/娱乐', '零售', '餐饮/酒店', '其他'])
-let job = ref('')
-let activeProfessionIndex = ref(0)
+let professions = ref([
+  "IT/互联网/通信",
+  "金融",
+  "工业制造业",
+  "教育/科研",
+  "公共事业单位",
+  "医药/健康",
+  "媒体/公关",
+  "影视/娱乐",
+  "零售",
+  "餐饮/酒店",
+  "其他",
+]);
+let job = ref("");
+let activeProfessionIndex = ref(0);
 const changeProfession = (e) => {
-  const { detail: { value } } = e
-  activeProfessionIndex.value = value
-  job.value = professions['value'][value]
-}
+  const {
+    detail: { value },
+  } = e;
+  activeProfessionIndex.value = value;
+  job.value = professions["value"][value];
+};
 </script>
 
 <style lang="scss" scoped>
