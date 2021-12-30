@@ -1,22 +1,32 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 23:19:42
+ * @LastEditTime: 2021-12-30 23:20:58
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <view class="userinfo-wraper">
-    <uni-forms ref="form" :modelValue="formData" :rules="rules">
-      <uni-forms-item label="姓名" name="name">
+    <uni-forms
+      ref="form"
+      :modelValue="formData"
+      :rules="rules"
+    >
+      <uni-forms-item
+        label="姓名"
+        name="name"
+      >
         <uni-easyinput
           type="text"
           v-model="formData.name"
           placeholder="请输入姓名"
         />
       </uni-forms-item>
-      <uni-forms-item label="邮箱" name="email">
+      <uni-forms-item
+        label="邮箱"
+        name="email"
+      >
         <input
           class="input"
           v-model="formData.email"
@@ -25,109 +35,128 @@
           @input="binddata('email', $event.detail.value)"
         />
       </uni-forms-item>
-          <view class="userinfo">
-      <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
-    </view>
-    <view class="info-item">
-      <view class="title-wraper">
-        <text class="title">个人照片</text>
-        <text>({{ quantity(images) }}/{{ images.length }})</text>
+      <view class="userinfo">
+        <image
+          :src="avatar ? avatar : defaultAvatar"
+          class="avatar"
+        ></image>
       </view>
-      <scroll-view scroll-x="true" class="photos">
-        <view class="photos">
-          <view
-            class="photo-wraper"
-            @click="onUpload(item, index)"
-            v-for="(item, index) in images"
-            :key="index"
-          >
-            <image
-              mode="aspectFill"
-              :src="item ? item : defaultAvatar"
-              class="photo"
-            ></image>
-            <text
-              class="photo-add"
-              v-if="(!item && images[index - 1]) || (index === 0 && !images[0])"
-              >+</text
-            >
-          </view>
+      <view class="info-item">
+        <view class="title-wraper">
+          <text class="title">个人照片</text>
+          <text>({{ quantity(images) }}/{{ images.length }})</text>
         </view>
-      </scroll-view>
-    </view>
-
-    <view class="info-item">
-      <view class="title-wraper">
-        <text class="title">个人签名</text>
+        <scroll-view
+          scroll-x="true"
+          class="photos"
+        >
+          <view class="photos">
+            <view
+              class="photo-wraper"
+              @click="onUpload(item, index)"
+              v-for="(item, index) in images"
+              :key="index"
+            >
+              <image
+                mode="aspectFill"
+                :src="item ? item : defaultAvatar"
+                class="photo"
+              ></image>
+              <text
+                class="photo-add"
+                v-if="(!item && images[index - 1]) || (index === 0 && !images[0])"
+              >+</text>
+            </view>
+          </view>
+        </scroll-view>
       </view>
-      <input type="text" placeholder="请输入个人签名" />
-    </view>
 
-    <view class="info-item">
-      <view class="title-wraper">
-        <text class="title">基础信息</text>
+      <view class="info-item">
+        <view class="title-wraper">
+          <text class="title">个人签名</text>
+        </view>
+        <input
+          type="text"
+          placeholder="请输入个人签名"
+        />
       </view>
-      <!-- <view class="base-item">
+
+      <view class="info-item">
+        <view class="title-wraper">
+          <text class="title">基础信息</text>
+        </view>
+        <!-- <view class="base-item">
         <text>昵称</text>
         <input type="text" placeholder="请输入昵称" />
       </view> -->
-      <uni-forms-item label="昵称" name="nickname">
-        <input
-          class="input"
-          v-model="formData.nickname"
-          type="text"
-          placeholder="请输入昵称"
-        />
-      </uni-forms-item>
-      <uni-forms-item label="性别" name="gender">
-        <!-- <text>性别</text> -->
-        <view @click="changeGender">{{ gender }}</view>
-      </uni-forms-item>
-      <view class="base-item">
-        <text>出生日期</text>
-        <picker
-          mode="date"
-          :value="date"
-          :start="startDate"
-          :end="endDate"
-          @change="bindDateChange"
+        <uni-forms-item
+          label="昵称"
+          name="nickname"
         >
-          <view class="uni-input">{{ date }}</view>
-        </picker>
-      </view>
-      <view class="base-item">
-        <text>所在地</text>
-        <PickerRegion
-          propsProvinceCode="440000"
-          propsCityCode="440300"
-          @change="onChange"
-        />
-      </view>
-      <view class="base-item">
-        <text>家乡</text>
-        <PickerRegion
-          propsProvinceCode="430000"
-          propsCityCode="430700"
-          @change="onChangeHome"
-        />
-      </view>
-      <view class="base-item">
-        <text>学校</text>
-        <view @click="openSchool" @changeSchool="onChangeSchool">{{
+          <input
+            class="input"
+            v-model="formData.nickname"
+            type="text"
+            placeholder="请输入昵称"
+          />
+        </uni-forms-item>
+        <uni-forms-item
+          label="性别"
+          name="gender"
+        >
+          <!-- <text>性别</text> -->
+          <view @click="changeGender">{{ gender }}</view>
+        </uni-forms-item>
+        <uni-forms-item
+          label="出生日期"
+          name="brithday"
+        >
+          <picker
+            mode="date"
+            :value="date"
+            :start="startDate"
+            :end="endDate"
+            @change="bindDateChange"
+          >
+            <view class="uni-input">{{ date }}</view>
+          </picker>
+        </uni-forms-item>
+        <view class="base-item">
+          <text>所在地</text>
+          <PickerRegion
+            propsProvinceCode="440000"
+            propsCityCode="440300"
+            @change="onChange"
+          />
+        </view>
+        <view class="base-item">
+          <text>家乡</text>
+          <PickerRegion
+            propsProvinceCode="430000"
+            propsCityCode="430700"
+            @change="onChangeHome"
+          />
+        </view>
+        <view class="base-item">
+          <text>学校</text>
+          <view
+            @click="openSchool"
+            @changeSchool="onChangeSchool"
+          >{{
           schoolName ? schoolName : "请选择学校"
         }}</view>
+        </view>
+        <view class="base-item">
+          <text>职业</text>
+          <picker
+            :range="professions"
+            :value="activeProfessionIndex"
+            @change="changeProfession"
+          >
+            <view class="uni-input">{{ job ? job : `请选择职业` }}</view>
+          </picker>
+        </view>
       </view>
-      <view class="base-item">
-        <text>职业</text>
-        <picker
-          :range="professions"
-          :value="activeProfessionIndex"
-          @change="changeProfession"
-        >
-          <view class="uni-input">{{ job ? job : `请选择职业` }}</view>
-        </picker>
-      </view>
-    </view>
     </uni-forms>
     <button @click="submit">Submit</button>
     <!-- end -->
@@ -348,7 +377,7 @@ const changeGender = () => {
 };
 
 /* 保存 */
-const onSave = () => {};
+const onSave = () => { };
 
 /*  区域选择 */
 const onChange = (obj) => {
