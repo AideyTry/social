@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-30 14:10:01
+ * @LastEditTime: 2021-12-30 15:19:27
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -51,6 +51,9 @@ const searchSchool = (query, page) => {
   getSchool(params).then((data) => {
     console.log("data===", data);
     schools.value = [...schools.value, ...data.data.data];
+    if(page === 1 && schools.value.length === 0){
+      schools.value = [{name: '其他学校'}]
+    }
     console.log('schools=', schools)
   })
 }
