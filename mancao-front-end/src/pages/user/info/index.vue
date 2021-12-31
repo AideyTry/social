@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-31 18:23:43
+ * @LastEditTime: 2021-12-31 18:25:11
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -103,6 +103,26 @@ const onUpload = (item, index) => {
 });
 
 let age = ref('')
+const getDate = (type) => {
+  const date = new Date();
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+
+  if (type === "start") {
+    year = year - 60;
+  } else if (type === "end") {
+    year = year + 2;
+  }
+  month = month > 9 ? month : "0" + month;
+  day = day > 9 ? day : "0" + day;
+  return `${year}-${month}-${day}`;
+};
+
+const currentDate = getDate({
+  format: true,
+});
+
   // uni.chooseImage({
   //   success: (chooseImageRes) => {
   //     console.log("chooseImageRes===", chooseImageRes);

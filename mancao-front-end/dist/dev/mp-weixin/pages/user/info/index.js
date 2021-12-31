@@ -28,6 +28,7 @@ const _sfc_main = {
       common_vendor.index.navigateTo({
         url: "/pages/user/info/Editor"
       });
+      common_vendor.ref("");
     };
     return (_ctx, _cache) => {
       return {
