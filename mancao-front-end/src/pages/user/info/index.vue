@@ -32,8 +32,8 @@
           >+</text
         >
       </view>
-      <button @click="editor">编辑资料</button>
     </view>
+    <button @click="editor">编辑资料</button>
   </view>
 </template>
 

@@ -61,8 +61,7 @@ const _sfc_main = {
             c: common_vendor.o(($event) => onUpload(item, index)),
             d: index
           });
-        }),
-        f: common_vendor.o((...args) => _ctx.editor && _ctx.editor(...args))
+        })
       };
     };
   }
