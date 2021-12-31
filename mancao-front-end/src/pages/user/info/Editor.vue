@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-31 11:02:27
+ * @LastEditTime: 2021-12-31 14:18:35
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -10,13 +10,16 @@
   <view class="userinfo-wraper">
     <uni-forms ref="form" :modelValue="formData" :rules="rules">
       <view class="userinfo">
+        <uni-forms-item name="avatar">
         <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
+        </uni-forms-item>
       </view>
       <view class="info-item">
         <view class="title-wraper">
           <text class="title">个人照片</text>
           <text>({{ quantity(images) }}/{{ images.length }})</text>
         </view>
+        <uni-forms-item name="photos">
         <scroll-view scroll-x="true" class="photos">
           <view class="photos">
             <view
@@ -40,6 +43,7 @@
             </view>
           </view>
         </scroll-view>
+        </uni-forms-item>
       </view>
 
       <view class="info-item">
@@ -47,7 +51,7 @@
           <text class="title">个人签名</text>
         </view>
         <uni-forms-item name="motto">
-          <input type="text" placeholder="请输入个人签名" />
+          <input v-model="formData.motto" type="text" placeholder="请输入个人签名" />
         </uni-forms-item>
       </view>
 
@@ -74,12 +78,12 @@
         <uni-forms-item label="出生日期" name="birthday">
           <picker
             mode="date"
-            :value="date"
+            :value="formData.birthday"
             :start="startDate"
             :end="endDate"
             @change="bindDateChange"
           >
-            <view class="uni-input">{{ date }}</view>
+            <view class="uni-input">{{ formData.birthday }}</view>
           </picker>
         </uni-forms-item>
         <uni-forms-item label="所在地" name="location">
@@ -98,7 +102,7 @@
         </uni-forms-item>
         <uni-forms-item label="学校" name="schoolName">
           <view @click="openSchool" @changeSchool="onChangeSchool">{{
-            schoolName ? schoolName : "请选择学校"
+            formData.schoolName ? formData.schoolName : "请选择学校"
           }}</view>
         </uni-forms-item>
         <uni-forms-item label="职业" name="job">
@@ -107,7 +111,7 @@
             :value="activeProfessionIndex"
             @change="changeProfession"
           >
-            <view class="uni-input">{{ job ? job : `请选择职业` }}</view>
+            <view class="uni-input">{{ formData.job ? formData.job : `请选择职业` }}</view>
           </picker>
         </uni-forms-item>
       </view>
@@ -118,30 +122,29 @@
 </template>
 
 
-<script>
-export default {
-  onLoad: function (options) {
-    const { schoolName } = options;
-  },
-};
-</script>
-
-
 <script setup>
-import { computed, ref, reactive } from "vue";
+import { computed, ref, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import PickerRegion from "./PickerRegion.vue";
 
 /* uni-forms */
 let formData = reactive({
+  avatar: '',
   nickname: "",
-  gender: "",
+  gender: "1",
   birthday: "",
-  location: "",
-  hometown: "",
+  location: {
+    provinceCode: '',
+    cityCode: ''
+  },
+  hometown: {
+    provinceCode: '',
+    cityCode: ''
+  },
   schoolName: "",
   job: "",
-  motto: ""
+  motto: "",
+  photos: null
 });
 let rules = {
   nickname: {
@@ -153,14 +156,16 @@ let rules = {
     ],
   },
 };
+
+
 const form = ref(null);
 
 const binddata = (name, obj) => {
   console.log("name, obj===", name, obj);
 };
 
-const submit = () => {
-  console.log("form===", form);
+const submit = (e) => {
+  console.log("form=e==", e);
   form.value
     .validate()
     .then((res) => {
@@ -178,6 +183,11 @@ let userInfo = computed(() => store.state.user.userInfo).value;
 
 let images = reactive(userInfo.photos);
 
+watch(images, (images, old) => {
+  console.log('images.value===', images.value)
+  formData.photos = images
+})
+
 const quantity = (images) => {
   const arr = images.filter((item) => item);
   return arr.length;
@@ -191,6 +201,10 @@ console.log("images===", images);
 // }
 
 const avatar = ref(userInfo.avatar);
+
+watch(avatar, (avatar, old) => {
+  formData.avatar = avatar
+})
 
 /**
  * @description: 提交图片
@@ -289,13 +303,12 @@ const currentDate = getDate({
   format: true,
 });
 console.log("currentDate===", currentDate);
-let date = ref(currentDate);
+formData.birthday = currentDate
 let startDate = getDate("start");
 let endDate = getDate("end");
 
 const bindDateChange = (e) => {
-  date.value = e.detail.value;
-  console.log("date======", date.value);
+  formData.birthday = e.detail.value;
 };
 
 /* 性别 */
@@ -318,19 +331,24 @@ const onSave = () => {};
 /*  区域选择 */
 const onChange = (obj) => {
   console.log("obj=====", obj);
+    const { provinceCode, cityCode } = obj
+  formData.location.provinceCode = provinceCode
+  formData.location.cityCode = cityCode
 };
 const onChangeHome = (obj) => {
   console.log("obj.home=====", obj);
+  const { provinceCode, cityCode } = obj
+  formData.hometown.provinceCode = provinceCode
+  formData.hometown.cityCode = cityCode
 };
 
 /* 选择学校 */
-let schoolName = ref("");
 const { hash } = location;
 const ops = hash.split("?")[1];
 if (ops) {
   const opsSchoolName = ops.split("=")[1];
   if (opsSchoolName) {
-    schoolName.value = decodeURI(opsSchoolName);
+    formData.schoolName = decodeURI(opsSchoolName);
   }
 }
 console.log("ops==", ops);
@@ -340,7 +358,7 @@ const openSchool = () => {
   });
 };
 const onChangeSchool = (name) => {
-  schoolName.value = name;
+  formData.schoolName= name;
 };
 
 /* 职业 */
@@ -357,14 +375,13 @@ let professions = ref([
   "餐饮/酒店",
   "其他",
 ]);
-let job = ref("");
 let activeProfessionIndex = ref(0);
 const changeProfession = (e) => {
   const {
     detail: { value },
   } = e;
   activeProfessionIndex.value = value;
-  job.value = professions["value"][value];
+  formData.job = professions["value"][value];
 };
 </script>
 

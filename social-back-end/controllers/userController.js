@@ -188,6 +188,8 @@ userInfo = async (req, res) => {
   const { userId } = req
   const userInfo = await getUserInfo(userId)
   userInfo.photos = JSON.parse(userInfo.photos)
+  userInfo.location = JSON.parse(userInfo.location)
+  userInfo.hometown = JSON.parse(userInfo.hometown)
   console.log('userInfo===', userInfo)
   if (userInfo) {
     res.send({
