@@ -13,8 +13,10 @@ if (!Math) {
 const PickerRegion = () => "./PickerRegion.js";
 const _sfc_main = {
   setup(__props) {
+    const store = common_vendor.useStore();
+    let userInfo = common_vendor.computed(() => store.state.user.userInfo).value;
     let formData = common_vendor.reactive({
-      avatar: "",
+      avatar: userInfo.avatar,
       nickname: "",
       gender: "1",
       birthday: "",
@@ -51,8 +53,6 @@ const _sfc_main = {
       });
     };
     const defaultAvatar = "/static/images/default_avatar.png";
-    const store = common_vendor.useStore();
-    let userInfo = common_vendor.computed(() => store.state.user.userInfo).value;
     let images = common_vendor.reactive(userInfo.photos);
     common_vendor.watch(images, (images2, old) => {
       console.log("images.value===", images2.value);

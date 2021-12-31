@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-31 18:13:51
+ * @LastEditTime: 2021-12-31 18:19:53
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -126,10 +126,11 @@
 import { computed, ref, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import PickerRegion from "./PickerRegion.vue";
-
+const store = useStore();
+let userInfo = computed(() => store.state.user.userInfo).value;
 /* uni-forms */
 let formData = reactive({
-  avatar: '',
+  avatar: userInfo.avatar,
   nickname: "",
   gender: "1",
   birthday: "",
@@ -177,8 +178,7 @@ const submit = (e) => {
 };
 
 const defaultAvatar = "/static/images/default_avatar.png";
-const store = useStore();
-let userInfo = computed(() => store.state.user.userInfo).value;
+
 // let schoolName = ref('')
 
 let images = reactive(userInfo.photos);
