@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-31 18:25:11
+ * @LastEditTime: 2021-12-31 18:29:18
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -32,6 +32,7 @@
           >+</text
         >
       </view>
+      <button @click="editor">编辑资料</button>
     </view>
   </view>
 </template>
@@ -122,6 +123,9 @@ const getDate = (type) => {
 const currentDate = getDate({
   format: true,
 });
+
+// 编辑资料
+const editor = () => {}
 
   // uni.chooseImage({
   //   success: (chooseImageRes) => {

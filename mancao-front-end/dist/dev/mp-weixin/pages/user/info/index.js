@@ -29,6 +29,23 @@ const _sfc_main = {
         url: "/pages/user/info/Editor"
       });
       common_vendor.ref("");
+      const getDate = (type) => {
+        const date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        if (type === "start") {
+          year = year - 60;
+        } else if (type === "end") {
+          year = year + 2;
+        }
+        month = month > 9 ? month : "0" + month;
+        day = day > 9 ? day : "0" + day;
+        return `${year}-${month}-${day}`;
+      };
+      getDate({
+        format: true
+      });
     };
     return (_ctx, _cache) => {
       return {
@@ -44,7 +61,8 @@ const _sfc_main = {
             c: common_vendor.o(($event) => onUpload(item, index)),
             d: index
           });
-        })
+        }),
+        f: common_vendor.o((...args) => _ctx.editor && _ctx.editor(...args))
       };
     };
   }
