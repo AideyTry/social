@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-31 14:18:35
+ * @LastEditTime: 2021-12-31 18:13:51
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -116,7 +116,7 @@
         </uni-forms-item>
       </view>
     </uni-forms>
-    <button @click="submit">Submit</button>
+    <button @click="submit">保存</button>
     <!-- end -->
   </view>
 </template>
