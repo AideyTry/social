@@ -34,7 +34,7 @@ const _sfc_main = {
         a: avatar.value ? avatar.value : defaultAvatar,
         b: common_vendor.t(common_vendor.unref(userInfo).location),
         c: common_vendor.t(common_vendor.unref(userInfo).gender),
-        d: common_vendor.t(common_vendor.unref(userInfo).age),
+        d: common_vendor.t(_ctx.age),
         e: common_vendor.f(common_vendor.unref(images), (item, index, i0) => {
           return common_vendor.e({
             a: item ? item : defaultAvatar,

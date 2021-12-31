@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-26 22:41:14
+ * @LastEditTime: 2021-12-31 18:23:43
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -15,7 +15,7 @@
         class="avatar"
       ></image>
       <text class="basic-info">
-        {{ userInfo.location }}/{{ userInfo.gender }}/{{ userInfo.age }}
+        {{ userInfo.location }}/{{ userInfo.gender }}/{{ age }}
       </text>
     </view>
     <view class="photos">
@@ -101,6 +101,8 @@ const onUpload = (item, index) => {
     uni.navigateTo({
     url: '/pages/user/info/Editor'
 });
+
+let age = ref('')
   // uni.chooseImage({
   //   success: (chooseImageRes) => {
   //     console.log("chooseImageRes===", chooseImageRes);
