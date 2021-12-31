@@ -1,33 +1,23 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-30 23:27:45
- * @LastEditors: Aiden
+ * @LastEditTime: 2021-12-31 11:02:27
+ * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <view class="userinfo-wraper">
-    <uni-forms
-      ref="form"
-      :modelValue="formData"
-      :rules="rules"
-    >
+    <uni-forms ref="form" :modelValue="formData" :rules="rules">
       <view class="userinfo">
-        <image
-          :src="avatar ? avatar : defaultAvatar"
-          class="avatar"
-        ></image>
+        <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
       </view>
       <view class="info-item">
         <view class="title-wraper">
           <text class="title">个人照片</text>
           <text>({{ quantity(images) }}/{{ images.length }})</text>
         </view>
-        <scroll-view
-          scroll-x="true"
-          class="photos"
-        >
+        <scroll-view scroll-x="true" class="photos">
           <view class="photos">
             <view
               class="photo-wraper"
@@ -42,8 +32,11 @@
               ></image>
               <text
                 class="photo-add"
-                v-if="(!item && images[index - 1]) || (index === 0 && !images[0])"
-              >+</text>
+                v-if="
+                  (!item && images[index - 1]) || (index === 0 && !images[0])
+                "
+                >+</text
+              >
             </view>
           </view>
         </scroll-view>
@@ -53,10 +46,9 @@
         <view class="title-wraper">
           <text class="title">个人签名</text>
         </view>
-        <input
-          type="text"
-          placeholder="请输入个人签名"
-        />
+        <uni-forms-item name="motto">
+          <input type="text" placeholder="请输入个人签名" />
+        </uni-forms-item>
       </view>
 
       <view class="info-item">
@@ -67,10 +59,7 @@
         <text>昵称</text>
         <input type="text" placeholder="请输入昵称" />
       </view> -->
-        <uni-forms-item
-          label="昵称"
-          name="nickname"
-        >
+        <uni-forms-item label="昵称" name="nickname">
           <input
             class="input"
             v-model="formData.nickname"
@@ -78,17 +67,11 @@
             placeholder="请输入昵称"
           />
         </uni-forms-item>
-        <uni-forms-item
-          label="性别"
-          name="gender"
-        >
+        <uni-forms-item label="性别" name="gender">
           <!-- <text>性别</text> -->
           <view @click="changeGender">{{ gender }}</view>
         </uni-forms-item>
-        <uni-forms-item
-          label="出生日期"
-          name="brithday"
-        >
+        <uni-forms-item label="出生日期" name="birthday">
           <picker
             mode="date"
             :value="date"
@@ -99,41 +82,26 @@
             <view class="uni-input">{{ date }}</view>
           </picker>
         </uni-forms-item>
-        <uni-forms-item
-          label="所在地"
-          name="loaction"
-        >
+        <uni-forms-item label="所在地" name="location">
           <PickerRegion
             propsProvinceCode="440000"
             propsCityCode="440300"
             @change="onChange"
           />
         </uni-forms-item>
-        <uni-forms-item
-          label="家乡"
-          name="homeTown"
-        >
+        <uni-forms-item label="家乡" name="hometown">
           <PickerRegion
             propsProvinceCode="430000"
             propsCityCode="430700"
             @change="onChangeHome"
           />
         </uni-forms-item>
-        <uni-forms-item
-          label="学校"
-          name="schoolName"
-        >
-          <view
-            @click="openSchool"
-            @changeSchool="onChangeSchool"
-          >{{
-          schoolName ? schoolName : "请选择学校"
-        }}</view>
+        <uni-forms-item label="学校" name="schoolName">
+          <view @click="openSchool" @changeSchool="onChangeSchool">{{
+            schoolName ? schoolName : "请选择学校"
+          }}</view>
         </uni-forms-item>
-        <uni-forms-item
-          label="职业"
-          name="job"
-        >
+        <uni-forms-item label="职业" name="job">
           <picker
             :range="professions"
             :value="activeProfessionIndex"
@@ -166,7 +134,14 @@ import PickerRegion from "./PickerRegion.vue";
 
 /* uni-forms */
 let formData = reactive({
-  nickname: ''
+  nickname: "",
+  gender: "",
+  birthday: "",
+  location: "",
+  hometown: "",
+  schoolName: "",
+  job: "",
+  motto: ""
 });
 let rules = {
   nickname: {
@@ -174,20 +149,20 @@ let rules = {
       {
         required: true,
         errorMessage: "请输入昵称",
-      }
-    ]
+      },
+    ],
   },
 };
-const form = ref(null)
+const form = ref(null);
 
 const binddata = (name, obj) => {
-  console.log('name, obj===', name, obj)
-}
+  console.log("name, obj===", name, obj);
+};
 
 const submit = () => {
-  console.log('form===', form)
-  form
-    .value.validate()
+  console.log("form===", form);
+  form.value
+    .validate()
     .then((res) => {
       console.log("表单数据信息：", res);
     })
@@ -338,7 +313,7 @@ const changeGender = () => {
 };
 
 /* 保存 */
-const onSave = () => { };
+const onSave = () => {};
 
 /*  区域选择 */
 const onChange = (obj) => {

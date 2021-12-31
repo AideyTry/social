@@ -55,7 +55,7 @@ const createUserInfo = (user_id, phone) => {
 // 获取用户的详情
 const getUserInfo = async (user_id) => {
   const sql =
-    'select username, gender, age, phone, birthday, location, avatar, job, motto, photos from userinfo where user_id=?'
+    'select username, gender, age, phone, birthday, hometown, location, avatar, job, motto, photos from userinfo where user_id=?'
   const sqlArr = [user_id]
   const result = await dbconfig.SySqlConnect(sql, sqlArr)
   return result[0]
@@ -74,20 +74,24 @@ const setUserInfo = async (
   age,
   phone,
   birthday,
+  hometown,
   location,
+  schoolName,
   avatar,
   job,
   motto
 ) => {
   const sql =
-    'update userinfo set username=?, gender=?, age=?, phone=?, birthday=?, location=?, avatar=?, job=?, motto=? where user_id=?'
+    'update userinfo set username=?, gender=?, age=?, phone=?, birthday=?, hometown=?, location=?, schoolName=?, avatar=?, job=?, motto=? where user_id=?'
   const sqlArr = [
     username,
     gender,
     age,
     phone,
     birthday,
+    hometown,
     location,
+    schoolName,
     avatar,
     job,
     motto,
@@ -215,6 +219,8 @@ const editUserInfo = async (req, res) => {
       phone,
       birthday,
       location,
+      hometown,
+      schoolName,
       avatar,
       job,
       motto,
@@ -230,7 +236,9 @@ const editUserInfo = async (req, res) => {
       age,
       phone,
       birthday,
+      hometown,
       location,
+      schoolName,
       avatar,
       job,
       motto
