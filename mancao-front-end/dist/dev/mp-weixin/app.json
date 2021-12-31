@@ -7,7 +7,8 @@
     "pages/hobby/index",
     "pages/login/index",
     "pages/user/info/index",
-    "pages/user/info/Editor"
+    "pages/user/info/Editor",
+    "pages/user/info/School"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -44,6 +45,5 @@
       "desc": "开发"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

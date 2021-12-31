@@ -62,7 +62,8 @@
       "scope.userLocation": {
         "desc": "开发"
       }
-    }
+    },
+    "optimization":{"subPackages":true}
   },
   "mp-alipay": {
     "usingComponents": true

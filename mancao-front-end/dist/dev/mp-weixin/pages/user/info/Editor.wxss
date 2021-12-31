@@ -37,16 +37,6 @@
   height: 150rpx;
   border-radius: 50%;
 }
-.info-item.data-v-53251d4e {
-  padding: 30rpx 0;
-}
-.info-item .base-item.data-v-53251d4e {
-  display: flex;
-  justify-content: space-between;
-  background-color: #fdfdfd;
-  padding: 20rpx 6rpx;
-  border-bottom: 1rpx solid #eee;
-}
 .title-wraper.data-v-53251d4e {
   padding: 20rpx 0;
 }

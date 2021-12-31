@@ -17,6 +17,7 @@ if (!Math) {
   "./pages/login/index.js";
   "./pages/user/info/index.js";
   "./pages/user/info/Editor.js";
+  "./pages/user/info/School.js";
 }
 const _sfc_main = {
   onLaunch: function() {
@@ -39,6 +40,18 @@ const _sfc_main = {
 function createApp() {
   const app = common_vendor.createSSRApp(_sfc_main);
   app.use(store_index.store);
+  app.config.globalProperties.$filters = {
+    filterRegion(value, array) {
+      const proviceObj = array.find((element) => element.code === value);
+      if (!proviceObj) {
+        return "\u5E02\u8F96\u533A";
+      }
+      if (!proviceObj.name) {
+        return proviceObj;
+      }
+      return proviceObj.name;
+    }
+  };
   return {
     app
   };

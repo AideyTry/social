@@ -12,6 +12,10 @@
 	border: none;
 	color: #4CD964;
 }
+ .uni-forms-item__content{
+    display: flex;
+    align-items: center;
+}
 .row {
 	display: flex;
 	flex-wrap: wrap;

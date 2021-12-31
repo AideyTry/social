@@ -69,10 +69,7 @@ const _sfc_main = {
       }, 200);
       api_user.codePhoneLogin(params).then((res) => {
         console.log("res========", res);
-        const {
-          code,
-          token
-        } = res.data;
+        const { code, token } = res.data;
         if (code === 200) {
           console.log("\u6210\u529F");
           utils_auth.setToken(token);
@@ -82,30 +79,35 @@ const _sfc_main = {
           });
         }
       });
+    },
+    miniProLogin: function(e) {
+      console.log("e===", e);
+      common_vendor.index.login({
+        provider: "weixin",
+        success: function(loginRes) {
+          console.log("loginRes=", loginRes.authResult);
+        }
+      });
     }
   }
 };
+if (!Array) {
+  const _easycom_uni_title2 = common_vendor.resolveComponent("uni-title");
+  Math.max.call(null, _easycom_uni_title2);
+}
+const _easycom_uni_title = () => "../../uni_modules/uni-title/components/uni-title/uni-title.js";
+if (!Math) {
+  Math.max.call(null, _easycom_uni_title);
+}
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return common_vendor.e({
-    a: common_vendor.o((...args) => $options.onInput && $options.onInput(...args)),
-    b: common_vendor.o((...args) => $options.onInputCode && $options.onInputCode(...args)),
-    c: $data.codeVisible
-  }, $data.codeVisible ? common_vendor.e({
-    d: common_vendor.t($data.codeMessage),
-    e: !$data.sendCaptchaEnabled
-  }, !$data.sendCaptchaEnabled ? {
-    f: common_vendor.t($data.counterTimer)
-  } : {}, {
-    g: !$data.sendCaptchaEnabled,
-    h: common_vendor.o((...args) => $options.sendCaptcha && $options.sendCaptcha(...args))
-  }) : {}, {
-    i: $data.loginVisible,
-    j: common_vendor.o((...args) => $options.formSubmit && $options.formSubmit(...args)),
-    k: common_vendor.o((...args) => _ctx.formReset && _ctx.formReset(...args)),
-    l: common_vendor.o((...args) => _ctx.getuserinfo && _ctx.getuserinfo(...args)),
-    m: common_vendor.o((...args) => _ctx.getuserinfo && _ctx.getuserinfo(...args)),
-    n: common_vendor.o((...args) => _ctx.getuserinfo && _ctx.getuserinfo(...args))
-  });
+  return {
+    a: common_vendor.p({
+      type: "h1",
+      align: "center",
+      title: "\u8513\u8349"
+    }),
+    b: common_vendor.o((...args) => $options.miniProLogin && $options.miniProLogin(...args))
+  };
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-247e7dd8"]]);
 wx.createPage(MiniProgramPage);
