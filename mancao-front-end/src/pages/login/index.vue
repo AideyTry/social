@@ -84,7 +84,23 @@
     </view>
     <!-- #endif -->
     <!-- #ifdef MP-WEIXIN -->
-    <button type="primary" open-type="openSetting" @getuserinfo="miniProLogin" class="auth-btn">登录</button>
+    <button
+      type="primary"
+      open-type="openSetting"
+      @getuserinfo="miniProLogin"
+      class="auth-btn"
+    >
+      登录
+    </button>
+    <button
+      type="primary"
+      open-type="getUserInfo"
+      @getuserinfo="getInfo"
+      class="auth-btn"
+    >
+      登录授权
+    </button>
+
     <!-- #endif -->
   </view>
 </template>
@@ -171,11 +187,20 @@ export default {
       });
     },
     miniProLogin: function (e) {
-		console.log('e===', e)
+      console.log("e===", e);
       uni.login({
         provider: "weixin",
         success: function (loginRes) {
-          console.log('loginRes=',loginRes.authResult);
+          console.log("loginRes=", loginRes.authResult);
+        },
+      });
+    },
+    getInfo: function (e) {
+      console.log("登录e=", e);
+      uni.login({
+        provider: "weixin",
+        success: function (loginRes) {
+          console.log('loginRes====', loginRes);
         },
       });
     },
@@ -252,7 +277,7 @@ export default {
   height: 50px;
 }
 
-.auth-btn{
-	margin-top: 50rpx;
+.auth-btn {
+  margin-top: 50rpx;
 }
 </style>

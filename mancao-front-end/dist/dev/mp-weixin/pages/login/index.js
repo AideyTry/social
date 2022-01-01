@@ -88,6 +88,15 @@ const _sfc_main = {
           console.log("loginRes=", loginRes.authResult);
         }
       });
+    },
+    getInfo: function(e) {
+      console.log("\u767B\u5F55e=", e);
+      common_vendor.index.login({
+        provider: "weixin",
+        success: function(loginRes) {
+          console.log("loginRes====", loginRes);
+        }
+      });
     }
   }
 };
@@ -106,7 +115,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       align: "center",
       title: "\u8513\u8349"
     }),
-    b: common_vendor.o((...args) => $options.miniProLogin && $options.miniProLogin(...args))
+    b: common_vendor.o((...args) => $options.miniProLogin && $options.miniProLogin(...args)),
+    c: common_vendor.o((...args) => $options.getInfo && $options.getInfo(...args))
   };
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-247e7dd8"]]);
