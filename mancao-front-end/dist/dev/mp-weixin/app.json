@@ -5,10 +5,17 @@
     "pages/find/index",
     "pages/message/index",
     "pages/hobby/index",
-    "pages/login/index",
-    "pages/user/info/index",
-    "pages/user/info/Editor",
-    "pages/user/info/School"
+    "pages/login/index"
+  ],
+  "subPackages": [
+    {
+      "root": "pagesUser",
+      "pages": [
+        "pages/user/info/index",
+        "pages/user/info/Editor",
+        "pages/user/info/School"
+      ]
+    }
   ],
   "window": {
     "navigationBarTextStyle": "black",

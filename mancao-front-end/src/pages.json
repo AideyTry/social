@@ -1,112 +1,117 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "social"
-			}
-		}, {
-			"path": "pages/user/index",
-			"style": {
-				"navigationBarTitleText": "user",
-				"enablePullDownRefresh": false,
-				"app-plus": {
-					"titleNView": false
-				}
-			}
-
-		}, {
-			"path": "pages/find/index",
-			"style": {
-				"navigationBarTitleText": "find",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/message/index",
-			"style": {
-				"navigationBarTitleText": "message",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/hobby/index",
-			"style": {
-				"navigationBarTitleText": "hobby",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"mp-weixin": {
-					"usingComponents": {
-					}
-				  },
-				"app-plus": {
-					"titleNView": false
-				}
-			}
-
-		},
-		{
-			"path": "pages/user/info/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/user/info/Editor",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/user/info/School",
-			"style": {
-				"navigationBarTitleText": "学校",
-				"enablePullDownRefresh": false
-			}
-
-		}
-	],
-	"tabBar": {
-		"color": "#7A7E83",
-		"selectedColor": "#3cc51f",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"height": "50px",
-		"fontSize": "10px",
-		"iconWidth": "24px",
-		"spacing": "3px",
-		"list": [{
-				"pagePath": "pages/index/index",
-				"text": "兴趣"
-			},
-			{
-				"pagePath": "pages/find/index",
-				"text": "发现"
-			},
-			{
-				"pagePath": "pages/message/index",
-				"text": "消息"
-			},
-			{
-				"pagePath": "pages/user/index",
-				"text": "我的"
-			}
-		]
-	},
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "social"
+      }
+    },
+    {
+      "path": "pages/user/index",
+      "style": {
+        "navigationBarTitleText": "user",
+        "enablePullDownRefresh": false,
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/find/index",
+      "style": {
+        "navigationBarTitleText": "find",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/message/index",
+      "style": {
+        "navigationBarTitleText": "message",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/hobby/index",
+      "style": {
+        "navigationBarTitleText": "hobby",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "mp-weixin": {
+          "usingComponents": {}
+        },
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pagesUser",
+      "pages": [
+        {
+          "path": "pages/user/info/index",
+          "style": {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/user/info/Editor",
+          "style": {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/user/info/School",
+          "style": {
+            "navigationBarTitleText": "学校",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
+    }
+  ],
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "height": "50px",
+    "fontSize": "10px",
+    "iconWidth": "24px",
+    "spacing": "3px",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "兴趣"
+      },
+      {
+        "pagePath": "pages/find/index",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/message/index",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
 }

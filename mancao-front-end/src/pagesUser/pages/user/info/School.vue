@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2021-12-30 16:11:31
+ * @LastEditTime: 2022-01-01 15:50:27
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -37,7 +37,7 @@ export default {
 
 <script setup>
 import { ref, reactive } from "vue";
-import { getSchool } from "../../../api/user";
+import { getSchool } from "../../../../api/user";
 
 let schools = ref([]);
 let pageNum = ref(1)

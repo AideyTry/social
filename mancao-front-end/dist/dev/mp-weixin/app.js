@@ -15,15 +15,15 @@ if (!Math) {
   "./pages/message/index.js";
   "./pages/hobby/index.js";
   "./pages/login/index.js";
-  "./pages/user/info/index.js";
-  "./pages/user/info/Editor.js";
-  "./pages/user/info/School.js";
+  "./pagesUser/pages/user/info/index.js";
+  "./pagesUser/pages/user/info/Editor.js";
+  "./pagesUser/pages/user/info/School.js";
 }
 const _sfc_main = {
   onLaunch: function() {
     console.log("App Launch");
     if (!utils_auth.getToken()) {
-      common_vendor.index.navigateTo({
+      common_vendor.index.reLaunch({
         url: "pages/login/index"
       });
     } else {
