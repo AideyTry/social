@@ -2,6 +2,7 @@
 var common_vendor = require("../../common/vendor.js");
 var api_user = require("../../api/user.js");
 var utils_auth = require("../../utils/auth.js");
+var api_wechat = require("../../api/wechat.js");
 require("../../utils/request.js");
 const _sfc_main = {
   data() {
@@ -42,8 +43,8 @@ const _sfc_main = {
         phone: this.phoneNumber
       };
       console.log("params===", params);
-      api_user.sendCode(params).then((res) => {
-        console.log("res=", res);
+      api_user.sendCode(params).then((res2) => {
+        console.log("res=", res2);
       });
       this.codeMessage = "\u91CD\u65B0\u53D1\u9001";
       const timer = setInterval(() => {
@@ -67,9 +68,9 @@ const _sfc_main = {
       setTimeout(() => {
         console.log("window.navigator1=", window.navigator.userAgent);
       }, 200);
-      api_user.codePhoneLogin(params).then((res) => {
-        console.log("res========", res);
-        const { code, token } = res.data;
+      api_user.codePhoneLogin(params).then((res2) => {
+        console.log("res========", res2);
+        const { code, token } = res2.data;
         if (code === 200) {
           console.log("\u6210\u529F");
           utils_auth.setToken(token);
@@ -95,6 +96,10 @@ const _sfc_main = {
         provider: "weixin",
         success: function(loginRes) {
           console.log("loginRes====", loginRes);
+          const { code } = loginRes;
+          api_wechat.loginWechat({
+            code
+          }).then("res===", res);
         }
       });
     }

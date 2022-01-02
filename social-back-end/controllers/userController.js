@@ -313,7 +313,7 @@ const getSchool = (req, res) => {
     query: { name, page = 1 },
   } = req
   https
-    .get(
+    .school.get(
       `https://qryschool.market.alicloudapi.com/lundroid/searchUniversity?name=${encodeURI(
         name
       )}&page=${page}`
@@ -335,6 +335,30 @@ const getSchool = (req, res) => {
     })
 }
 
+const loginWechat = (req, res) => {
+  const {
+    query: { code },
+  } = req
+  https
+  .get(
+    `https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=${code}&grant_type=authorization_code`
+  )
+  .then((data) => {
+    console.log('data=====', data)
+    res.send({
+      code: 200,
+      data: data,
+      msg: data.data.desc,
+    })
+  })
+  .catch(function (error) {
+    res.send({
+      code: 500,
+      msg: '失败',
+    })
+  })
+}
+
 module.exports = {
   auth,
   sendCode,
@@ -343,4 +367,5 @@ module.exports = {
   editUserInfo,
   uploadFile,
   getSchool,
+  loginWechat
 }

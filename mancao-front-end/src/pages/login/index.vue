@@ -107,6 +107,10 @@
 <script>
 import { sendCode, codePhoneLogin } from "../../api/user.js";
 import { setToken } from "../../utils/auth.js";
+
+/*  #ifdef  MP-WEIXIN  */
+import { loginWechat } from '../../api/wechat'
+/*  #endif  */
 export default {
   data() {
     return {
@@ -198,9 +202,13 @@ export default {
     getInfo: function (e) {
       console.log("登录e=", e);
       uni.login({
-        provider: "weixin",
+        provider: 'weixin',
         success: function (loginRes) {
           console.log('loginRes====', loginRes);
+          const { code } = loginRes
+          loginWechat({
+            code
+          }).then('res===', res)
         },
       });
     },
