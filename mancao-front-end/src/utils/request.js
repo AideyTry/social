@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:41:15
- * @LastEditTime: 2021-12-20 14:30:05
+ * @LastEditTime: 2022-01-03 14:01:25
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -30,11 +30,12 @@ function showToast(title) {
 
 export const request = (url, method, data = {}) => {
 	console.log('url===', url)
+	console.log('process.env.BASE_URL=', process.env.BASE_URL)
 	return new Promise((resolve, reject) => {
 		showLoading()
 		uni.request({
 			// url: `http:127.0.0.1:3000${url}`,
-			url,
+			url: process.env.BASE_URL + url,
 			method,
 			data,
 			header: {
