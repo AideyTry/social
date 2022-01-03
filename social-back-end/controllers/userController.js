@@ -7,6 +7,8 @@ const databaseConfig = require('../database.config')
 
 const https = require('../util/request')
 
+const wxConfig = require('../util/wxConfig')
+
 const rand = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
 }
@@ -339,24 +341,26 @@ const loginWechat = (req, res) => {
   const {
     query: { code },
   } = req
+  console.log('code======', code)
   https
-  .get(
-    `https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=${code}&grant_type=authorization_code`
+  .wechat.get(
+    `https://api.weixin.qq.com/sns/jscode2session?appid=${wxConfig.appID}&secret=${wxConfig.AppSecret}&js_code=${code}&grant_type=authorization_code`
   )
   .then((data) => {
     console.log('data=====', data)
     res.send({
-      code: 200,
-      data: data,
-      msg: data.data.desc,
+      code: data.status,
+      data: data.data,
+      msg: data.statusText,
     })
   })
-  .catch(function (error) {
-    res.send({
-      code: 500,
-      msg: '失败',
-    })
-  })
+  // .catch(function (error) {
+  //   console.log('error=', error)
+  //   res.send({
+  //     code: 500,
+  //     msg: '失败',
+  //   })
+  // })
 }
 
 module.exports = {

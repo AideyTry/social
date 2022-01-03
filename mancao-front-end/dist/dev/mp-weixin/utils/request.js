@@ -18,10 +18,11 @@ function showToast(title) {
 }
 const request = (url, method, data = {}) => {
   console.log("url===", url);
+  console.log('{"BASE_URL":"https://mancao.social/prod/"}.BASE_URL=', { "BASE_URL": "https://mancao.social/prod/" }.BASE_URL);
   return new Promise((resolve, reject) => {
     showLoading();
     common_vendor.index.request({
-      url,
+      url: { "BASE_URL": "https://mancao.social/prod/" }.BASE_URL + url,
       method,
       data,
       header: {
