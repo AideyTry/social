@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-04 14:32:37
+ * @LastEditTime: 2022-01-04 17:17:42
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,7 +19,7 @@
           <text class="title">个人照片</text>
           <text>({{ quantity(images) }}/{{ images.length }})</text>
         </view>
-        <uni-forms-item name="photos">
+        <!-- <uni-forms-item name="photos"> -->
         <scroll-view scroll-x="true" class="photos">
           <view class="photos">
             <view
@@ -43,7 +43,7 @@
             </view>
           </view>
         </scroll-view>
-        </uni-forms-item>
+        <!-- </uni-forms-item> -->
       </view>
 
       <view class="info-item">
@@ -88,15 +88,15 @@
         </uni-forms-item>
         <uni-forms-item label="所在地" name="location">
           <PickerRegion
-            propsProvinceCode="440000"
-            propsCityCode="440300"
+            :propsProvinceCode="formData.location.provinceCode"
+            :propsCityCode="formData.location.cityCode"
             @change="onChange"
           />
         </uni-forms-item>
         <uni-forms-item label="家乡" name="hometown">
           <PickerRegion
-            propsProvinceCode="430000"
-            propsCityCode="430700"
+            :propsProvinceCode="formData.hometown.provinceCode"
+            :propsCityCode="formData.hometown.cityCode"
             @change="onChangeHome"
           />
         </uni-forms-item>
@@ -132,21 +132,21 @@ let userInfo = computed(() => store.state.user.userInfo).value;
 /* uni-forms */
 let formData = reactive({
   avatar: userInfo.avatar,
-  username: "",
+  username: userInfo.username,
   gender: "1",
-  birthday: "",
+  birthday: userInfo.birthday,
   location: {
-    provinceCode: '',
-    cityCode: ''
+    provinceCode: userInfo.location.provinceCode,
+    cityCode: userInfo.location.cityCode
   },
   hometown: {
-    provinceCode: '',
-    cityCode: ''
+    provinceCode: userInfo.hometown.provinceCode,
+    cityCode: userInfo.hometown.cityCode
   },
-  schoolName: "",
-  job: "",
-  motto: "",
-  photos: null
+  schoolName: userInfo.schoolName,
+  job: userInfo.job,
+  motto: userInfo.motto,
+  photos: userInfo.photos
 });
 let rules = {
   username: {
@@ -173,7 +173,7 @@ const submit = (e) => {
     .then((res) => {
       console.log("表单数据信息：", res);
       const params = {
-        form: {...res, photos: null}
+        form: {...res, photos: images}
       }
 
       editUserInfo(params).then(data => {
@@ -192,7 +192,7 @@ const defaultAvatar = "/static/images/default_avatar.png";
 let images = reactive(userInfo.photos);
 
 watch(images, (images, old) => {
-  console.log('images.value===', images.value)
+  console.log('images', images)
   formData.photos = images
 })
 
@@ -220,7 +220,7 @@ watch(avatar, (avatar, old) => {
  * @Author:
  * @return {*}
  */
-const onUploadFile = (filePath) => {
+const onUploadFile = (index, filePath) => {
   uni.uploadFile({
     url: "http://127.0.0.1:3000/users/uploadFile",
     filePath,
@@ -230,6 +230,10 @@ const onUploadFile = (filePath) => {
     },
     success: (uploadFileRes) => {
       console.log("uploadFileRes===", uploadFileRes);
+      const { data } = uploadFileRes
+      const imgData = JSON.parse(data)
+      console.log('imgData=', imgData)
+      images[index] = imgData.url;
     },
   });
 };
@@ -246,9 +250,9 @@ const chooseImage = (index) => {
       console.log("chooseImageRes===", chooseImageRes);
       const { tempFilePaths, tempFiles } = chooseImageRes;
       console.log("tempFilePaths[0]===", tempFilePaths[0]);
-      // onUploadFile(tempFilePaths[0])
-      images[index] = tempFilePaths[0];
-      console.log("images===", images);
+      onUploadFile(index, tempFilePaths[0])
+      // images[index] = tempFilePaths[0];
+      // console.log("images===", images);
     },
   });
 };

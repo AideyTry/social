@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2021-12-31 18:29:18
+ * @LastEditTime: 2022-01-04 16:01:12
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,7 +25,11 @@
         v-for="(item, index) in images"
         :key="index"
       >
-        <image mode="aspectFill" :src="item ? item : defaultAvatar" class="photo"></image>
+        <image
+          mode="aspectFill"
+          :src="item ? item : defaultAvatar"
+          class="photo"
+        ></image>
         <text
           class="photo-add"
           v-if="(!item && images[index - 1]) || (index === 0 && !images[0])"
@@ -33,7 +37,18 @@
         >
       </view>
     </view>
-    <button @click="editor">编辑资料</button>
+    <uni-forms>
+      <uni-forms-item label="家乡">
+        <view>{{ userInfo.hometown }}</view>
+      </uni-forms-item>
+      <uni-forms-item label="学校">
+        <view>{{ userInfo.schoolName }}</view>
+      </uni-forms-item>
+      <uni-forms-item label="职业">
+        <view>{{ userInfo.job }}</view>
+      </uni-forms-item>
+    </uni-forms>
+    <button @click="inEditor">编辑资料</button>
   </view>
 </template>
 
@@ -46,10 +61,9 @@ let userInfo = computed(() => store.state.user.userInfo).value;
 
 let images = reactive(userInfo.photos);
 
+console.log("images===", images);
 
-console.log('images===', images)
-
-const avatar = ref(userInfo.avatar)
+const avatar = ref(userInfo.avatar);
 // if (!userInfo.photos) {
 //   for(let i = 0; i<5; i++){
 //     images.push('')
@@ -59,22 +73,22 @@ const avatar = ref(userInfo.avatar)
 /**
  * @description: 提交图片
  * @param {*}
- * @Author: 
+ * @Author:
  * @return {*}
  */
 const onUploadFile = (filePath) => {
-      uni.uploadFile({
-        url: "http://127.0.0.1:3000/users/uploadFile",
-        filePath,
-        name: "file",
-        formData: {
-          user: "test",
-        },
-        success: (uploadFileRes) => {
-          console.log("uploadFileRes===", uploadFileRes);
-        },
-      });
-}
+  uni.uploadFile({
+    url: "http://127.0.0.1:3000/users/uploadFile",
+    filePath,
+    name: "file",
+    formData: {
+      user: "test",
+    },
+    success: (uploadFileRes) => {
+      console.log("uploadFileRes===", uploadFileRes);
+    },
+  });
+};
 
 /**
  * @description: 头像上传
@@ -83,49 +97,52 @@ const onUploadFile = (filePath) => {
  * @return {*}
  */
 const onUpload = (item, index) => {
-  console.log('item, index===', item, index)
-  if(item){
+  console.log("item, index===", item, index);
+  if (item) {
     uni.previewImage({
-            urls: images,
-            longPressActions: {
-                itemList: ['发送给朋友', '保存图片', '收藏'],
-                success: function(data) {
-                    console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
-                },
-                fail: function(err) {
-                    console.log(err.errMsg);
-                }
-            }
-        });
-        return
+      urls: images,
+      longPressActions: {
+        itemList: ["发送给朋友", "保存图片", "收藏"],
+        success: function (data) {
+          console.log(
+            "选中了第" +
+              (data.tapIndex + 1) +
+              "个按钮,第" +
+              (data.index + 1) +
+              "张图片"
+          );
+        },
+        fail: function (err) {
+          console.log(err.errMsg);
+        },
+      },
+    });
+    return;
   }
-    uni.navigateTo({
-    url: '/pages/user/info/Editor'
-});
+  uni.navigateTo({
+    url: "/pages/user/info/Editor",
+  });
 
-let age = ref('')
-const getDate = (type) => {
-  const date = new Date();
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
+  let age = ref("");
+  const getDate = (type) => {
+    const date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
 
-  if (type === "start") {
-    year = year - 60;
-  } else if (type === "end") {
-    year = year + 2;
-  }
-  month = month > 9 ? month : "0" + month;
-  day = day > 9 ? day : "0" + day;
-  return `${year}-${month}-${day}`;
-};
+    if (type === "start") {
+      year = year - 60;
+    } else if (type === "end") {
+      year = year + 2;
+    }
+    month = month > 9 ? month : "0" + month;
+    day = day > 9 ? day : "0" + day;
+    return `${year}-${month}-${day}`;
+  };
 
-const currentDate = getDate({
-  format: true,
-});
-
-// 编辑资料
-const editor = () => {}
+  const currentDate = getDate({
+    format: true,
+  });
 
   // uni.chooseImage({
   //   success: (chooseImageRes) => {
@@ -137,6 +154,14 @@ const editor = () => {}
   //     console.log('images===', images)
   //   },
   // });
+};
+
+// 编辑资料
+const inEditor = () => {
+  console.log("why");
+  uni.navigateTo({
+    url: "/pages/user/info/Editor",
+  });
 };
 </script>
 

@@ -57,7 +57,7 @@ const createUserInfo = (user_id, phone) => {
 // 获取用户的详情
 const getUserInfo = async (user_id) => {
   const sql =
-    'select username, gender, phone, birthday, hometown, location, avatar, job, motto, photos from userinfo where user_id=?'
+    'select username, gender, phone, birthday, hometown, location,schoolName, avatar, job, motto, photos from userinfo where user_id=?'
   const sqlArr = [user_id]
   const result = await dbconfig.SySqlConnect(sql, sqlArr)
   return result[0]
@@ -256,7 +256,7 @@ const editUserInfo = async (req, res) => {
       avatar || userInfo.avatar,
       job || userInfo.job,
       motto || userInfo.motto,
-      photos || userInfo.photos,
+      JSON.stringify(photos) || userInfo.photos,
     )
     console.log('r=', r)
     if (r.affectedRows === 1) {
@@ -305,8 +305,6 @@ const uploadFile = (req, res) => {
       },
     },
     (err, data) => {
-      console.log('err===', err)
-      console.log('data.location===', data.Location)
       if (err) {
         res.send({
           code: 400,
@@ -315,11 +313,10 @@ const uploadFile = (req, res) => {
       } else {
         res.send({
           code: 200,
-          url: data.Location,
+          url: `https://${data.Location}`,
           msg: '成功',
         })
       }
-      console.log('data===', data)
     }
   )
 }
