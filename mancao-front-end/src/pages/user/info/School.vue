@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-29 14:06:11
- * @LastEditTime: 2022-01-04 15:38:53
+ * @LastEditTime: 2022-01-04 18:31:51
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -38,6 +38,15 @@ export default {
 <script setup>
 import { ref, reactive } from "vue";
 import { getSchool } from "../../../api/user";
+
+const pages = getCurrentPages()
+// console.log('page.$getAppWebview()=', page.$getAppWebview())
+console.log('page===', pages)
+console.log('page.route=', pages.route)
+let prevPage = pages[pages.length - 2]; //上一页页面实例
+
+console.log('prevPage===', prevPage)
+
 
 let schools = ref([]);
 let pageNum = ref(1)
@@ -81,9 +90,13 @@ const onLoadMore = () => {
 const onChecked = (item) => {
   schoolName.value = item.name
   schools.value = []
-    uni.navigateTo({
-    url: `/pages/user/info/Editor?schoolName=${schoolName.value}`
-});
+  prevPage.$vm.otherFun(schoolName.value)// 給上一頁綁定方法otherFun,傳參object
+  uni.navigateBack({
+                    delta:1 // 可以不傳delta值，默認為1
+                })
+//     uni.navigateTo({
+//     url: `/pages/user/info/Editor?schoolName=${schoolName.value}`
+// });
 }
 </script>
 
