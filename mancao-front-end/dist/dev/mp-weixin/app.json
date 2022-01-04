@@ -52,5 +52,6 @@
       "desc": "开发"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

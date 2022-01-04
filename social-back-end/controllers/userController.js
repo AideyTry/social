@@ -80,10 +80,13 @@ const setUserInfo = async (
   schoolName,
   avatar,
   job,
-  motto
+  motto,
+  photos
 ) => {
+  console.log('hometown==set===', hometown)
+  console.log('location==set===', location)
   const sql =
-    'update userinfo set username=?, gender=?, phone=?, birthday=?, hometown=?, location=?, schoolName=?, avatar=?, job=?, motto=? where user_id=?'
+    'update userinfo set username=?, gender=?, phone=?, birthday=?, hometown=?, location=?, schoolName=?, avatar=?, job=?, motto=?, photos=? where user_id=?'
   const sqlArr = [
     username,
     gender,
@@ -95,10 +98,11 @@ const setUserInfo = async (
     avatar,
     job,
     motto,
+    photos,
     user_id,
   ]
   const result = await dbconfig.SySqlConnect(sql, sqlArr)
-  console.log('result=', result)
+  return result
 }
 
 /**
@@ -110,10 +114,13 @@ const setUserInfo = async (
 const auth = (req, res, next) => {
   const {
     headers: { token },
+    body
   } = req
   console.log('token auth=', token)
+  console.log('body===', body)
   const { id } = jwt.verify(token, databaseConfig.redisSecret)
   req.userId = id
+  console.log('auth req.body=', req.body)
   next()
 }
 
@@ -187,7 +194,7 @@ userInfo = async (req, res) => {
   console.log('req=======', req)
   const { userId } = req
   const userInfo = await getUserInfo(userId)
-  userInfo.photos = JSON.parse(userInfo.photos)
+  userInfo.photos = JSON.parse(userInfo && userInfo.photos)
   userInfo.location = JSON.parse(userInfo.location)
   userInfo.hometown = JSON.parse(userInfo.hometown)
   console.log('userInfo===', userInfo)
@@ -225,29 +232,37 @@ const editUserInfo = async (req, res) => {
       avatar,
       job,
       motto,
+      photos
     },
   } = req
+
+  console.log('userId=======', userId)
+  console.log('location=', location)
+  console.log('hometown=', hometown)
+  console.log('birthday===', birthday)
   const userInfo = await getUserInfo(userId)
   console.log('userInfo===', userInfo)
-  if (result) {
+  console.log('userInfo.affectedRows=', userInfo.affectedRows)
+  if (userInfo) {
     const r = await setUserInfo(
       userId,
-      username,
-      gender,
-      phone,
-      birthday,
-      hometown,
-      location,
-      schoolName,
-      avatar,
-      job,
-      motto
+      username || userInfo.username,
+      gender || userInfo.gender,
+      phone || userInfo.phone,
+      birthday || userInfo.birthday,
+      JSON.stringify(hometown) || userInfo.hometown,
+      JSON.stringify(location) || userInfo.location,
+      schoolName || userInfo.schoolName,
+      avatar || userInfo.avatar,
+      job || userInfo.job,
+      motto || userInfo.motto,
+      photos || userInfo.photos,
     )
     console.log('r=', r)
-    if (r.length) {
+    if (r.affectedRows === 1) {
       res.send({
         code: 200,
-        data: r[0],
+        msg: '修改成功',
       })
     } else {
       res.send({

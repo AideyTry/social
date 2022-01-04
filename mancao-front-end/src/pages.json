@@ -50,8 +50,32 @@
           "titleNView": false
         }
       }
+    },
+    /*  #ifdef H5  */
+    {
+      "path": "pages/user/info/index",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/user/info/Editor",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/user/info/School",
+      "style": {
+        "navigationBarTitleText": "学校",
+        "enablePullDownRefresh": false
+      }
     }
+    /*  #endif  */
   ],
+  /*  #ifdef MP-WEIXIN  */
   "subPackages": [
     {
       "root": "pagesUser",
@@ -80,6 +104,7 @@
       ]
     }
   ],
+  /*  #endif  */
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#3cc51f",
