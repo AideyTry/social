@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-28 15:48:57
- * @LastEditTime: 2021-12-28 17:21:21
+ * @LastEditTime: 2022-01-04 17:36:41
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -12,6 +12,7 @@
     :range="multiArray"
     range-key="name"
     :value="multiIndex"
+    :disabled="isDisabled"
     @columnchange="multiColumn"
     @change="multiChange"
   >
@@ -37,6 +38,10 @@ import {  ref, reactive } from "vue";
 import { province, city } from "province-city-china/data";
 /*  区域选择 */
 const props = defineProps({
+  isDisabled: {
+    type: Boolean,
+    default: false
+  },
   propsProvinceCode: {
       type: String,
       default: ''

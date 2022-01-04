@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-04 16:01:12
+ * @LastEditTime: 2022-01-04 17:36:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,9 +14,13 @@
         :src="avatar ? avatar : defaultAvatar"
         class="avatar"
       ></image>
-      <text class="basic-info">
-        {{ userInfo.location }}/{{ userInfo.gender }}/{{ age }}
-      </text>
+      <view class="basic-info">
+              <PickerRegion
+            isDisabled
+            :propsProvinceCode="userInfo.location.provinceCode"
+            :propsCityCode="userInfo.location.cityCode"
+        />/{{ userInfo.gender }}/{{ age }}
+      </view>
     </view>
     <view class="photos">
       <view
@@ -39,7 +43,11 @@
     </view>
     <uni-forms>
       <uni-forms-item label="家乡">
-        <view>{{ userInfo.hometown }}</view>
+      <PickerRegion
+      isDisabled
+            :propsProvinceCode="userInfo.hometown.provinceCode"
+            :propsCityCode="userInfo.hometown.cityCode"
+        />
       </uni-forms-item>
       <uni-forms-item label="学校">
         <view>{{ userInfo.schoolName }}</view>
@@ -56,6 +64,8 @@
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 const defaultAvatar = "/static/images/default_avatar.png";
+import PickerRegion from './PickerRegion.vue'
+
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
 
@@ -198,5 +208,8 @@ const inEditor = () => {
       font-size: 12rpx;
     }
   }
+}
+.basic-info{
+  display: flex;
 }
 </style>
