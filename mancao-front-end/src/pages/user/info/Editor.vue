@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-04 17:17:42
+ * @LastEditTime: 2022-01-05 17:08:57
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -11,7 +11,7 @@
     <uni-forms ref="form" :modelValue="formData" :rules="rules">
       <view class="userinfo">
         <uni-forms-item name="avatar">
-        <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
+          <image :src="avatar ? avatar : defaultAvatar" class="avatar"></image>
         </uni-forms-item>
       </view>
       <view class="info-item">
@@ -51,7 +51,11 @@
           <text class="title">个人签名</text>
         </view>
         <uni-forms-item name="motto">
-          <input v-model="formData.motto" type="text" placeholder="请输入个人签名" />
+          <input
+            v-model="formData.motto"
+            type="text"
+            placeholder="请输入个人签名"
+          />
         </uni-forms-item>
       </view>
 
@@ -73,7 +77,7 @@
         </uni-forms-item>
         <uni-forms-item label="性别" name="gender">
           <!-- <text>性别</text> -->
-          <view @click="changeGender">{{ gender }}</view>
+          <view @click="changeGender">{{ $filters.filterGender(gender) }}</view>
         </uni-forms-item>
         <uni-forms-item label="出生日期" name="birthday">
           <picker
@@ -101,7 +105,7 @@
           />
         </uni-forms-item>
         <uni-forms-item label="学校" name="schoolName">
-          <view @click="openSchool" @changeSchool="onChangeSchool">{{
+          <view @click="openSchool">{{
             formData.schoolName ? formData.schoolName : "请选择学校"
           }}</view>
         </uni-forms-item>
@@ -111,7 +115,9 @@
             :value="activeProfessionIndex"
             @change="changeProfession"
           >
-            <view class="uni-input">{{ formData.job ? formData.job : `请选择职业` }}</view>
+            <view class="uni-input">{{
+              formData.job ? formData.job : `请选择职业`
+            }}</view>
           </picker>
         </uni-forms-item>
       </view>
@@ -126,7 +132,8 @@
 import { computed, ref, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import PickerRegion from "./PickerRegion.vue";
-import { editUserInfo } from '../../../api/user'
+import { editUserInfo } from "../../../api/user";
+
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
 /* uni-forms */
@@ -136,17 +143,17 @@ let formData = reactive({
   gender: "1",
   birthday: userInfo.birthday,
   location: {
-    provinceCode: userInfo.location.provinceCode,
-    cityCode: userInfo.location.cityCode
+    provinceCode: userInfo.location && userInfo.location.provinceCode,
+    cityCode: userInfo.location && userInfo.location.cityCode,
   },
   hometown: {
-    provinceCode: userInfo.hometown.provinceCode,
-    cityCode: userInfo.hometown.cityCode
+    provinceCode: userInfo.hometown && userInfo.hometown.provinceCode,
+    cityCode: userInfo.hometown && userInfo.hometown.cityCode,
   },
   schoolName: userInfo.schoolName,
   job: userInfo.job,
   motto: userInfo.motto,
-  photos: userInfo.photos
+  photos: userInfo.photos,
 });
 let rules = {
   username: {
@@ -159,6 +166,16 @@ let rules = {
   },
 };
 
+/**
+ * @description: 监听School页面选择学校后传递过来的参数
+ * @param {*} schoolUpdate
+ * @param {*} function
+ * @Author:
+ * @return {*}
+ */
+uni.$on("schoolUpdate", function (data) {
+  formData.schoolName = data.schoolName;
+});
 
 const form = ref(null);
 
@@ -173,12 +190,17 @@ const submit = (e) => {
     .then((res) => {
       console.log("表单数据信息：", res);
       const params = {
-        form: {...res, photos: images}
-      }
+        form: { ...res, photos: images },
+      };
 
-      editUserInfo(params).then(data => {
-        console.log('data======', data)
-      })
+      editUserInfo(params).then((data) => {
+        console.log("data======", data);
+        store.dispatch("user/GetUserInfo").then(() => {
+          uni.navigateTo({
+            url: "/pages/user/info/index",
+          });
+        });
+      });
     })
     .catch((err) => {
       console.log("表单错误信息：", err);
@@ -192,9 +214,9 @@ const defaultAvatar = "/static/images/default_avatar.png";
 let images = reactive(userInfo.photos);
 
 watch(images, (images, old) => {
-  console.log('images', images)
-  formData.photos = images
-})
+  console.log("images", images);
+  formData.photos = images;
+});
 
 const quantity = (images) => {
   const arr = images.filter((item) => item);
@@ -211,8 +233,8 @@ console.log("images===", images);
 const avatar = ref(userInfo.avatar);
 
 watch(avatar, (avatar, old) => {
-  formData.avatar = avatar
-})
+  formData.avatar = avatar;
+});
 
 /**
  * @description: 提交图片
@@ -230,9 +252,9 @@ const onUploadFile = (index, filePath) => {
     },
     success: (uploadFileRes) => {
       console.log("uploadFileRes===", uploadFileRes);
-      const { data } = uploadFileRes
-      const imgData = JSON.parse(data)
-      console.log('imgData=', imgData)
+      const { data } = uploadFileRes;
+      const imgData = JSON.parse(data);
+      console.log("imgData=", imgData);
       images[index] = imgData.url;
     },
   });
@@ -250,7 +272,7 @@ const chooseImage = (index) => {
       console.log("chooseImageRes===", chooseImageRes);
       const { tempFilePaths, tempFiles } = chooseImageRes;
       console.log("tempFilePaths[0]===", tempFilePaths[0]);
-      onUploadFile(index, tempFilePaths[0])
+      onUploadFile(index, tempFilePaths[0]);
       // images[index] = tempFilePaths[0];
       // console.log("images===", images);
     },
@@ -315,7 +337,7 @@ const currentDate = getDate({
   format: true,
 });
 console.log("currentDate===", currentDate);
-formData.birthday = currentDate
+formData.birthday = currentDate;
 let startDate = getDate("start");
 let endDate = getDate("end");
 
@@ -343,34 +365,22 @@ const onSave = () => {};
 /*  区域选择 */
 const onChange = (obj) => {
   console.log("obj=====", obj);
-    const { provinceCode, cityCode } = obj
-  formData.location.provinceCode = provinceCode
-  formData.location.cityCode = cityCode
+  const { provinceCode, cityCode } = obj;
+  formData.location.provinceCode = provinceCode;
+  formData.location.cityCode = cityCode;
 };
 const onChangeHome = (obj) => {
   console.log("obj.home=====", obj);
-  const { provinceCode, cityCode } = obj
-  formData.hometown.provinceCode = provinceCode
-  formData.hometown.cityCode = cityCode
+  const { provinceCode, cityCode } = obj;
+  formData.hometown.provinceCode = provinceCode;
+  formData.hometown.cityCode = cityCode;
 };
 
 /* 选择学校 */
-const { hash } = location;
-const ops = hash.split("?")[1];
-if (ops) {
-  const opsSchoolName = ops.split("=")[1];
-  if (opsSchoolName) {
-    formData.schoolName = decodeURI(opsSchoolName);
-  }
-}
-console.log("ops==", ops);
 const openSchool = () => {
   uni.navigateTo({
     url: "/pages/user/info/School",
   });
-};
-const onChangeSchool = (name) => {
-  formData.schoolName= name;
 };
 
 /* 职业 */

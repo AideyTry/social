@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-04 17:36:58
+ * @LastEditTime: 2022-01-05 17:17:33
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -15,11 +15,13 @@
         class="avatar"
       ></image>
       <view class="basic-info">
-              <PickerRegion
-            isDisabled
-            :propsProvinceCode="userInfo.location.provinceCode"
-            :propsCityCode="userInfo.location.cityCode"
-        />/{{ userInfo.gender }}/{{ age }}
+        <PickerRegion
+          isDisabled
+          :propsProvinceCode="
+            userInfo.location && userInfo.location.provinceCode
+          "
+          :propsCityCode="userInfo.location && userInfo.location.cityCode"
+        />/{{ $filters.filterGender(userInfo.gender) || '暂无' }}/{{ age || ''}}<uni-tag v-if="!age" disabled inverted text="暂无"></uni-tag>
       </view>
     </view>
     <view class="photos">
@@ -43,10 +45,12 @@
     </view>
     <uni-forms>
       <uni-forms-item label="家乡">
-      <PickerRegion
-      isDisabled
-            :propsProvinceCode="userInfo.hometown.provinceCode"
-            :propsCityCode="userInfo.hometown.cityCode"
+        <PickerRegion
+          isDisabled
+          :propsProvinceCode="
+            userInfo.hometown && userInfo.hometown.provinceCode
+          "
+          :propsCityCode="userInfo.hometown && userInfo.hometown.cityCode"
         />
       </uni-forms-item>
       <uni-forms-item label="学校">
@@ -60,11 +64,25 @@
   </view>
 </template>
 
+<script>
+export default {
+  onBackPress(options) {
+    if (options.from === "navigateBack") {
+      return false;
+    }
+    uni.switchTab({
+      url: "/pages/user/index",
+    });
+    return true;
+  },
+};
+</script>
+
 <script setup>
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 const defaultAvatar = "/static/images/default_avatar.png";
-import PickerRegion from './PickerRegion.vue'
+import PickerRegion from "./PickerRegion.vue";
 
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
@@ -209,7 +227,7 @@ const inEditor = () => {
     }
   }
 }
-.basic-info{
+.basic-info {
   display: flex;
 }
 </style>

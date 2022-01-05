@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2021-12-28 17:21:28
+ * @LastEditTime: 2022-01-05 17:04:12
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,6 +25,13 @@ export function createApp() {
 			return proviceObj
 		  }
 		  return proviceObj.name
+		},
+		filterGender(value){
+			const genderStatusMap = {
+				'0': '女',
+				'1': '男'
+			  }
+			  return (genderStatusMap[value] || '')
 		}
 	  }
 	return {
