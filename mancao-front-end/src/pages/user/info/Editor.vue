@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-05 17:08:57
+ * @LastEditTime: 2022-01-05 18:09:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -256,6 +256,7 @@ const onUploadFile = (index, filePath) => {
       const imgData = JSON.parse(data);
       console.log("imgData=", imgData);
       images[index] = imgData.url;
+      avatar.value = imgData.url
     },
   });
 };
