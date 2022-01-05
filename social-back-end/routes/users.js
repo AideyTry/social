@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-02 16:34:10
- * @LastEditTime: 2022-01-03 21:06:25
+ * @LastEditTime: 2022-01-05 09:23:36
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,6 +14,7 @@ const userC = require('../controllers/userController');
 
 /* GET users listing. */
 router.post('/sendCode', userC.sendCode)
+router.post('/sendCodeTencent', userC.sendCodeTencent)
 router.post('/codePhoneLogin', userC.codePhoneLogin)
 router.get('/userInfo', userC.auth, userC.userInfo)
 router.post('/editUserInfo', userC.auth, userC.editUserInfo)
