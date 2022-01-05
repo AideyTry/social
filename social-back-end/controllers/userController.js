@@ -380,7 +380,7 @@ const loginWechat = (req, res) => {
 // 腾讯云短信
 const sendCodeTencent = (req, res) => {
   const {
-    body: { phone }
+    body: { phone },
   } = req
   console.log('phone===', phone)
   const code = rand(100000, 999999)
@@ -472,12 +472,41 @@ const sendCodeTencent = (req, res) => {
   })
 }
 
+/**
+ * @description: 设置性别
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const setGender = async (req, res) => {
+  const {
+    body: { gender },
+    userId,
+  } = req
+  const sql = 'update userinfo set gender=? where user_id=?'
+  const sqlArr = [gender, userId]
+  const result = await dbconfig.SySqlConnect(sql, sqlArr)
+  console.log('result===', result)
+  if (result.affectedRows === 1) {
+    res.send({
+      code: 200,
+      msg: '修改成功',
+    })
+  } else {
+    res.send({
+      code: 400,
+      msg: '修改失败',
+    })
+  }
+}
+
 module.exports = {
   auth,
   sendCode,
   sendCodeTencent,
   codePhoneLogin,
   userInfo,
+  setGender,
   editUserInfo,
   uploadFile,
   getSchool,

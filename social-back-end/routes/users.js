@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-02 16:34:10
- * @LastEditTime: 2022-01-05 09:23:36
+ * @LastEditTime: 2022-01-05 20:33:12
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -21,6 +21,7 @@ router.post('/editUserInfo', userC.auth, userC.editUserInfo)
 router.post('/uploadFile', userC.uploadFile)
 router.get('/getSchool', userC.getSchool)
 router.get('/loginWechat', userC.loginWechat)
+router.post('/setGender',userC.auth, userC.setGender)
 
 
 

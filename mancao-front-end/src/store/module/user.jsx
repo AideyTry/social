@@ -1,13 +1,13 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-20 17:46:39
- * @LastEditTime: 2021-12-21 15:45:37
+ * @LastEditTime: 2022-01-05 22:36:33
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
  */
 import { getUserInfo } from '../../api/user'
-import { validateObjAttr } from '../../utils/validate'
+import { validataGender, validateObjAttr } from '../../utils/validate'
 
 export const user = {
     namespaced: true,
@@ -16,10 +16,26 @@ export const user = {
     },
     mutations: {
         setUserInfo(state, userInfo){
-            if(!validateObjAttr(userInfo)){
+            if(!validataGender(userInfo)){
+                uni.reLaunch({
+                    url: '/pages/index/index'
+                });
                 uni.showModal({
                     title: '提示',
-                    content: '请完善个人信息资料',
+                    showCancel: false,
+                    content: `<text>sdfsdf<text/>`,
+                    success: function (res) {
+                        if (res.confirm) {
+                            uni.reLaunch({
+                                url: '/pages/user/index'
+                            });
+                        }
+                    }
+                });
+            }else if(!validateObjAttr(userInfo)){
+                uni.showModal({
+                    title: '提示',
+                    content: '请完善头像、昵称、生日等个人信息资料',
                     success: function (res) {
                         if (res.confirm) {
                             uni.reLaunch({

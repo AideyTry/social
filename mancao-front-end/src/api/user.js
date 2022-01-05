@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:41:15
- * @LastEditTime: 2022-01-05 11:24:06
+ * @LastEditTime: 2022-01-05 20:34:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -20,6 +20,10 @@ export const sendCode = (params) => {
 
 export const codePhoneLogin = (params) => {
 	return request(`/users/codePhoneLogin`,'POST',params)
+}
+
+export const setGender = (params) => {
+	return request(`/users/setGender`,'POST',params)
 }
 
 export const getUserInfo = () => {
