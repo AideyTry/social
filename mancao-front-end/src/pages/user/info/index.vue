@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-05 17:17:33
+ * @LastEditTime: 2022-01-05 17:48:46
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -21,7 +21,15 @@
             userInfo.location && userInfo.location.provinceCode
           "
           :propsCityCode="userInfo.location && userInfo.location.cityCode"
-        />/{{ $filters.filterGender(userInfo.gender) || '暂无' }}/{{ age || ''}}<uni-tag v-if="!age" disabled inverted text="暂无"></uni-tag>
+        />/{{ $filters.filterGender(userInfo.gender) || "暂无" }}/<text
+          v-if="age || age === 0"
+          >{{ age }}岁</text
+        ><uni-tag
+          v-if="!age && age !== 0"
+          disabled
+          inverted
+          text="暂无"
+        ></uni-tag>
       </view>
     </view>
     <view class="photos">
@@ -81,6 +89,7 @@ export default {
 <script setup>
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
+import moment from "moment";
 const defaultAvatar = "/static/images/default_avatar.png";
 import PickerRegion from "./PickerRegion.vue";
 
@@ -92,11 +101,8 @@ let images = reactive(userInfo.photos);
 console.log("images===", images);
 
 const avatar = ref(userInfo.avatar);
-// if (!userInfo.photos) {
-//   for(let i = 0; i<5; i++){
-//     images.push('')
-//   }
-// }
+
+const age = ref(moment().diff(userInfo.birthday, "years"));
 
 /**
  * @description: 提交图片
@@ -151,7 +157,6 @@ const onUpload = (item, index) => {
     url: "/pages/user/info/Editor",
   });
 
-  let age = ref("");
   const getDate = (type) => {
     const date = new Date();
     let year = date.getFullYear();
