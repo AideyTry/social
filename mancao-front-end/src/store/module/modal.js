@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-06 22:26:23
- * @LastEditTime: 2022-01-06 22:28:27
+ * @LastEditTime: 2022-01-07 10:21:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -31,7 +31,7 @@ export const modal = {
         },
         showModal(state,data) {
             state = Object.assign(state,data)
-            console.log(state);
+            console.log('modal state=',state);
             state.show = true
         },
         success(state,res) {

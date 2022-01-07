@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-20 17:46:39
- * @LastEditTime: 2022-01-06 21:53:52
+ * @LastEditTime: 2022-01-07 12:23:45
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -20,11 +20,11 @@ export const user = {
                 uni.reLaunch({
                     url: '/pages/index/index'
                 });
-                console.log('uni.dlbModal===', uni.dlbModal({title: 'dlb'}))
-                uni.showModal({
+                // console.log('uni.dlbModal===', uni.dlbModal)
+                uni.dlbModal({
                     title: '提示',
                     showCancel: false,
-                    content: '还未选性别',
+                    content: '还未选性别1',
                     success: function (res) {
                         if (res.confirm) {
                             uni.reLaunch({
@@ -32,7 +32,19 @@ export const user = {
                             });
                         }
                     }
-                });
+                })
+                // uni.showModal({
+                //     title: '提示',
+                //     showCancel: false,
+                //     content: '还未选性别',
+                //     success: function (res) {
+                //         if (res.confirm) {
+                //             uni.reLaunch({
+                //                 url: '/pages/user/index'
+                //             });
+                //         }
+                //     }
+                // });
             }else if(!validateObjAttr(userInfo)){
                 uni.showModal({
                     title: '提示',

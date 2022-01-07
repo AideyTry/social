@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-01-05 22:14:28
+ * @LastEditTime: 2022-01-07 23:23:35
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -30,6 +30,7 @@
 import { mapState } from "vuex";
 import { getToken } from "./utils/auth.js";
 import { setGender } from "./api/user";
+import mcModal from './pages/components/mcModal.vue'
 export default {
   data() {
     return {
@@ -58,6 +59,9 @@ export default {
     console.log("App Show");
     console.log("userInfo=1==", this.userInfo);
     console.log('this.$refs.popup===', this.$refs)
+        uni.$on('onShowModal', (options) => {
+			console.log('on optine=', options)
+		})
     // this.$refs.popup.open()
 
   },
