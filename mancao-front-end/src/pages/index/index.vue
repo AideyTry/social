@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-01-05 22:00:56
+ * @LastEditTime: 2022-01-09 20:54:10
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -20,7 +20,7 @@
 export default {
   data() {
     return {
-      title: "Hello",
+      title: "蔓草",
     };
   },
   onLoad() {},
