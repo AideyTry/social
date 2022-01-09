@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-09 21:39:24
+ * @LastEditTime: 2022-01-09 21:51:49
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -11,9 +11,9 @@
     <view class="_shade"></view>
     <view class="_modalBox">
       <view class="_modal">
-        <slot name="title">
+        <!-- <slot name="title"> -->
           <view class="title" v-show="title">{{ title }}</view>
-        </slot>
+        <!-- </slot> -->
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
           <!-- <slot name="content"> -->
             <text>请按实际情况认真选择性别，确认后性别无法修改</text>
@@ -143,32 +143,32 @@ const submitForm = () => {
       width: 70%;
       // min-height:200upx;
       background: #fff;
-      border-radius: 10upx;
+      border-radius: 10rpx;
       .title {
-        height: 40upx;
-        line-height: 40upx;
+        height: 40rpx;
+        line-height: 40rpx;
         text-align: center;
         font-size: 32rpx;
         font-weight: bold;
-        padding: 15upx 0 0;
+        padding: 15rpx 0 0;
         // border-bottom: 1upx solid #e1e1e1;
       }
       .content {
-        padding: 30upx;
-        font-size: 24upx;
+        padding: 30rpx;
+        font-size: 24rpx;
         color: #666;
-        line-height: 35upx;
+        line-height: 35rpx;
         text-align: center;
       }
       .btnbox {
         display: flex;
         .btn {
-          font-size: 30upx;
+          font-size: 30rpx;
           text-align: center;
           flex: auto;
-          line-height: 80upx;
-          border-top: 1upx solid #e1e1e1;
-          border-right: 1upx solid #e1e1e1;
+          line-height: 80rpx;
+          border-top: 1rpx solid #e1e1e1;
+          border-right: 1rpx solid #e1e1e1;
         }
         .btn:last-child {
           border-right: none;
