@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-05 17:48:46
+ * @LastEditTime: 2022-01-09 20:14:45
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -24,12 +24,14 @@
         />/{{ $filters.filterGender(userInfo.gender) || "暂无" }}/<text
           v-if="age || age === 0"
           >{{ age }}岁</text
-        ><uni-tag
+        >
+        <text v-if="!age && age !== 0">暂无</text>
+        <!-- <uni-tag
           v-if="!age && age !== 0"
           disabled
           inverted
           text="暂无"
-        ></uni-tag>
+        ></uni-tag> -->
       </view>
     </view>
     <view class="photos">
@@ -62,10 +64,10 @@
         />
       </uni-forms-item>
       <uni-forms-item label="学校">
-        <view>{{ userInfo.schoolName }}</view>
+        <view>{{ userInfo.schoolName || '暂未填写'}}</view>
       </uni-forms-item>
       <uni-forms-item label="职业">
-        <view>{{ userInfo.job }}</view>
+        <view>{{ userInfo.job || '暂未填写'}}</view>
       </uni-forms-item>
     </uni-forms>
     <button @click="inEditor">编辑资料</button>

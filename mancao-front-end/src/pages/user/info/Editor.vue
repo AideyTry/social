@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-05 18:09:58
+ * @LastEditTime: 2022-01-09 20:13:15
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -77,7 +77,7 @@
         </uni-forms-item>
         <uni-forms-item label="性别" name="gender">
           <!-- <text>性别</text> -->
-          <view @click="changeGender">{{ $filters.filterGender(gender) }}</view>
+          <view @click="changeGender">{{ $filters.filterGender(userInfo.gender) }}</view>
         </uni-forms-item>
         <uni-forms-item label="出生日期" name="birthday">
           <picker
@@ -140,7 +140,7 @@ let userInfo = computed(() => store.state.user.userInfo).value;
 let formData = reactive({
   avatar: userInfo.avatar,
   username: userInfo.username,
-  gender: "1",
+  gender: userInfo.gender,
   birthday: userInfo.birthday,
   location: {
     provinceCode: userInfo.location && userInfo.location.provinceCode,
@@ -347,7 +347,6 @@ const bindDateChange = (e) => {
 };
 
 /* 性别 */
-const gender = ref("1");
 const changeGender = () => {
   uni.showActionSheet({
     itemList: ["男", "女"],

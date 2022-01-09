@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-28 15:48:57
- * @LastEditTime: 2022-01-04 17:36:41
+ * @LastEditTime: 2022-01-09 20:11:14
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -23,7 +23,7 @@
               provinceCode,
               province
             )}/${$filters.filterRegion(cityCode, city)}`
-          : "请选择省"
+          : `${ isDisabled ? '暂未填写' : '请选择省'}`
       }}
     </view>
   </picker>
