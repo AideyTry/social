@@ -218,6 +218,10 @@ export default {
 
 <style lang="scss" scoped>
 @import url("../../static/iconfont/iconfont-mc/iconfont.css");
+.btn-block{
+  height: 46px;
+  line-height: 46px;
+}
 .image {
   height: 600rpx;
 }

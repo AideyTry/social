@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-01-01 15:56:26
+ * @LastEditTime: 2022-01-09 20:30:03
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,7 +18,7 @@
       </view>
       <view class="userinfo-detail">
         <text>用户名：{{ userInfo.username }}</text>
-        <text>签名{{ userInfo.motto }}</text>
+        <text>签&nbsp;&nbsp;名: {{ userInfo.motto }}</text>
       </view>
     </view>
     <button @click="onLogout">退出</button>
