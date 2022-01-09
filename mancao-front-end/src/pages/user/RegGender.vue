@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-09 20:00:29
+ * @LastEditTime: 2022-01-09 21:39:24
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,13 +9,13 @@
 <template>
   <view class="_showModal" v-show="show">
     <view class="_shade"></view>
-    <view class="_modalBox" @click="closeModal" @touchmove.stop.prevent="">
+    <view class="_modalBox">
       <view class="_modal">
         <slot name="title">
           <view class="title" v-show="title">{{ title }}</view>
         </slot>
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
-          <slot name="content">
+          <!-- <slot name="content"> -->
             <text>请按实际情况认真选择性别，确认后性别无法修改</text>
             <uni-forms-item name="gender">
               <uni-data-checkbox
@@ -24,13 +24,13 @@
                 @change="change"
               ></uni-data-checkbox>
             </uni-forms-item>
-          </slot>
+          <!-- </slot> -->
         </uni-forms>
-        <slot name="btn">
+        <!-- <slot name="btn"> -->
           <view class="btnbox">
             <button @click="submitForm" class="btn">确定</button>
           </view>
-        </slot>
+        <!-- </slot> -->
       </view>
     </view>
   </view>
@@ -78,10 +78,6 @@ if(userInfo.gender){
     show.value = true
 }
 })
-
-const closeModal = () => {
-  //   show.value = !show.value;
-};
 
 const change = (e) => {
   const {
