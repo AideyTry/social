@@ -51,7 +51,6 @@
         }
       }
     },
-    /*  #ifdef H5  */
     {
       "path": "pages/user/info/index",
       "style": {
@@ -72,8 +71,20 @@
         "navigationBarTitleText": "学校",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/user/RegGender",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "mp-weixin": {
+          "usingComponents": {}
+        },
+        "app-plus": {
+          "titleNView": false
+        }
+      }
     }
-    /*  #endif  */
   ],
   /*  #ifdef MP-WEIXIN  */
   "subPackages": [

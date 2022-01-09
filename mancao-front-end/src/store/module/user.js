@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-20 17:46:39
- * @LastEditTime: 2022-01-08 23:58:05
+ * @LastEditTime: 2022-01-09 20:01:07
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -17,22 +17,26 @@ export const user = {
     mutations: {
         setUserInfo(state, userInfo){
             if(!validataGender(userInfo)){
-                uni.reLaunch({
-                    url: '/pages/index/index'
-                });
+                console.log('不应该=', userInfo)
+                // uni.reLaunch({
+                //     url: '/pages/index/index'
+                // });
                 // console.log('uni.dlbModal===', uni.dlbModal)
-                uni.dlbModal({
-                    title: '提示',
-                    showCancel: false,
-                    content: '还未选性别1',
-                    success: function (res) {
-                        if (res.confirm) {
-                            uni.reLaunch({
-                                url: '/pages/user/index'
-                            });
-                        }
-                    }
-                })
+                // uni.dlbModal({
+                //     title: '提示',
+                //     showCancel: false,
+                //     content: '还未选性别1',
+                //     success: function (res) {
+                //         if (res.confirm) {
+                //             uni.reLaunch({
+                //                 url: '/pages/user/index'
+                //             });
+                //         }
+                //     }
+                // })
+                uni.reLaunch({
+                    url: "/pages/user/RegGender",
+                  });
                 // uni.showModal({
                 //     title: '提示',
                 //     showCancel: false,
@@ -55,7 +59,9 @@ export const user = {
                                 url: '/pages/user/index'
                             });
                         } else if (res.cancel) {
-                            
+                            uni.reLaunch({
+                                url: '/pages/index/index'
+                            });
                         }
                     }
                 });
