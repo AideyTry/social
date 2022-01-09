@@ -1,9 +1,10 @@
 {
   "name": "social-back-end",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodemon --inspect ./bin/www"
+    "start": "nodemon --inspect ./bin/www",
+    "pm2": "pm2 start processes.json"
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.10",
