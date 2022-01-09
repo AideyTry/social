@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-20 17:46:39
- * @LastEditTime: 2022-01-09 20:01:07
+ * @LastEditTime: 2022-01-09 22:35:16
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -34,9 +34,12 @@ export const user = {
                 //         }
                 //     }
                 // })
-                uni.reLaunch({
-                    url: "/pages/user/RegGender",
-                  });
+                uni.redirectTo({
+                    url: '/pages/user/RegGender'
+                });
+                // uni.reLaunch({
+                //     url: "/pages/user/RegGender",
+                //   });
                 // uni.showModal({
                 //     title: '提示',
                 //     showCancel: false,

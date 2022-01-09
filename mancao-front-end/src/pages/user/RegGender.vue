@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-09 21:51:49
+ * @LastEditTime: 2022-01-09 22:33:04
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,9 +14,9 @@
         <!-- <slot name="title"> -->
           <view class="title" v-show="title">{{ title }}</view>
         <!-- </slot> -->
+          <text>请按实际情况认真选择性别，确认后性别无法修改</text>
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
           <!-- <slot name="content"> -->
-            <text>请按实际情况认真选择性别，确认后性别无法修改</text>
             <uni-forms-item name="gender">
               <uni-data-checkbox
                 v-model="value"
