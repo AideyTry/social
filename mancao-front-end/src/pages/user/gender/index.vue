@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-09 22:47:18
+ * @LastEditTime: 2022-01-10 09:11:03
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -39,7 +39,7 @@
 <script setup>
 import { ref, reactive, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
-import { setGender } from "../../api/user";
+import { setGender } from "../../../api/user";
 const store = useStore();
 
 let userInfo = computed(() => store.state.user.userInfo).value;
