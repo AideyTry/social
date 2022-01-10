@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-10 12:19:34
+ * @LastEditTime: 2022-01-10 21:26:09
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,15 +18,14 @@
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
           <!-- <slot name="content"> -->
           <uni-forms-item name="gender">
-            <!-- <uni-data-checkbox
-                v-model="value"
+            <uni-data-checkbox
                 :localdata="range"
                 @change="change"
-              ></uni-data-checkbox> -->
-            <radio-group name="radio" @change="radioChange">
+              ></uni-data-checkbox>
+            <!-- <radio-group name="radio" @change="radioChange">
               <label> <radio :value="1" /><text>男</text> </label>
               <label> <radio :value="2" /><text>女</text> </label>
-            </radio-group>
+            </radio-group> -->
           </uni-forms-item>
           <!-- </slot> -->
         </uni-forms>
@@ -41,8 +40,8 @@
 </template>
 
 <script setup>
-// import { ref, reactive, computed, watchEffect } from "vue";
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watchEffect } from "vue";
+// import { ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { setGender } from "../../../api/user";
 const store = useStore();
@@ -59,10 +58,10 @@ let genderValue = ref(null);
 let formData = reactive({
   gender: null,
 });
-// const range = [
-//   { value: 1, text: "男" },
-//   { value: 2, text: "女" },
-// ];
+const range = reactive([
+  { value: 1, text: "男" },
+  { value: 2, text: "女" },
+]);
 const rules = {
   gender: {
     rules: [
@@ -74,14 +73,14 @@ const rules = {
   },
 };
 
-// watchEffect(() => {
-//     console.log('watchEffect')
-// if(userInfo.gender){
-//  show.value = false
-// } else {
-//     show.value = true
-// }
-// })
+watchEffect(() => {
+    console.log('watchEffect')
+if(userInfo.gender){
+ show.value = false
+} else {
+    show.value = true
+}
+})
 
 const change = (e) => {
   const {
