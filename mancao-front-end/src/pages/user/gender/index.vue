@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-10 09:11:03
+ * @LastEditTime: 2022-01-10 09:57:04
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -37,7 +37,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watchEffect } from "vue";
+// import { ref, reactive, computed, watchEffect } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { setGender } from "../../../api/user";
 const store = useStore();
@@ -70,14 +71,14 @@ const rules = {
 };
 
 
-watchEffect(() => {
-    console.log('watchEffect')
-if(userInfo.gender){
- show.value = false
-} else {
-    show.value = true
-}
-})
+// watchEffect(() => {
+//     console.log('watchEffect')
+// if(userInfo.gender){
+//  show.value = false
+// } else {
+//     show.value = true
+// }
+// })
 
 const change = (e) => {
   const {
