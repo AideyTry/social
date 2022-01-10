@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-10 21:26:09
+ * @LastEditTime: 2022-01-10 21:46:59
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,24 +14,22 @@
         <!-- <slot name="title"> -->
         <view class="title" v-show="title">{{ title }}</view>
         <!-- </slot> -->
-        <text>请按实际情况认真选择性别，确认后性别无法修改</text>
+        <view class="content-hint"
+          >请按实际情况认真选择性别，确认后性别无法修改！</view
+        >
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
           <!-- <slot name="content"> -->
           <uni-forms-item name="gender">
-            <uni-data-checkbox
-                :localdata="range"
-                @change="change"
-              ></uni-data-checkbox>
-            <!-- <radio-group name="radio" @change="radioChange">
+            <radio-group name="radio" @change="radioChange">
               <label> <radio :value="1" /><text>男</text> </label>
               <label> <radio :value="2" /><text>女</text> </label>
-            </radio-group> -->
+            </radio-group>
           </uni-forms-item>
           <!-- </slot> -->
         </uni-forms>
         <!-- <slot name="btn"> -->
         <view class="btnbox">
-          <button @click="submitForm" class="btn">确定</button>
+          <button type="primary" @click="submitForm" class="btn">确定</button>
         </view>
         <!-- </slot> -->
       </view>
@@ -41,15 +39,11 @@
 
 <script setup>
 import { ref, reactive, computed, watchEffect } from "vue";
-// import { ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { setGender } from "../../../api/user";
 const store = useStore();
 
 let userInfo = computed(() => store.state.user.userInfo).value;
-
-console.log("加载了");
-console.log("userInfo===", userInfo);
 
 const form = ref(null);
 let show = ref(true);
@@ -58,10 +52,6 @@ let genderValue = ref(null);
 let formData = reactive({
   gender: null,
 });
-const range = reactive([
-  { value: 1, text: "男" },
-  { value: 2, text: "女" },
-]);
 const rules = {
   gender: {
     rules: [
@@ -74,34 +64,24 @@ const rules = {
 };
 
 watchEffect(() => {
-    console.log('watchEffect')
-if(userInfo.gender){
- show.value = false
-} else {
-    show.value = true
-}
-})
+  if (userInfo.gender) {
+    show.value = false;
+  } else {
+    show.value = true;
+  }
+});
 
-const change = (e) => {
+const radioChange = (e) => {
   const {
     detail: { value },
   } = e;
-  //   gender.value = value;
-  console.log("value=", value);
+  form.value.setValue("gender", value);
 };
-
-const radioChange = (e) => {
-  console.log('e=', e)
-  const { detail: { value } } = e
-  // genderValue.value = value
-    form.value.setValue('gender',value)
-}
 
 const submitForm = () => {
   form.value
     .validate()
     .then((res) => {
-      console.log("表单数据信息：", res);
       const params = {
         gender: res.gender,
       };
@@ -118,8 +98,11 @@ const submitForm = () => {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .uni-data-checklist .checklist-group {
+::v-deep .uni-forms-item__content {
   justify-content: center !important;
+  .uni-label-pointer {
+    margin-left: 40rpx;
+  }
 }
 ._showModal {
   position: fixed;
@@ -128,6 +111,11 @@ const submitForm = () => {
   width: 100vw;
   height: 100vh;
   z-index: 10000;
+  .content-hint {
+    text-indent: 2em;
+    margin: 20rpx 0;
+    color: #00d0ff;
+  }
   ._shade {
     width: 100%;
     height: 100%;
@@ -161,6 +149,7 @@ const submitForm = () => {
         font-size: 32rpx;
         font-weight: bold;
         padding: 15rpx 0 0;
+        color: #06f;
         // border-bottom: 1upx solid #e1e1e1;
       }
       .content {
