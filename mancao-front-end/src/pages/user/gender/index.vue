@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-10 09:57:04
+ * @LastEditTime: 2022-01-10 12:19:34
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -12,24 +12,28 @@
     <view class="_modalBox">
       <view class="_modal">
         <!-- <slot name="title"> -->
-          <view class="title" v-show="title">{{ title }}</view>
+        <view class="title" v-show="title">{{ title }}</view>
         <!-- </slot> -->
-          <text>请按实际情况认真选择性别，确认后性别无法修改</text>
+        <text>请按实际情况认真选择性别，确认后性别无法修改</text>
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
           <!-- <slot name="content"> -->
-            <uni-forms-item name="gender">
-              <uni-data-checkbox
+          <uni-forms-item name="gender">
+            <!-- <uni-data-checkbox
                 v-model="value"
                 :localdata="range"
                 @change="change"
-              ></uni-data-checkbox>
-            </uni-forms-item>
+              ></uni-data-checkbox> -->
+            <radio-group name="radio" @change="radioChange">
+              <label> <radio :value="1" /><text>男</text> </label>
+              <label> <radio :value="2" /><text>女</text> </label>
+            </radio-group>
+          </uni-forms-item>
           <!-- </slot> -->
         </uni-forms>
         <!-- <slot name="btn"> -->
-          <view class="btnbox">
-            <button @click="submitForm" class="btn">确定</button>
-          </view>
+        <view class="btnbox">
+          <button @click="submitForm" class="btn">确定</button>
+        </view>
         <!-- </slot> -->
       </view>
     </view>
@@ -45,20 +49,20 @@ const store = useStore();
 
 let userInfo = computed(() => store.state.user.userInfo).value;
 
-console.log('加载了')
-console.log('userInfo===', userInfo)
+console.log("加载了");
+console.log("userInfo===", userInfo);
 
 const form = ref(null);
 let show = ref(true);
 let title = ref("选择性别");
-let value = ref(null);
+let genderValue = ref(null);
 let formData = reactive({
   gender: null,
 });
-const range = [
-  { value: 1, text: "男" },
-  { value: 2, text: "女" },
-];
+// const range = [
+//   { value: 1, text: "男" },
+//   { value: 2, text: "女" },
+// ];
 const rules = {
   gender: {
     rules: [
@@ -69,7 +73,6 @@ const rules = {
     ],
   },
 };
-
 
 // watchEffect(() => {
 //     console.log('watchEffect')
@@ -88,6 +91,13 @@ const change = (e) => {
   console.log("value=", value);
 };
 
+const radioChange = (e) => {
+  console.log('e=', e)
+  const { detail: { value } } = e
+  // genderValue.value = value
+    form.value.setValue('gender',value)
+}
+
 const submitForm = () => {
   form.value
     .validate()
@@ -98,7 +108,7 @@ const submitForm = () => {
       };
       setGender(params).then((data) => {
         console.log("data===", data);
-        show.value = false
+        show.value = false;
         store.dispatch("user/GetUserInfo");
       });
     })
