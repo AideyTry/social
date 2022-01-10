@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-09 22:33:04
+ * @LastEditTime: 2022-01-09 22:47:18
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -51,7 +51,7 @@ const form = ref(null);
 let show = ref(true);
 let title = ref("选择性别");
 let value = ref(null);
-const formData = reactive({
+let formData = reactive({
   gender: null,
 });
 const range = [
