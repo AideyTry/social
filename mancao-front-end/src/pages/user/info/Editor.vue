@@ -1,8 +1,8 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-09 20:13:15
- * @LastEditors: Aiden(戴林波)
+ * @LastEditTime: 2022-01-11 20:48:12
+ * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
@@ -244,7 +244,7 @@ watch(avatar, (avatar, old) => {
  */
 const onUploadFile = (index, filePath) => {
   uni.uploadFile({
-    url: "http://127.0.0.1:3000/users/uploadFile",
+    url: `${process.env.BASE_URL}/users/uploadFile`,
     filePath,
     name: "file",
     formData: {
