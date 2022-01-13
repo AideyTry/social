@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-13 16:39:58
- * @LastEditTime: 2022-01-13 16:41:17
+ * @LastEditTime: 2022-01-13 17:23:06
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -28,7 +28,7 @@ if (!commitRE.test(msg)) {
       `    ${chalk.green(
         `fix(v-model): handle events on blur (close #28)`
       )}\n\n` +
-      chalk.red(`  See .github/commit-convention.md for more details.\n`)
+      chalk.red(`  See https://www.conventionalcommits.org/ for more details.\n`)
   )
   process.exit(1)
 }
