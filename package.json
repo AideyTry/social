@@ -30,7 +30,6 @@
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged",
     "commit-msg": "node scripts/verifyCommit.js"
   },
   "dependencies": {
@@ -54,6 +53,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "chalk": "^4.1.0",
     "@dcloudio/types": "^2.5.14",
     "@dcloudio/uni-automator": "^3.0.0-alpha-3030120211217001",
     "@dcloudio/uni-cli-shared": "^3.0.0-alpha-3030120211217001",
