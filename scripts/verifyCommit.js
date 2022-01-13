@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-13 16:39:58
- * @LastEditTime: 2022-01-13 17:23:06
+ * @LastEditTime: 2022-01-13 17:24:18
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,7 +14,6 @@ const msg = require('fs')
   .trim()
 
 const commitRE = /^(revert: )?(feat|fix|docs|dx|style|refactor|perf|test|workflow|build|ci|chore|types|wip|release)(\(.+\))?: .{1,50}/
-console.log('msg===', msg)
 if (!commitRE.test(msg)) {
   console.log()
   console.error(
