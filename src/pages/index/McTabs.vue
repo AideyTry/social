@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-01-16 21:11:10
+ * @LastEditTime: 2022-01-16 21:31:10
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -52,9 +52,11 @@
               <template v-slot:header>
                 <view class="uni-thumb uni-content list-picture">
                   <image
+                    v-if="item.img"
                     class="slot-image"
                     :src="item.img"
                     mode="widthFix"
+                     @click="goDetail(item)"
                   ></image>
                   <view class="hint" v-if="item.hintTitle || item.dateSrc">
                     <text v-if="item.hintTitle">By</text>
@@ -66,6 +68,7 @@
               <template v-slot:body>
                 <view class="content-body">
                   <view class="title-wraper"
+                    @click="goDetail(item)"
                     ><view class="title">{{ item.title }}</view
                     ><view class="video"><uni-icons style="vertical-align: middle;" type="videocam" size="20" color="#999"></uni-icons
                   ><text>VIDEO</text></view></view>
@@ -143,6 +146,12 @@ var getEnglishVideos = () => {
     }
   });
 };
+const goDetail = (item) => {
+  console.log('item===', item)
+  uni.navigateTo({
+    url: `/pages/index/VideoDetail?id=${item.id}`
+});
+}
 </script>
 
 <style lang="scss" scoped>

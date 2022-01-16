@@ -8,6 +8,12 @@
       }
     },
     {
+      "path": "pages/index/VideoDetail",
+      "style": {
+        "navigationBarTitleText": "英语"
+      }
+    },
+    {
       "path": "pages/user/index",
       "style": {
         "navigationBarTitleText": "user",
