@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 21:17:51
- * @LastEditTime: 2022-01-16 23:04:30
+ * @LastEditTime: 2022-01-17 09:35:06
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -10,7 +10,9 @@
   <div class="video-detail">
     <view class="title">{{videInfo.title}}</view>
     <text class="abstract">{{videInfo.abstract}}</text>
-    <video :src="videInfo.src" v-if="videInfo.src"></video>
+    <video controls="controls" preload="meta">
+      <source :src="videInfo.src">
+    </video>
   </div>
 </template>
 
