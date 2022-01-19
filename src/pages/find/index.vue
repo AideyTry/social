@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-01-19 10:54:06
+ * @LastEditTime: 2022-01-19 18:03:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -17,7 +17,7 @@
     />
     <view>
       <button @tap="uploadVideo">上传视频</button>
-      <view v-if="src"><video :src="src"></video></view>
+      <video :src="src"></video>
     </view>
   </view>
 </template>

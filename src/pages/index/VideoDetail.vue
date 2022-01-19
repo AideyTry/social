@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 21:17:51
- * @LastEditTime: 2022-01-19 16:15:18
+ * @LastEditTime: 2022-01-19 18:16:55
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -23,8 +23,6 @@ export default {
     console.log("options===", options);
   },
   setup(props, context) {
-    console.log("props===", props);
-    console.log("context===", context);
     let videInfo = ref({});
     const getVideoDetail = (id) => {
       const params = { id };
@@ -35,10 +33,14 @@ export default {
         }
       });
     };
-    onMounted(() => {
-      getVideoDetail(props.id);
-      const videoId = document.querySelector("#video");
-      // const videoSrc = "https://www.mancao.social/video/output.m3u8";
+    /**
+     * @description: 通过hls将m3u8转化为video可播放的资源地址
+     * @param {*}
+     * @Author: 
+     * @return {*}
+     */    
+    const getM3u8Resorce = () => {
+      const video = document.querySelector("#video");
       const videoSrc = "https://www.mancao.social/video/output.m3u8";
       console.log('Hls===', Hls)
       if (Hls.isSupported()) {
@@ -49,7 +51,11 @@ export default {
       } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = videoSrc;
       }
-      console.log("videoId=", videoId);
+      console.log("video=", video);
+    }
+    onMounted(() => {
+      getVideoDetail(props.id);
+      getM3u8Resorce()
     });
     return {
       videInfo,
