@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 21:17:51
- * @LastEditTime: 2022-01-20 11:14:58
+ * @LastEditTime: 2022-01-20 23:11:38
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,6 +19,9 @@
       :type="options.type"
       :autoPlay="false"
     />
+    <uni-list>
+    <uni-list-item :note="item.section" v-for="item in videInfo.sections" :key="item.id"></uni-list-item>
+</uni-list>
   </div>
 </template>
 
