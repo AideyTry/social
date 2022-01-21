@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-01-16 21:31:10
+ * @LastEditTime: 2022-01-21 17:24:53
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -59,8 +59,8 @@
                      @click="goDetail(item)"
                   ></image>
                   <view class="hint" v-if="item.hintTitle || item.dateSrc">
-                    <text v-if="item.hintTitle">By</text>
-                    <text class="hint-title">{{ item.hintTitle }}</text>
+                    <!-- <text v-if="item.hintTitle">By</text> -->
+                    <text v-if="item.hintTitle" class="hint-title">{{ item.hintTitle }}</text>
                     <text class="hint-date">{{ item.dateSrc }}</text>
                   </view>
                 </view>
@@ -69,7 +69,7 @@
                 <view class="content-body">
                   <view class="title-wraper"
                     @click="goDetail(item)"
-                    ><view class="title">{{ item.title }}</view
+                    ><text class="title">{{ item.title }}</text
                     ><view class="video"><uni-icons style="vertical-align: middle;" type="videocam" size="20" color="#999"></uni-icons
                   ><text>VIDEO</text></view></view>
                   <view class="description">{{ item.description }}</view>
@@ -205,14 +205,17 @@ const goDetail = (item) => {
     }
     .hint-title {
       color: #014073;
+      margin-right: 20rpx;
     }
     .hint-date {
-      margin-left: 20rpx;
+      // margin-left: 20rpx;
     }
     .content-body {
       .title-wraper{
-      .title {
         display: inline-block;
+        text-align: left;
+      .title {
+        // display: inline-block;
         font-size: 40rpx;
         font-family: "Times New Roman", Times, serif;
         color: #000;
@@ -224,10 +227,16 @@ const goDetail = (item) => {
       }
       }
       .description {
-        margin-top: 10rpx;
+        // text-align: left;
+        // margin-top: 10rpx;
+        // color: #666;
+        // font-size: 32rpx;
+        // font-family: Arial, Helvetica, sans-serif;
         color: #666;
         font-size: 32rpx;
         font-family: Arial, Helvetica, sans-serif;
+        margin-top: 10rpx;
+        line-height: 40rpx;
       }
     }
   }

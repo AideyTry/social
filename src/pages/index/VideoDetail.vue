@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 21:17:51
- * @LastEditTime: 2022-01-20 23:11:38
+ * @LastEditTime: 2022-01-21 17:29:05
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -20,7 +20,11 @@
       :autoPlay="false"
     />
     <uni-list>
-    <uni-list-item :note="item.section" v-for="item in videInfo.sections" :key="item.id"></uni-list-item>
+    <uni-list-item :note="item.section" v-for="item in videInfo.sections" :key="item.id">
+      <template v-slot:body>
+        <view class="description">{{ item.section }}</view>
+      </template>
+    </uni-list-item>
 </uni-list>
   </div>
 </template>
@@ -97,6 +101,13 @@ export default {
   .abstract {
     //   font-size: 24rpx;
     font-family: Arial, Helvetica, sans-serif;
+    color: #666;
+  }
+  .description{
+    font-size: 32rpx;
+    margin: 0 0 30rpx 0;
+    text-align: left;
+    line-height: 1.6;
     color: #666;
   }
 }
