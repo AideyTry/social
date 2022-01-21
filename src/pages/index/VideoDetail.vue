@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 21:17:51
- * @LastEditTime: 2022-01-21 17:29:05
+ * @LastEditTime: 2022-01-21 17:49:15
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -73,7 +73,7 @@ export default {
     const options = reactive({
       width: '100%',
       height: '280px',
-      src: "/upload/video/output.m3u8", //视频源
+      src: "/upload/output.m3u8", //视频源
       type: "m3u8", //视频类型
     });
 
