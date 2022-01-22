@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-01-19 18:03:28
+ * @LastEditTime: 2022-01-22 20:27:55
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -34,7 +34,7 @@ const uploadVideo = () => {
       console.log("res===", res);
       src.value = res.tempFilePath;
 	    uni.uploadFile({
-    url: "http://127.0.0.1:3000/files/uploadVideo",
+    url: "/dev/files/uploadVideo",
     filePath: res.tempFilePath,
     name: "file",
 	fileType: 'video',

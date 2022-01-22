@@ -16,6 +16,10 @@
     display: flex;
     align-items: center;
 }
+::v-deep .uni-input{
+	height: 80rpx;
+	line-height: 80rpx;
+}
 
 .row {
 	display: flex;

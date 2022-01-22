@@ -241,6 +241,8 @@ export default {
 
 .code {
   font-size: 14rpx;
+  height: 80rpx;
+  line-height: 80rpx;
 }
 
 .uni-btn-v {
