@@ -1,8 +1,8 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-11 20:48:12
- * @LastEditors: Aiden
+ * @LastEditTime: 2022-01-23 21:30:43
+ * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
@@ -77,7 +77,9 @@
         </uni-forms-item>
         <uni-forms-item label="性别" name="gender">
           <!-- <text>性别</text> -->
-          <view @click="changeGender">{{ $filters.filterGender(userInfo.gender) }}</view>
+          <view @click="changeGender">{{
+            $filters.filterGender(userInfo.gender)
+          }}</view>
         </uni-forms-item>
         <uni-forms-item label="出生日期" name="birthday">
           <picker
@@ -127,7 +129,6 @@
   </view>
 </template>
 
-
 <script setup>
 import { computed, ref, reactive, watch } from "vue";
 import { useStore } from "vuex";
@@ -173,7 +174,7 @@ let rules = {
  * @Author:
  * @return {*}
  */
-uni.$on("schoolUpdate", function (data) {
+uni.$on("schoolUpdate", function(data) {
   formData.schoolName = data.schoolName;
 });
 
@@ -256,7 +257,10 @@ const onUploadFile = (index, filePath) => {
       const imgData = JSON.parse(data);
       console.log("imgData=", imgData);
       images[index] = imgData.url;
-      avatar.value = imgData.url
+      console.log("index===", index);
+      if (index === 0) {
+        avatar.value = imgData.url;
+      }
     },
   });
 };
@@ -295,19 +299,24 @@ const onUpload = (item, index) => {
     }
     uni.showActionSheet({
       itemList: itemList,
-      success: function (res) {
+      success: function(res) {
         console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
         if (res.tapIndex === 0) {
           images[index] = images[0];
           images[0] = item;
           avatar.value = item;
+          return;
         }
 
         if (res.tapIndex === 1) {
           chooseImage(index);
+          return;
+        }
+        if (res.tapIndex === 2) {
+          images.splice(index, 1);
         }
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log(res.errMsg);
       },
     });
@@ -350,10 +359,10 @@ const bindDateChange = (e) => {
 const changeGender = () => {
   uni.showActionSheet({
     itemList: ["男", "女"],
-    success: function (res) {
+    success: function(res) {
       console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
     },
-    fail: function (res) {
+    fail: function(res) {
       console.log(res.errMsg);
     },
   });
