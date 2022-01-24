@@ -1,0 +1,125 @@
+
+/*每个页面公共css */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+.btn-block{
+    width: 100%;border-radius: 20rpx;color: #fff;margin-bottom: 30rpx;
+	border: none;
+	color: #4CD964;
+}
+ .uni-forms-item__content{
+    display: flex;
+    align-items: center;
+}
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.col {
+	flex-basis: 0;
+	flex-grow: 1;
+	max-width: 100%;
+}
+.col-1 {
+	flex: 0 0 4.166667%;
+	max-width: 4.166667%;
+}
+.col-2 {
+	flex: 0 0 8.333333%;
+	max-width: 8.333333%;
+}
+.col-3 {
+	flex: 0 0 12.5%;
+	max-width: 12.5%;
+}
+.col-4 {
+	flex: 0 0 16.666667%;
+	max-width: 16.666667%;
+}
+.col-5 {
+	flex: 0 0 20.833333%;
+	max-width: 20.833333%;
+}
+.col-6 {
+	flex: 0 0 25%;
+	max-width: 25%;
+}
+.col-7 {
+	flex: 0 0 29.166667%;
+	max-width: 29.166667%;
+}
+.col-8 {
+	flex: 0 0 33.333333%;
+	max-width: 33.333333%;
+}
+.col-9 {
+	flex: 0 0 37.5%;
+	max-width: 37.5%;
+}
+.col-10 {
+	flex: 0 0 41.666667%;
+	max-width: 41.666667%;
+}
+.col-11 {
+	flex: 0 0 45.833333%;
+	max-width: 45.833333%;
+}
+.col-12 {
+	flex: 0 0 50%;
+	max-width: 50%;
+}
+.col-13 {
+	flex: 0 0 54.166667%;
+	max-width: 54.166667%;
+}
+.col-14 {
+	flex: 0 0 58.333333%;
+	max-width: 58.333333%;
+}
+.col-15 {
+	flex: 0 0 62.5%;
+	max-width: 62.5%;
+}
+.col-16 {
+	flex: 0 0 66.666667%;
+	max-width: 66.666667%;
+}
+.col-17 {
+	flex: 0 0 70.833333%;
+	max-width: 70.833333%;
+}
+.col-18 {
+	flex: 0 0 75%;
+	max-width: 75%;
+}
+.col-19 {
+	flex: 0 0 79.166667%;
+	max-width: 79.166667%;
+}
+.col-20 {
+	flex: 0 0 83.333333%;
+	max-width: 83.333333%;
+}
+.col-21 {
+	flex: 0 0 87.5%;
+	max-width: 87.5%;
+}
+.col-22 {
+	flex: 0 0 91.666667%;
+	max-width: 91.666667%;
+}
+.col-23 {
+	flex: 0 0 95.833333%;
+	max-width: 95.833333%;
+}
+.col-24 {
+	flex: 0 0 100%;
+	max-width: 100%;
+}
+page{--status-bar-height:25px;--top-window-height:0px;--window-top:0px;--window-bottom:0px;--window-left:0px;--window-right:0px;--window-magin:0px}[data-c-h="true"]{display: none !important;}
