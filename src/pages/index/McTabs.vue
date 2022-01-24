@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-01-21 17:24:53
+ * @LastEditTime: 2022-01-24 17:42:19
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -125,6 +125,7 @@ const swiperChange = (e) => {
 };
 onMounted(() => {
   const items = document.querySelectorAll(".nav-item");
+  if(items.length > 0){
   items.forEach((item) => {
     console.log("width=", item.offsetWidth);
     navItems.push({ width: item.offsetWidth });
@@ -133,6 +134,7 @@ onMounted(() => {
   console.log("items===", items);
   console.log("navItemWidth===", navItemWidth.value);
   getEnglishVideos();
+  }
 });
 const result = computed(() => `${navItemWidth.value}rpx`);
 
