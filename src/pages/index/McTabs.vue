@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-01-24 17:42:19
+ * @LastEditTime: 2022-01-25 18:16:21
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -38,7 +38,7 @@
       @change="swiperChange"
     >
       <swiper-item v-for="(item, index) in list" :key="index">
-        <scroll-view scroll-y="true" class="swiper-scroll">
+        <scroll-view scroll-y="true" class="swiper-scroll" @scrolltolower="onScrolltolower" @scroll="onScroll">
           <uni-list v-if="index === 0">
             <uni-list-item
               :title="item.title"
@@ -86,7 +86,7 @@
 </template>:enable-flex="true"
 
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, getCurrentInstance } from "vue";
 import { getVideoList } from "@/api/hobby.js";
 const list = ref([
   { title: "英语", content: [] },
@@ -148,6 +148,16 @@ var getEnglishVideos = () => {
     }
   });
 };
+
+const onScrolltolower = (e) => {
+  console.log('滚动加载tolowere=', e)
+}
+const onScroll = (e) => {
+  const getCurrentInstance = getCurrentInstance()
+  console.log('getCurrentInstance=', getCurrentInstance)
+  console.log('onScroll=', e)
+}
+
 const goDetail = (item) => {
   console.log('item===', item)
   uni.navigateTo({
