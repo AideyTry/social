@@ -1,13 +1,13 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-01-25 18:16:21
- * @LastEditors: Aiden(戴林波)
+ * @LastEditTime: 2022-01-25 21:37:49
+ * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
-  <view class="tabs">
+  <view class="tabs" ref="mcTabs">
     <scroll-view
       scroll-x
       scroll-with-animaiton
@@ -85,9 +85,22 @@
   </view>
 </template>:enable-flex="true"
 
+<script>
+export default {
+  name: 'McTabs',
+  mounted(){
+    console.log('this===', this)
+  }
+}
+</script>
+
 <script setup>
-import { ref, reactive, onMounted, computed, getCurrentInstance } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import { getVideoList } from "@/api/hobby.js";
+
+const mcTabs = ref(null)
+
+
 const list = ref([
   { title: "英语", content: [] },
   {
@@ -153,8 +166,11 @@ const onScrolltolower = (e) => {
   console.log('滚动加载tolowere=', e)
 }
 const onScroll = (e) => {
-  const getCurrentInstance = getCurrentInstance()
-  console.log('getCurrentInstance=', getCurrentInstance)
+  // const getCurrentInstance = getCurrentInstance()
+  // console.log('getCurrentInstance=', getCurrentInstance)
+  console.log('mcTabs=', mcTabs)
+  const query = uni.createSelectorQuery().in(mcTabs);
+  console.log('query===', query)
   console.log('onScroll=', e)
 }
 
