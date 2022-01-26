@@ -1,13 +1,13 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-01-25 21:37:49
- * @LastEditors: Aiden
+ * @LastEditTime: 2022-01-26 17:50:27
+ * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
-  <view class="tabs" ref="mcTabs">
+  <view class="tabs">
     <scroll-view
       scroll-x
       scroll-with-animaiton
@@ -38,7 +38,11 @@
       @change="swiperChange"
     >
       <swiper-item v-for="(item, index) in list" :key="index">
-        <scroll-view scroll-y="true" class="swiper-scroll" @scrolltolower="onScrolltolower" @scroll="onScroll">
+        <scroll-view
+          scroll-y="true"
+          class="swiper-scroll"
+          @scrolltolower="onScrolltolower"
+        >
           <uni-list v-if="index === 0">
             <uni-list-item
               :title="item.title"
@@ -56,22 +60,31 @@
                     class="slot-image"
                     :src="item.img"
                     mode="widthFix"
-                     @click="goDetail(item)"
+                    @click="goDetail(item)"
                   ></image>
                   <view class="hint" v-if="item.hintTitle || item.dateSrc">
                     <!-- <text v-if="item.hintTitle">By</text> -->
-                    <text v-if="item.hintTitle" class="hint-title">{{ item.hintTitle }}</text>
+                    <text v-if="item.hintTitle" class="hint-title">{{
+                      item.hintTitle
+                    }}</text>
                     <text class="hint-date">{{ item.dateSrc }}</text>
                   </view>
                 </view>
               </template>
               <template v-slot:body>
                 <view class="content-body">
-                  <view class="title-wraper"
-                    @click="goDetail(item)"
+                  <view class="title-wraper" @click="goDetail(item)"
                     ><text class="title">{{ item.title }}</text
-                    ><view class="video"><uni-icons style="vertical-align: middle;" type="videocam" size="20" color="#999"></uni-icons
-                  ><text>VIDEO</text></view></view>
+                    ><view class="video"
+                      ><uni-icons
+                        style="vertical-align: middle;"
+                        type="videocam"
+                        size="20"
+                        color="#999"
+                      ></uni-icons
+                      ><text>VIDEO</text></view
+                    ></view
+                  >
                   <view class="description">{{ item.description }}</view>
                 </view>
               </template>
@@ -82,24 +95,21 @@
         <!-- <slot></slot> -->
       </swiper-item>
     </swiper>
-  </view>
-</template>:enable-flex="true"
+  </view> </template
+>:enable-flex="true"
 
 <script>
 export default {
-  name: 'McTabs',
-  mounted(){
-    console.log('this===', this)
-  }
-}
+  name: "McTabs",
+  mounted() {
+    console.log("this===", this);
+  },
+};
 </script>
 
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import { getVideoList } from "@/api/hobby.js";
-
-const mcTabs = ref(null)
-
 
 const list = ref([
   { title: "英语", content: [] },
@@ -138,48 +148,90 @@ const swiperChange = (e) => {
 };
 onMounted(() => {
   const items = document.querySelectorAll(".nav-item");
-  if(items.length > 0){
-  items.forEach((item) => {
-    console.log("width=", item.offsetWidth);
-    navItems.push({ width: item.offsetWidth });
-  });
-  navItemWidth.value = navItems[swiperIndex.value].width;
-  console.log("items===", items);
-  console.log("navItemWidth===", navItemWidth.value);
-  getEnglishVideos();
+  if (items.length > 0) {
+    items.forEach((item) => {
+      console.log("width=", item.offsetWidth);
+      navItems.push({ width: item.offsetWidth });
+    });
+    navItemWidth.value = navItems[swiperIndex.value].width;
+    console.log("items===", items);
+    console.log("navItemWidth===", navItemWidth.value);
+    getEnglishVideos({ pageNum:1, pageSize: 10 });
   }
 });
 const result = computed(() => `${navItemWidth.value}rpx`);
 
 // 英语
 let videos = ref([]);
-var getEnglishVideos = () => {
-  getVideoList().then((data) => {
+let pageNum = ref(1)
+let pageSize = ref(10)
+let total = ref(0)
+var getEnglishVideos = ({ pageNum = 1, pageSize = 10}) => {
+  const params = {
+    pageNum,
+    pageSize
+  }
+  getVideoList(params).then((data) => {
     console.log("data===", data);
     if (data.data.code === 200) {
-      videos.value = data.data.data;
+      videos.value = videos.value.concat(data.data.data);
+      total.value = data.data.total
     }
   });
 };
 
 const onScrolltolower = (e) => {
-  console.log('滚动加载tolowere=', e)
-}
+  if(Math.ceil(total.value / pageSize.value) <= pageNum.value){
+    return
+  }
+  pageNum.value++
+  getEnglishVideos({pageNum: pageNum.value, pageSize: pageSize.value})
+  
+};
+// 暂时不用
 const onScroll = (e) => {
-  // const getCurrentInstance = getCurrentInstance()
-  // console.log('getCurrentInstance=', getCurrentInstance)
-  console.log('mcTabs=', mcTabs)
-  const query = uni.createSelectorQuery().in(mcTabs);
-  console.log('query===', query)
-  console.log('onScroll=', e)
-}
+  const items = uni.createSelectorQuery().selectAll(".content-item");
+  console.log("items===", items);
+  console.log("onScroll=", e);
+  let scrollHeight = null
+  let scrollTop = null
+  let height = null
+
+  const view = uni
+    .createSelectorQuery()
+    .select(".swiper-scroll")
+    .scrollOffset((res) => {
+      console.log("res===============================", res);
+      console.log("竖直滚动位置" + res.scrollTop);
+      scrollHeight = res.scrollHeight
+      scrollTop = res.scrollTop
+    })
+    .exec();
+  view
+    .fields(
+      {
+        size: true,
+        scrollOffset: true,
+      },
+      (data) => {
+        // console.log("得到节点信息" + JSON.stringify(data));
+        console.log("节点的高为" + data.height);
+        height = parseInt(data.height)
+      }
+    )
+    .exec();
+
+    if(scrollHeight === (scrollTop + height)){
+      console.log('滚动加载了更多了')
+    }
+};
 
 const goDetail = (item) => {
-  console.log('item===', item)
+  console.log("item===", item);
   uni.navigateTo({
-    url: `/pages/index/VideoDetail?id=${item.id}`
-});
-}
+    url: `/pages/index/VideoDetail?id=${item.id}`,
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -239,20 +291,20 @@ const goDetail = (item) => {
       // margin-left: 20rpx;
     }
     .content-body {
-      .title-wraper{
+      .title-wraper {
         display: inline-block;
         text-align: left;
-      .title {
-        // display: inline-block;
-        font-size: 40rpx;
-        font-family: "Times New Roman", Times, serif;
-        color: #000;
-      }
-      .video{
-        display: inline-block;
-        color: #999999;
-        font-size: 16rpx;
-      }
+        .title {
+          // display: inline-block;
+          font-size: 40rpx;
+          font-family: "Times New Roman", Times, serif;
+          color: #000;
+        }
+        .video {
+          display: inline-block;
+          color: #999999;
+          font-size: 16rpx;
+        }
       }
       .description {
         // text-align: left;
