@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-20 17:46:39
- * @LastEditTime: 2022-01-10 09:10:33
+ * @LastEditTime: 2022-01-27 16:00:07
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -60,10 +60,6 @@ export const user = {
                         if (res.confirm) {
                             uni.reLaunch({
                                 url: '/pages/user/index'
-                            });
-                        } else if (res.cancel) {
-                            uni.reLaunch({
-                                url: '/pages/index/index'
                             });
                         }
                     }
