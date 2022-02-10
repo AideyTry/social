@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:41:15
- * @LastEditTime: 2022-01-03 14:01:25
+ * @LastEditTime: 2022-02-10 16:44:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -28,7 +28,7 @@ function showToast(title) {
   })
 }
 
-export const request = (url, method, data = {}) => {
+export const request = (url, method, data = {}, fileType) => {
 	console.log('url===', url)
 	console.log('process.env.BASE_URL=', process.env.BASE_URL)
 	return new Promise((resolve, reject) => {
@@ -39,7 +39,7 @@ export const request = (url, method, data = {}) => {
 			method,
 			data,
 			header: {
-			  'Content-Type': 'application/json',
+			  'Content-Type': fileType === 'image' ? 'application/x-www-form-urlencoded' : 'application/json',
 			  'token': getToken()
 			},
 			success: res => {

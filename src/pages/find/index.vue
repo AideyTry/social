@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-05 23:02:29
+ * @LastEditTime: 2022-02-10 16:52:36
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,26 +9,58 @@
 <template>
   <view>
     <uni-file-picker
-      fileMediatype="video"
+      file-mediatype="video"
       @select="onSelect"
-      @progress="progress"
+      @progress="onProgress"
       @success="success"
       @fail="fail"
+    >
+      <button>选择文件</button>
+    </uni-file-picker>
+    <progress
+      :percent="progressPercent"
+      active
+      :fontSize="24"
+      activeColor="#00f"
+      show-info
+      stroke-width="3"
     />
-    <progress :percent="progressPercent" active :fontSize="24" activeColor="#00f" show-info stroke-width="3"/>
-<!-- <progress :percent="80" active :fontSize="24" activeColor="#00f" show-info stroke-width="3"/> -->
+    <!-- <progress :percent="80" active :fontSize="24" activeColor="#00f" show-info stroke-width="3"/> -->
     <view>
       <button @tap="uploadVideo">上传视频</button>
       <!-- <video :src="src"></video> -->
+    </view>
+
+    <view>
+      <uni-file-picker
+        file-mediatype="image"
+        @select="onSelectImage"
+        @progress="progressImages"
+        @success="successImage"
+        @fail="failImage"
+      >
+        <button>选择图片</button>
+      </uni-file-picker>
+      <progress
+        :percent="progressImage"
+        active
+        :fontSize="24"
+        activeColor="#00f"
+        show-info
+        stroke-width="3"
+      />
     </view>
   </view>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
+import qs from 'qs'
+import { fileParse } from '../../utils/util'
+import { uploadImage } from '../../api/file'
 
 let src = ref("");
-let progressPercent = ref('0');
+let progressPercent = ref("0");
 
 const uploadVideo = () => {
   uni.chooseVideo({
@@ -64,9 +96,9 @@ const onSelect = (e) => {
     filePath: tempFilePaths[0],
     name: "file",
     fileType: "video",
-    formData: {
-      user: "test",
-    },
+    // formData: {
+    //   user: "test",
+    // },
     success: (uploadFileRes) => {
       console.log("uploadFileRes===", uploadFileRes);
     },
@@ -85,15 +117,47 @@ const onSelect = (e) => {
     // }
   });
 };
+
+const onProgress = (e) => {
+  console.log('e process=', e)
+}
 // const progress = (e) => {
 //   console.log("progress=", e);
 // };
 const fail = (err) => {
   console.log("err=", err);
 };
+
+// 图片
+let srcImage = ref("");
+let progressImage = ref("0");
+const onSelectImage = async(e) => {
+  console.log('image=', e)
+    if(!e) return
+    const { tempFilePaths, tempFiles } = e;
+    const file = tempFiles[0].file
+    const result = await fileParse(file, 'base64')
+    console.log('result===', result)
+    uploadImage(qs.stringify({
+      chunk: encodeURIComponent(result),
+      filename: file.name,
+    })).then(data => {
+      console.log('data===', data)
+    })
+
+}
+const progressImages = (e) => {
+  console.log('image process=', e)
+}
+const successImage = () => {
+
+}
+const failImage = () => {
+
+}
 </script>
 
-<style lang="scss" scoped>    
+<style lang="scss" scoped>
 // .progress-box {
 //         display: flex;
 //         height: 50rpx;
@@ -105,7 +169,7 @@ const fail = (err) => {
 //     .progress-cancel {
 //         margin-left: 40rpx;
 //     }
-    
+
 //     .progress-control button{
 //         margin-top: 20rpx;
 //     }
