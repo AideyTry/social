@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-10 16:52:36
+ * @LastEditTime: 2022-02-11 21:35:18
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,7 +9,7 @@
 <template>
   <view>
     <uni-file-picker
-      file-mediatype="video"
+      file-mediatype="all"
       @select="onSelect"
       @progress="onProgress"
       @success="success"
@@ -55,9 +55,11 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import qs from 'qs'
-import { fileParse } from '../../utils/util'
-import { uploadImage } from '../../api/file'
+import qs from "qs";
+import SparkMD5 from "spark-md5";
+import { fileParse } from "../../utils/util";
+import { uploadImage, uploadLargeFile } from "../../api/file";
+import { request } from "../../utils/request";
 
 let src = ref("");
 let progressPercent = ref("0");
@@ -86,7 +88,7 @@ const uploadVideo = () => {
 const success = (e) => {
   console.log("e===", e);
 };
-const onSelect = (e) => {
+const onSelect1 = (e) => {
   console.log("select ", e);
   const { tempFilePaths } = e;
   src.value = tempFilePaths[0];
@@ -118,9 +120,112 @@ const onSelect = (e) => {
   });
 };
 
+// 大文件上传
+let hash = ref("");
+let partList = ref([]);
+let requestList = ref([]);
+let total = ref(0);
+let sendIndex = ref(0);
+
+/**
+ * @description: 传递完文件后合并切片文件
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const complete = async () => {
+  console.log("去调用接口合并文件");
+};
+
+/**
+ * @description: 串行发送请求
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
+const send = async () => {
+  if (sendIndex.value >= requestList.value.length) {
+    complete();
+    return;
+  }
+  await requestList.value[sendIndex.value]();
+  sendIndex.value++;
+  send();
+};
+
+const sendRequest = async () => {
+  partList.value.forEach((item, index) => {
+    let fn = () => {
+      // let formData = new FormData();
+      // console.log("item===", item);
+      // console.log("item.filename===", item.chunk);
+      // formData.append("chunk", item.chunk);
+      // formData.append("filename", item.filename);
+      // console.log("formData=", formData);
+      console.log('item===', item)
+      const blobUrl = URL.createObjectURL(item.chunk)
+      console.log('blobUrl===', blobUrl)
+      const uploadTask = uni.uploadFile({
+        url: "/dev/files/uploadLargeFile",
+        filePath: blobUrl,
+        name: "file",
+        fileType: "video",
+        formData: {
+          username: item.filename,
+        },
+        success: (uploadFileRes) => {
+          console.log("uploadFileRes===", uploadFileRes);
+        },
+      });
+      // uploadLargeFile(formData).then((result) => {
+      //   const {
+      //     data: { code },
+      //   } = result;
+      //   if (code === 200) {
+      //     total.value += 1;
+      //     // 传完后要把切片移除掉
+      //     partList.value.splice(index, 1);
+      //   }
+      // });
+    };
+    requestList.value.push(fn);
+  });
+
+  // 传递,使用串行（传完一个再传递下一个）
+  send();
+};
+
+const onSelect = async (e) => {
+  console.log("select ", e);
+  const { tempFilePaths, tempFiles } = e;
+  const file = tempFiles[0].file;
+  src.value = tempFilePaths[0];
+  console.log("tempFilePath===", tempFilePaths[0]);
+  console.log("tempFiles===", tempFiles[0]);
+  console.log("file===", file);
+  const buffer = await fileParse(file, "buffer");
+  const spark = new SparkMD5.ArrayBuffer();
+  let suffix;
+  spark.append(buffer);
+  hash.value = spark.end();
+  suffix = /\.([0-9a-zA-Z]+)$/i.exec(file.name)[1];
+  // 创建切片
+  let partsize = file.size / 100;
+  let cut = 0;
+  for (let i = 0; i < 100; i++) {
+    let item = {
+      chunk: file.slice(cut, cut + partsize),
+      filename: `${hash.value}_${i}_.${suffix}`,
+    };
+    cut += partsize;
+    partList.value.push(item);
+  }
+  sendRequest();
+};
+
 const onProgress = (e) => {
-  console.log('e process=', e)
-}
+  console.log("e process=", e);
+};
 // const progress = (e) => {
 //   console.log("progress=", e);
 // };
@@ -131,30 +236,27 @@ const fail = (err) => {
 // 图片
 let srcImage = ref("");
 let progressImage = ref("0");
-const onSelectImage = async(e) => {
-  console.log('image=', e)
-    if(!e) return
-    const { tempFilePaths, tempFiles } = e;
-    const file = tempFiles[0].file
-    const result = await fileParse(file, 'base64')
-    console.log('result===', result)
-    uploadImage(qs.stringify({
+const onSelectImage = async (e) => {
+  console.log("image=", e);
+  if (!e) return;
+  const { tempFilePaths, tempFiles } = e;
+  const file = tempFiles[0].file;
+  const result = await fileParse(file, "base64");
+  console.log("result===", result);
+  uploadImage(
+    qs.stringify({
       chunk: encodeURIComponent(result),
       filename: file.name,
-    })).then(data => {
-      console.log('data===', data)
     })
-
-}
+  ).then((data) => {
+    console.log("data===", data);
+  });
+};
 const progressImages = (e) => {
-  console.log('image process=', e)
-}
-const successImage = () => {
-
-}
-const failImage = () => {
-
-}
+  console.log("image process=", e);
+};
+const successImage = () => {};
+const failImage = () => {};
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 11:15:02
- * @LastEditTime: 2022-02-10 16:45:50
+ * @LastEditTime: 2022-02-11 18:07:17
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -17,5 +17,10 @@ export const uploadVideo = (params) => {
 }
 
 export const uploadImage = (params) => {
-	return request(`/files/uploadImage`, 'POST', params, 'image')
+	return request(`/files/uploadImage`, 'POST', params, 'application/x-www-form-urlencoded')
+}
+
+export const uploadLargeFile = (params) => {
+	console.log('params===', params)
+	return request(`/files/uploadLargeFile`, 'POST', params, 'form')
 }
