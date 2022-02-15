@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-14 16:24:26
+ * @LastEditTime: 2022-02-15 10:45:14
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -73,24 +73,48 @@ let uploadFlag = ref(false)
 let uploadBtn = ref(false)
 let abort = ref(false)
 
+
+const sends = async (tempFile) => {
+  console.log("tempFiles===", tempFile);
+  const buffer = await fileParse(tempFile, "buffer");
+  const spark = new SparkMD5.ArrayBuffer();
+  let suffix;
+  spark.append(buffer);
+  hash.value = spark.end();
+  suffix = /\.([0-9a-zA-Z]+)$/i.exec(tempFile.name)[1];
+  // 创建切片
+  let partsize = tempFile.size / 100;
+  let cut = 0;
+  for (let i = 0; i < 100; i++) {
+    let item = {
+      chunk: tempFile.slice(cut, cut + partsize),
+      filename: `${hash.value}_${i}_.${suffix}`,
+    };
+    cut += partsize;
+    partList.value.push(item);
+  }
+  sendRequest();
+}
+
 const uploadVideo = () => {
   uni.chooseVideo({
     sourceType: ["camera", "album"],
     success: function(res) {
       console.log("res===", res);
       src.value = res.tempFilePath;
-      uni.uploadFile({
-        url: "/dev/files/uploadVideo",
-        filePath: res.tempFilePath,
-        name: "file",
-        fileType: "video",
-        formData: {
-          user: "test",
-        },
-        success: (uploadFileRes) => {
-          console.log("uploadFileRes===", uploadFileRes);
-        },
-      });
+      sends(res.tempFile)
+      // uni.uploadFile({
+      //   url: "/dev/files/uploadVideo",
+      //   filePath: res.tempFilePath,
+      //   name: "file",
+      //   fileType: "video",
+      //   formData: {
+      //     user: "test",
+      //   },
+      //   success: (uploadFileRes) => {
+      //     console.log("uploadFileRes===", uploadFileRes);
+      //   },
+      // });
     },
   });
 };
@@ -184,7 +208,7 @@ const promiseSend = (item, index) => {
       },
       success: (uploadFileRes) => {
         console.log("uploadFileRes===", uploadFileRes);
-        partList.value.splice(index, 1)
+        // partList.value.splice(index, 1)
         resolve(uploadFileRes);
       },
     });
