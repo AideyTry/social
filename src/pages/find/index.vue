@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-18 16:04:18
+ * @LastEditTime: 2022-02-18 16:15:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -322,21 +322,6 @@ const failImage = () => {};
 </script>
 
 <style lang="scss" scoped>
-// .progress-box {
-//         display: flex;
-//         height: 50rpx;
-//         margin-bottom: 60rpx;
-//     }
-//     .uni-icon {
-//         line-height: 1.5;
-//     }
-//     .progress-cancel {
-//         margin-left: 40rpx;
-//     }
-
-//     .progress-control button{
-//         margin-top: 20rpx;
-//     }
 .share-wraper{
   .progress-large-file{
     display: flex;
