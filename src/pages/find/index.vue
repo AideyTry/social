@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-15 10:45:14
+ * @LastEditTime: 2022-02-18 16:04:18
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -127,7 +127,7 @@ const onSelect1 = (e) => {
   src.value = tempFilePaths[0];
   console.log("tempFilePath===", tempFilePaths[0]);
   const uploadTask = uni.uploadFile({
-    url: "/dev/files/uploadVideo",
+    url: "/upload/files/uploadVideo",
     filePath: tempFilePaths[0],
     name: "file",
     fileType: "video",
@@ -199,7 +199,7 @@ const promiseSend = (item, index) => {
     const blobUrl = URL.createObjectURL(item.chunk);
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
-      url: "/dev/files/uploadLargeFile",
+      url: "/upload/files/uploadLargeFile",
       filePath: blobUrl,
       name: "file",
       fileType: "video",
