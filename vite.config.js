@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-02-18 16:15:08
+ * @LastEditTime: 2022-02-19 18:08:03
  * @LastEditors: Aiden(戴林波)
  * @Description:
  * @Email: jason_dlb@sina.cn
@@ -61,23 +61,23 @@ export default defineConfig(({ command, mode }) => {
     server: {
       sourcemap: false,
       port: '80',
-      // proxy: {
-        // '^/dev': {
-        //   target: 'http://localhost:3000',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/dev/, '')
-        // },
-        // '^/upload': {
-        //   target: 'https://www.mancao.social/upload',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/upload/, '')
-        // },
-        // '^/download': {
-        //   target: 'https://www.mancao.social/download',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/download/, '')
-        // },
-      // },
+      proxy: {
+        '^/dev': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev/, '')
+        },
+        '^/upload': {
+          target: 'https://www.mancao.social/upload',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/upload/, '')
+        },
+        '^/download': {
+          target: 'https://www.mancao.social/download',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/download/, '')
+        },
+      },
     },
   }
 })

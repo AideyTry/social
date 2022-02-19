@@ -1,14 +1,14 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-18 16:15:39
+ * @LastEditTime: 2022-02-19 23:15:07
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <view class="share-wraper">
-    <uni-file-picker
+    <!-- <uni-file-picker
       file-mediatype="all"
       @select="onSelect"
       @progress="onProgress"
@@ -16,7 +16,7 @@
       @fail="fail"
     >
       <button>选择文件</button>
-    </uni-file-picker>
+    </uni-file-picker> -->
     <!-- <view class="progress-large-file"> -->
           <progress
       :percent="progressPercent"
@@ -36,7 +36,7 @@
       <!-- <video :src="src"></video> -->
     </view>
 
-    <view>
+    <!-- <view>
       <uni-file-picker
         file-mediatype="image"
         @select="onSelectImage"
@@ -54,7 +54,7 @@
         show-info
         stroke-width="3"
       />
-    </view>
+    </view> -->
   </view>
 </template>
 
@@ -200,6 +200,7 @@ const promiseSend = (item, index) => {
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
       url: "/upload/files/uploadLargeFile",
+      // url: "http://localhost:3000/files/uploadLargeFile",
       filePath: blobUrl,
       name: "file",
       fileType: "video",
@@ -297,7 +298,7 @@ const fail = (err) => {
 
 // 图片
 let srcImage = ref("");
-let progressImage = ref("0");
+let progressImage = ref(0)
 const onSelectImage = async (e) => {
   console.log("image=", e);
   if (!e) return;
