@@ -1,8 +1,8 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-19 23:36:28
- * @LastEditors: Aiden(戴林波)
+ * @LastEditTime: 2022-02-20 20:40:59
+ * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
@@ -179,30 +179,15 @@ const complete = () => {
   })
 };
 
-/**
- * @description: 串行发送请求
- * @param {*}
- * @Author:
- * @return {*}
- */
-const send = async () => {
-  if (sendIndex.value >= requestList.value.length) {
-    complete();
-    return;
-  }
-  await requestList.value[sendIndex.value]();
-  sendIndex.value++;
-  send();
-};
 
 const promiseSend = (item, index) => {
   return new Promise((resolve) => {
     const blobUrl = URL.createObjectURL(item.chunk);
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
-      url: "/prod/files/uploadLargeFile",
+      // url: "/prod/files/uploadLargeFile",
       // url: "/upload/files/uploadLargeFile",
-      // url: "http://localhost:3000/files/uploadLargeFile",
+      url: "http://localhost:3000/files/uploadLargeFile",
       filePath: blobUrl,
       name: "file",
       fileType: "video",
@@ -211,12 +196,18 @@ const promiseSend = (item, index) => {
       },
       success: (uploadFileRes) => {
         console.log("uploadFileRes===", uploadFileRes);
-        // partList.value.splice(index, 1)
-        resolve(uploadFileRes);
+        resolve(index);
       },
     });
   });
 };
+
+/**
+ * @description: 串行发送请求
+ * @param {*}
+ * @Author:
+ * @return {*}
+ */
 
 
 /**
@@ -230,19 +221,36 @@ const sendRequest = async () => {
   console.log('partList.value.length=', partList.value.length)
   uploadFlag.value = true
   uploadText.value = '暂停'
-  for (let item of partList.value) {
-    // 如果中断则不再传递
-    if(abort.value){
-      return
-    }
-    await promiseSend(item, activeIndex);
-    activeIndex++
-    progressPercent.value = activeIndex
-    console.log('progressPercent.value===', progressPercent.value)
-    if(activeIndex >= partList.value.length){
-      complete()
-    }
-  }
+  let i = 0
+  const send = async () => {
+          if (i >= partList.value.length) {
+            // 发送完毕
+            complete()
+            return
+          } 
+          // await requestList[i]()
+          const items = partList.value
+          const activeIndex = await promiseSend(items[i], i);
+          // partList.value.splice(activeIndex, 1)
+          i++
+          console.log('activeIndex=', activeIndex)
+          console.log('i=', i)
+          send()
+};
+  send()
+  // for (let item of partList.value) {
+  //   // 如果中断则不再传递
+  //   if(abort.value){
+  //     return
+  //   }
+  //   await promiseSend(item, activeIndex);
+  //   activeIndex++
+  //   progressPercent.value = activeIndex
+  //   console.log('progressPercent.value===', progressPercent.value)
+  //   if(activeIndex >= partList.value.length){
+  //     complete()
+  //   }
+  // }
 };
 
 const onSelect = async (e) => {
