@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-20 20:40:59
+ * @LastEditTime: 2022-02-20 21:13:01
  * @LastEditors: Aiden
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -185,9 +185,9 @@ const promiseSend = (item, index) => {
     const blobUrl = URL.createObjectURL(item.chunk);
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
-      // url: "/prod/files/uploadLargeFile",
+      url: "/prod/files/uploadLargeFile",
       // url: "/upload/files/uploadLargeFile",
-      url: "http://localhost:3000/files/uploadLargeFile",
+      // url: "http://localhost:3000/files/uploadLargeFile",
       filePath: blobUrl,
       name: "file",
       fileType: "video",
