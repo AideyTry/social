@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-21 21:44:07
+ * @LastEditTime: 2022-02-21 21:50:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -265,7 +265,7 @@ const sends = async (tempFile) => {
   //   cut += partsize;
   //   partList.value.push(item);
   // }
-  const partSize = 1048576
+  const partSize = 524288
   let cut = 0
   const partListLength = Math.ceil(tempFile.size / partSize)
   console.log('partListLength=', partListLength)
