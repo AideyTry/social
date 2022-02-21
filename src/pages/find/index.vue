@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-21 21:22:04
+ * @LastEditTime: 2022-02-21 21:44:07
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -140,9 +140,9 @@ const promiseSend = (item, index) => {
     const blobUrl = URL.createObjectURL(item.chunk);
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
-      // url: "/prod/files/uploadLargeFile",
+      url: "/prod/files/uploadLargeFile",
       // url: "/upload/files/uploadLargeFile",
-      url: "http://localhost:3000/files/uploadLargeFile",
+      // url: "http://localhost:3000/files/uploadLargeFile",
       filePath: blobUrl,
       name: "file",
       fileType: "video",
@@ -203,7 +203,6 @@ const sendRequest = async () => {
 
 
   console.log('partList.value=', partList.value)
-  debugger
   partList.value.forEach((item, index) => {
     const fn = () => promiseSend(item, index)
     requestList.value.push(fn)
@@ -212,7 +211,6 @@ const sendRequest = async () => {
   let i = 0
   const send = async () => {
     if(abort.value){
-      let bb =1
       return
     }
     console.log('abort',abort.value)
@@ -267,7 +265,7 @@ const sends = async (tempFile) => {
   //   cut += partsize;
   //   partList.value.push(item);
   // }
-  const partSize = 2097152
+  const partSize = 1048576
   let cut = 0
   const partListLength = Math.ceil(tempFile.size / partSize)
   console.log('partListLength=', partListLength)
