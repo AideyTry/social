@@ -1,8 +1,8 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-20 20:40:59
- * @LastEditors: Aiden
+ * @LastEditTime: 2022-02-21 17:37:45
+ * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
@@ -73,51 +73,6 @@ let uploadFlag = ref(false)
 let uploadBtn = ref(false)
 let abort = ref(false)
 
-
-const sends = async (tempFile) => {
-  console.log("tempFiles===", tempFile);
-  const buffer = await fileParse(tempFile, "buffer");
-  const spark = new SparkMD5.ArrayBuffer();
-  let suffix;
-  spark.append(buffer);
-  hash.value = spark.end();
-  suffix = /\.([0-9a-zA-Z]+)$/i.exec(tempFile.name)[1];
-  // 创建切片
-  let partsize = tempFile.size / 100;
-  let cut = 0;
-  for (let i = 0; i < 100; i++) {
-    let item = {
-      chunk: tempFile.slice(cut, cut + partsize),
-      filename: `${hash.value}_${i}_.${suffix}`,
-    };
-    cut += partsize;
-    partList.value.push(item);
-  }
-  sendRequest();
-}
-
-const uploadVideo = () => {
-  uni.chooseVideo({
-    sourceType: ["camera", "album"],
-    success: function(res) {
-      console.log("res===", res);
-      src.value = res.tempFilePath;
-      sends(res.tempFile)
-      // uni.uploadFile({
-      //   url: "/dev/files/uploadVideo",
-      //   filePath: res.tempFilePath,
-      //   name: "file",
-      //   fileType: "video",
-      //   formData: {
-      //     user: "test",
-      //   },
-      //   success: (uploadFileRes) => {
-      //     console.log("uploadFileRes===", uploadFileRes);
-      //   },
-      // });
-    },
-  });
-};
 const success = (e) => {
   console.log("e===", e);
 };
@@ -185,9 +140,9 @@ const promiseSend = (item, index) => {
     const blobUrl = URL.createObjectURL(item.chunk);
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
-      // url: "/prod/files/uploadLargeFile",
+      url: "/prod/files/uploadLargeFile",
       // url: "/upload/files/uploadLargeFile",
-      url: "http://localhost:3000/files/uploadLargeFile",
+      // url: "http://localhost:3000/files/uploadLargeFile",
       filePath: blobUrl,
       name: "file",
       fileType: "video",
@@ -196,6 +151,12 @@ const promiseSend = (item, index) => {
       },
       success: (uploadFileRes) => {
         console.log("uploadFileRes===", uploadFileRes);
+        // 上传完就从切片数组中删除当前部分
+        console.log('index================================', index)
+        let parts = partList.value
+        parts.splice(0, 1)
+        partList.value = [...parts]
+        console.log('partList=', partList)
         resolve(index);
       },
     });
@@ -217,32 +178,65 @@ const promiseSend = (item, index) => {
  * @return {*}
  */
 const sendRequest = async () => {
-  let activeIndex = 0
-  console.log('partList.value.length=', partList.value.length)
+//   let activeIndex = 0
+//   console.log('partList.value.length=', partList.value.length)
   uploadFlag.value = true
-  uploadText.value = '暂停'
+  // uploadText.value = '暂停'
+  requestList.value = []
+//   let i = 0
+//   const send = async () => {
+//           if (i >= partList.value.length) {
+//             // 发送完毕
+//             complete()
+//             return
+//           } 
+//           // await requestList[i]()
+//           const items = partList.value
+//           const activeIndex = await promiseSend(items[i], i);
+//           // partList.value.splice(activeIndex, 1)
+//           i++
+//           console.log('activeIndex=', activeIndex)
+//           console.log('i=', i)
+//           send()
+// };
+//   send()
+
+
+  console.log('partList.value=', partList.value)
+  debugger
+  partList.value.forEach((item, index) => {
+    const fn = () => promiseSend(item, index)
+    requestList.value.push(fn)
+  })
+
   let i = 0
   const send = async () => {
-          if (i >= partList.value.length) {
-            // 发送完毕
-            complete()
-            return
-          } 
-          // await requestList[i]()
-          const items = partList.value
-          const activeIndex = await promiseSend(items[i], i);
-          // partList.value.splice(activeIndex, 1)
-          i++
-          console.log('activeIndex=', activeIndex)
-          console.log('i=', i)
-          send()
-};
+    if(abort.value){
+      let bb =1
+      return
+    }
+    console.log('abort',abort.value)
+    console.log('requestList.value===', requestList.value)
+    if(i >= requestList.value.length){
+      complete()
+      return
+    }
+    try {
+       await (requestList.value)[i]()
+    i++
+    send()
+    } catch (error) {
+      throw new Error('err happened')
+    }
+   
+  }
   send()
+
   // for (let item of partList.value) {
   //   // 如果中断则不再传递
-  //   if(abort.value){
-  //     return
-  //   }
+    // if(abort.value){
+    //   return
+    // }
   //   await promiseSend(item, activeIndex);
   //   activeIndex++
   //   progressPercent.value = activeIndex
@@ -251,6 +245,65 @@ const sendRequest = async () => {
   //     complete()
   //   }
   // }
+};
+
+
+const sends = async (tempFile) => {
+  console.log("tempFiles===", tempFile);
+  const buffer = await fileParse(tempFile, "buffer");
+  const spark = new SparkMD5.ArrayBuffer();
+  let suffix;
+  spark.append(buffer);
+  hash.value = spark.end();
+  suffix = /\.([0-9a-zA-Z]+)$/i.exec(tempFile.name)[1];
+  // 创建切片
+  // let partsize = tempFile.size / 100;
+  // let cut = 0;
+  // for (let i = 0; i < 100; i++) {
+  //   let item = {
+  //     chunk: tempFile.slice(cut, cut + partsize),
+  //     filename: `${hash.value}_${i}_.${suffix}`,
+  //   };
+  //   cut += partsize;
+  //   partList.value.push(item);
+  // }
+  const partSize = 2097152
+  let cut = 0
+  const partListLength = Math.ceil(tempFile.size / partSize)
+  console.log('partListLength=', partListLength)
+    for (let i = 0; i < partListLength; i++) {
+    let item = {
+      chunk: tempFile.slice(cut, cut + partSize),
+      filename: `${hash.value}_${i}_.${suffix}`,
+    };
+    cut += partSize;
+    partList.value.push(item);
+  }
+  sendRequest();
+}
+
+const uploadVideo = () => {
+  uni.chooseVideo({
+    sourceType: ["camera", "album"],
+    success: function(res) {
+      console.log("res===", res);
+      src.value = res.tempFilePath;
+      uploadBtn.value = true
+      sends(res.tempFile)
+      // uni.uploadFile({
+      //   url: "/dev/files/uploadVideo",
+      //   filePath: res.tempFilePath,
+      //   name: "file",
+      //   fileType: "video",
+      //   formData: {
+      //     user: "test",
+      //   },
+      //   success: (uploadFileRes) => {
+      //     console.log("uploadFileRes===", uploadFileRes);
+      //   },
+      // });
+    },
+  });
 };
 
 const onSelect = async (e) => {
