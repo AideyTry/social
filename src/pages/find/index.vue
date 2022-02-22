@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-22 11:28:44
+ * @LastEditTime: 2022-02-22 16:24:42
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,23 +18,12 @@
       <button>选择文件</button>
     </uni-file-picker> -->
     <!-- <view class="progress-large-file"> -->
-          <progress
-      :percent="progressPercent"
-      active
-      :fontSize="24"
-      activeColor="#00f"
-      show-info
-      stroke-width="3"
-    />
-    <view class="upload-text">
-      <text v-if="uploadFlag" @click="onPause">{{uploadText}}</text>
-    </view>
     <!-- </view> -->
     <!-- <progress :percent="80" active :fontSize="24" activeColor="#00f" show-info stroke-width="3"/> -->
-    <view>
+    <!-- <view>
       <button @tap="uploadVideo">上传视频</button>
-      <!-- <video :src="src"></video> -->
-    </view>
+      <video :src="src"></video>
+    </view> -->
 
     <!-- <view>
       <uni-file-picker
@@ -55,6 +44,59 @@
         stroke-width="3"
       />
     </view> -->
+    <uni-forms ref="form" :modelValue="formData" :rules="rules">
+      <view class="info-item">
+        <uni-forms-item required label="标    题：" name="title">
+          <uni-easyinput
+            v-model="title"
+            placeholder="请输入标题"
+          ></uni-easyinput>
+        </uni-forms-item>
+      </view>
+      <view class="info-item">
+        <!-- <view class="title-wraper">
+          <text class="title">个人签名</text>
+        </view> -->
+        <uni-forms-item required label="兴    趣：" name="hobby">
+          <uni-data-checkbox
+            v-model="hobby"
+            :localdata="hobbys"
+            @change="hobbyChange"
+          ></uni-data-checkbox>
+        </uni-forms-item>
+      </view>
+      <view class="info-item">
+        <uni-forms-item required label="文件类型：" name="fileType">
+          <uni-data-checkbox
+            v-model="fileType"
+            :localdata="fileTypes"
+            @change="typeChange"
+          ></uni-data-checkbox>
+        </uni-forms-item>
+      </view>
+      <view class="info-item">
+        <uni-forms-item required label="内    容：" name="content">
+          <uni-easyinput
+            type="textarea"
+            :maxlength="-1"
+            autoHeight
+            v-model="content"
+            placeholder="请输入正文内容"
+          ></uni-easyinput>
+        </uni-forms-item>
+      </view>
+    </uni-forms>
+    <button @tap="submit" type="primary">上传分享</button>
+    <progress
+      :percent="progressPercent"
+      :fontSize="24"
+      activeColor="#00f"
+      show-info
+      stroke-width="12"
+    />
+    <view class="upload-text">
+      <text v-if="uploadFlag" @click="onPause">{{ uploadText }}</text>
+    </view>
   </view>
 </template>
 
@@ -68,12 +110,12 @@ import { request } from "../../utils/request";
 
 let src = ref("");
 let progressPercent = ref(0);
-let partListLength = ref(0)
-let cutParts = ref([])
-let uploadText = ref('暂停')
-let uploadFlag = ref(false)
-let uploadBtn = ref(false)
-let abort = ref(false)
+let partListLength = ref(0);
+let cutParts = ref([]);
+let uploadText = ref("暂停");
+let uploadFlag = ref(false);
+let uploadBtn = ref(false);
+let abort = ref(false);
 
 const success = (e) => {
   console.log("e===", e);
@@ -127,15 +169,14 @@ let sendIndex = ref(0);
 const complete = () => {
   console.log("去调用接口合并文件");
   const params = {
-    hash: hash.value
-  }
-  mergeFile(params).then(data => {
-    console.log('data===', data)
-    uploadFlag.value = false
+    hash: hash.value,
+  };
+  mergeFile(params).then((data) => {
+    console.log("data===", data);
+    uploadFlag.value = false;
     // progressPercent.value  = 100
-  })
+  });
 };
-
 
 const promiseSend = (item, index) => {
   return new Promise((resolve, reject) => {
@@ -153,27 +194,30 @@ const promiseSend = (item, index) => {
       },
       success: (uploadFileRes) => {
         console.log("uploadFileRes===", uploadFileRes);
-        const { statusCode } = uploadFileRes
+        const { statusCode } = uploadFileRes;
         // 上传完就从切片数组中删除当前部分
-        console.log('index================================', index)
-        if(statusCode === 200){
+        console.log("index================================", index);
+        if (statusCode === 200) {
           // partListLength.value / partList.value.length
-        let parts = partList.value
-        const part = parts.splice(0, 1)
-        cutParts.value.push(part)
-        partList.value = [...parts]
-        console.log('partList=', partList)
-        console.log('cutPartslength=', cutParts.value.length)
-        console.log('partListLength=', partListLength.value)
-        progressPercent.value = ((cutParts.value.length / partListLength.value) * 100).toFixed(2)
-        resolve(true);
+          let parts = partList.value;
+          const part = parts.splice(0, 1);
+          cutParts.value.push(part);
+          partList.value = [...parts];
+          console.log("partList=", partList);
+          console.log("cutPartslength=", cutParts.value.length);
+          console.log("partListLength=", partListLength.value);
+          progressPercent.value = (
+            (cutParts.value.length / partListLength.value) *
+            100
+          ).toFixed(2);
+          resolve(true);
         } else {
-          resolve(false)
+          resolve(false);
         }
       },
       fail: (err) => {
-        console.log('err=', err)
-      }
+        console.log("err=", err);
+      },
     });
   });
 };
@@ -185,74 +229,71 @@ const promiseSend = (item, index) => {
  * @return {*}
  */
 
-
 /**
  * @description:   传递,使用串行（传完一个再传递下一个）
  * @param {*}
- * @Author: 
+ * @Author:
  * @return {*}
  */
 const sendRequest = async () => {
-//   let activeIndex = 0
-//   console.log('partList.value.length=', partList.value.length)
-  uploadFlag.value = true
+  //   let activeIndex = 0
+  //   console.log('partList.value.length=', partList.value.length)
+  uploadFlag.value = true;
   // uploadText.value = '暂停'
-  requestList.value = []
-//   let i = 0
-//   const send = async () => {
-//           if (i >= partList.value.length) {
-//             // 发送完毕
-//             complete()
-//             return
-//           } 
-//           // await requestList[i]()
-//           const items = partList.value
-//           const activeIndex = await promiseSend(items[i], i);
-//           // partList.value.splice(activeIndex, 1)
-//           i++
-//           console.log('activeIndex=', activeIndex)
-//           console.log('i=', i)
-//           send()
-// };
-//   send()
+  requestList.value = [];
+  //   let i = 0
+  //   const send = async () => {
+  //           if (i >= partList.value.length) {
+  //             // 发送完毕
+  //             complete()
+  //             return
+  //           }
+  //           // await requestList[i]()
+  //           const items = partList.value
+  //           const activeIndex = await promiseSend(items[i], i);
+  //           // partList.value.splice(activeIndex, 1)
+  //           i++
+  //           console.log('activeIndex=', activeIndex)
+  //           console.log('i=', i)
+  //           send()
+  // };
+  //   send()
 
-
-  console.log('partList.value=', partList.value)
+  console.log("partList.value=", partList.value);
   partList.value.forEach((item, index) => {
-    const fn = () => promiseSend(item, index)
-    requestList.value.push(fn)
-  })
+    const fn = () => promiseSend(item, index);
+    requestList.value.push(fn);
+  });
 
-  let i = 0
+  let i = 0;
   const send = async () => {
-    if(abort.value){
-      return
+    if (abort.value) {
+      return;
     }
-    console.log('abort',abort.value)
-    console.log('requestList.value===', requestList.value)
-    if(i >= requestList.value.length){
-      complete()
-      return
+    console.log("abort", abort.value);
+    console.log("requestList.value===", requestList.value);
+    if (i >= requestList.value.length) {
+      complete();
+      return;
     }
     try {
-     const isStep = await (requestList.value)[i]()
-     console.log('isStep=', isStep)
-     if(isStep){
-      i++
-     }
-    send()
+      const isStep = await requestList.value[i]();
+      console.log("isStep=", isStep);
+      if (isStep) {
+        i++;
+      }
+      send();
     } catch (error) {
-      throw new Error('err happened')
+      throw new Error("err happened");
     }
-   
-  }
-  send()
+  };
+  send();
 
   // for (let item of partList.value) {
   //   // 如果中断则不再传递
-    // if(abort.value){
-    //   return
-    // }
+  // if(abort.value){
+  //   return
+  // }
   //   await promiseSend(item, activeIndex);
   //   activeIndex++
   //   progressPercent.value = activeIndex
@@ -262,7 +303,6 @@ const sendRequest = async () => {
   //   }
   // }
 };
-
 
 const sends = async (tempFile) => {
   console.log("tempFiles===", tempFile);
@@ -283,11 +323,11 @@ const sends = async (tempFile) => {
   //   cut += partsize;
   //   partList.value.push(item);
   // }
-  const partSize = 524288
-  let cut = 0
-  partListLength.value = Math.ceil(tempFile.size / partSize)
-  console.log('partListLength=', partListLength.value)
-    for (let i = 0; i < partListLength.value; i++) {
+  const partSize = 524288;
+  let cut = 0;
+  partListLength.value = Math.ceil(tempFile.size / partSize);
+  console.log("partListLength=", partListLength.value);
+  for (let i = 0; i < partListLength.value; i++) {
     let item = {
       chunk: tempFile.slice(cut, cut + partSize),
       filename: `${hash.value}_${i}_.${suffix}`,
@@ -296,7 +336,7 @@ const sends = async (tempFile) => {
     partList.value.push(item);
   }
   sendRequest();
-}
+};
 
 const uploadVideo = () => {
   uni.chooseVideo({
@@ -304,8 +344,8 @@ const uploadVideo = () => {
     success: function(res) {
       console.log("res===", res);
       src.value = res.tempFilePath;
-      uploadBtn.value = true
-      sends(res.tempFile)
+      uploadBtn.value = true;
+      sends(res.tempFile);
       // uni.uploadFile({
       //   url: "/dev/files/uploadVideo",
       //   filePath: res.tempFilePath,
@@ -351,19 +391,19 @@ const onSelect = async (e) => {
 };
 
 const onPause = () => {
-  if(uploadBtn.value){
-     uploadText.value = '继续'
-     uploadBtn.value = false
-     abort.value = true
-     // 暂停上传
+  if (uploadBtn.value) {
+    uploadText.value = "继续";
+    uploadBtn.value = false;
+    abort.value = true;
+    // 暂停上传
   } else {
-    uploadText.value = '暂停'
-    uploadBtn.value = true
-    abort.value = false
+    uploadText.value = "暂停";
+    uploadBtn.value = true;
+    abort.value = false;
     // 继续上传
-    sendRequest()
+    sendRequest();
   }
-}
+};
 
 const onProgress = (e) => {
   console.log("e process=", e);
@@ -377,12 +417,14 @@ const fail = (err) => {
 
 // 图片
 let srcImage = ref("");
-let progressImage = ref(0)
+let progressImage = ref(0);
 const onSelectImage = async (e) => {
   console.log("image=", e);
   if (!e) return;
   const { tempFilePaths, tempFiles } = e;
-  const file = tempFiles[0].file;
+  // uni-ui 上传组件使用
+  // const file = tempFiles[0].file;
+    const file = tempFiles[0];
   const result = await fileParse(file, "base64");
   console.log("result===", result);
   uploadImage(
@@ -392,6 +434,20 @@ const onSelectImage = async (e) => {
     })
   ).then((data) => {
     console.log("data===", data);
+    const { data: { code } } = data
+    if(code === 200){
+      progressPercent.value = 100
+    }
+  });
+};
+const onUploadImage = async () => {
+  uni.chooseImage({
+    count: 6, //默认9
+    sizeType: ["original", "compressed"], //可以指定是原图还是压缩图，默认二者都有
+    sourceType: ["album"], //从相册选择
+    success: function(res) {
+      onSelectImage(res);
+    },
   });
 };
 const progressImages = (e) => {
@@ -399,15 +455,108 @@ const progressImages = (e) => {
 };
 const successImage = () => {};
 const failImage = () => {};
+
+// 表单数据
+const form = ref(null);
+let formData = reactive({
+  title: "",
+  hobby: "",
+  fileType: "",
+  content: "",
+});
+let rules = {
+  title: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请输入标题",
+      },
+    ],
+  },
+  hobby: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请选择兴趣",
+      },
+    ],
+  },
+  fileType: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请选择文件类型",
+      },
+    ],
+  },
+  content: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请输入正文内容",
+      },
+    ],
+  },
+};
+let title = ref("");
+let content = ref("");
+let hobby = ref("");
+let fileType = ref("");
+let hobbys = reactive([
+  { value: 0, text: "狼人杀" },
+  { value: 1, text: "剧本杀" },
+  { value: 2, text: "登山" },
+  { value: 3, text: "旅游" },
+]);
+let fileTypes = reactive([
+  { value: 0, text: "图片" },
+  { value: 1, text: "视频" },
+]);
+const hobbyChange = (e) => {
+  console.log("e=", e);
+  const {
+    data: { value },
+  } = e;
+  hobby.value = value;
+};
+const typeChange = (e) => {
+  const {
+    data: { value },
+  } = e;
+  fileType.value = value;
+};
+const submit = () => {
+  form.value
+    .validate()
+    .then((res) => {
+      console.log("表单数据信息：", res);
+      const { fileType } = res;
+      if (fileType === 0) {
+        onUploadImage();
+      } else {
+        uploadVideo();
+      }
+    })
+    .catch((err) => {
+      console.log("表单错误信息：", err);
+    });
+};
 </script>
 
 <style lang="scss" scoped>
-.share-wraper{
-  .progress-large-file{
+.share-wraper {
+  padding-top: 100rpx;
+  .progress-large-file {
     display: flex;
   }
-  .upload-text{
+  .upload-text {
     text-align: center;
+  }
+  .title-wraper {
+    padding: 20rpx 0;
+    .title {
+      font-weight: 700;
+    }
   }
 }
 </style>
