@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-22 10:10:00
+ * @LastEditTime: 2022-02-22 11:28:44
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -68,6 +68,8 @@ import { request } from "../../utils/request";
 
 let src = ref("");
 let progressPercent = ref(0);
+let partListLength = ref(0)
+let cutParts = ref([])
 let uploadText = ref('暂停')
 let uploadFlag = ref(false)
 let uploadBtn = ref(false)
@@ -130,7 +132,7 @@ const complete = () => {
   mergeFile(params).then(data => {
     console.log('data===', data)
     uploadFlag.value = false
-    progressPercent.value  = 100
+    // progressPercent.value  = 100
   })
 };
 
@@ -155,10 +157,15 @@ const promiseSend = (item, index) => {
         // 上传完就从切片数组中删除当前部分
         console.log('index================================', index)
         if(statusCode === 200){
+          // partListLength.value / partList.value.length
         let parts = partList.value
-        parts.splice(0, 1)
+        const part = parts.splice(0, 1)
+        cutParts.value.push(part)
         partList.value = [...parts]
         console.log('partList=', partList)
+        console.log('cutPartslength=', cutParts.value.length)
+        console.log('partListLength=', partListLength.value)
+        progressPercent.value = ((cutParts.value.length / partListLength.value) * 100).toFixed(2)
         resolve(true);
         } else {
           resolve(false)
@@ -278,9 +285,9 @@ const sends = async (tempFile) => {
   // }
   const partSize = 524288
   let cut = 0
-  const partListLength = Math.ceil(tempFile.size / partSize)
-  console.log('partListLength=', partListLength)
-    for (let i = 0; i < partListLength; i++) {
+  partListLength.value = Math.ceil(tempFile.size / partSize)
+  console.log('partListLength=', partListLength.value)
+    for (let i = 0; i < partListLength.value; i++) {
     let item = {
       chunk: tempFile.slice(cut, cut + partSize),
       filename: `${hash.value}_${i}_.${suffix}`,
