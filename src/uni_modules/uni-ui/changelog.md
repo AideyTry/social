@@ -1,3 +1,40 @@
+## 1.4.12（2022-02-19）
+- uni-collapse 修复 初始化的时候 ，open 属性失效的bug
+- uni-data-checkbox 修复 multiple 为 true 时，v-model 的值为 null 报错的 bug
+- uni-icons 优化 size 属性可以传入不带单位的字符串数值
+- uni-icons 优化 size 支持其他单位
+- uni-nav-bar 新增 left-width/right-width属性 ，可修改左右两侧的宽度
+- uni-popup 修复 safeArea 属性不能设置为false的bug
+## 1.4.11（2022-01-21）
+- uni-collapse 修复 微信小程序resize后组件收起的bug
+- uni-countdown 修复 在微信小程序中样式不生效的bug
+- uni-countdown 新增 update 方法 ，在动态更新时间后，刷新组件
+- uni-load-more 新增 showText属性 ，是否显示文本
+- uni-load-more 修复 nvue 平台下不显示文本的bug
+- uni-load-more 修复 微信小程序平台样式选择器报警告的问题
+- uni-nav-bar 修复 在vue下，标题不垂直居中的bug
+- uni-nav-bar 修复 height 属性类型错误
+- uni-nav-bar 新增 height 属性,可修改组件高度
+- uni-nav-bar 新增 dark 属性可可开启暗黑模式
+- uni-nav-bar 优化 标题字数过多显示省略号
+- uni-nav-bar 优化 插槽，插入内容可完全覆盖
+- uni-popup 修复 isMaskClick 失效的bug
+- uni-popup 新增 cancelText \ confirmText 属性 ，可自定义文本
+- uni-popup 新增 maskBackgroundColor 属性 ，可以修改蒙版颜色
+- uni-popup 优化 maskClick属性 更新为 isMaskClick ，解决微信小程序警告的问题
+
+## 1.4.10（2022-01-17）
+- uni-card 修复 在vue页面下略缩图显示不正常的bug
+- uni-datetime-picker 修复 clear-icon 属性在小程序平台不生效的 bug
+- uni-datetime-picker 修复 日期范围选在小程序平台，必须多点击一次才能取消选中状态的 bug
+- uni-fab 更新 组件依赖
+-
+- uni-icons 修复 nvue 有些图标不显示的bug，兼容老版本图标
+- uni-icons 优化 示例可复制图标名称
+- uni-nav-bar 修复 color 属性不生效的bug
+- uni-popup 修复 设置 safeArea 属性不生效的bug
+- uni-popup 优化 组件示例
+- uni-popup 修复 vuedoc 文字错误
 ## 1.4.9（2021-11-23）
 - uni-ui 修复 vue3中某些scss变量无法找到的问题
 - uni-combox 优化 label、label-width 属性

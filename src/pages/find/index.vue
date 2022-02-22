@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-22 16:24:42
+ * @LastEditTime: 2022-02-22 20:59:57
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -58,20 +58,46 @@
           <text class="title">个人签名</text>
         </view> -->
         <uni-forms-item required label="兴    趣：" name="hobby">
-          <uni-data-checkbox
-            v-model="hobby"
+          <!-- <uni-data-checkbox
+            :value="hobby"
+            :multiple="false"
             :localdata="hobbys"
             @change="hobbyChange"
-          ></uni-data-checkbox>
+          ></uni-data-checkbox> -->
+                <radio-group class="uni-list" @change="hobbyChange">
+                    <label class="uni-list-cell uni-list-cell-pd" v-for="(item,index) in hobbys" :key="index">
+                        <view>
+                            <radio :id="item.value" :value="item.value"></radio>
+                        </view>
+                          <view>
+                            <label class="label-2-text" :for="item.value">
+                                <text>{{item.text}}</text>
+                            </label>
+                        </view>
+                    </label>
+                </radio-group>
         </uni-forms-item>
       </view>
       <view class="info-item">
         <uni-forms-item required label="文件类型：" name="fileType">
-          <uni-data-checkbox
-            v-model="fileType"
+          <!-- <uni-data-checkbox
+            :multiple="false"
+            :value="fileType"
             :localdata="fileTypes"
             @change="typeChange"
-          ></uni-data-checkbox>
+          ></uni-data-checkbox> -->
+                          <radio-group class="uni-list" @change="typeChange">
+                    <label class="uni-list-cell uni-list-cell-pd" v-for="(item,index) in fileTypes" :key="index">
+                        <view>
+                            <radio :id="item.value" :value="item.value"></radio>
+                        </view>
+                          <view>
+                            <label class="label-2-text" :for="item.value">
+                                <text>{{item.text}}</text>
+                            </label>
+                        </view>
+                    </label>
+                </radio-group>
         </uni-forms-item>
       </view>
       <view class="info-item">
@@ -503,27 +529,29 @@ let content = ref("");
 let hobby = ref("");
 let fileType = ref("");
 let hobbys = reactive([
-  { value: 0, text: "狼人杀" },
-  { value: 1, text: "剧本杀" },
-  { value: 2, text: "登山" },
-  { value: 3, text: "旅游" },
+  { value: 0, text: "狼人杀", disable: false },
+  { value: 1, text: "剧本杀", disable: false },
+  { value: 2, text: "登山", disable: false },
+  { value: 3, text: "旅游", disable: false },
 ]);
 let fileTypes = reactive([
-  { value: 0, text: "图片" },
-  { value: 1, text: "视频" },
+  { value: 0, text: "图片", disable: false },
+  { value: 1, text: "视频", disable: false },
 ]);
 const hobbyChange = (e) => {
   console.log("e=", e);
   const {
-    data: { value },
+    detail: { value },
   } = e;
   hobby.value = value;
+  form.value.setValue('hobby', value)
 };
 const typeChange = (e) => {
   const {
-    data: { value },
+    detail: { value },
   } = e;
   fileType.value = value;
+  form.value.setValue('fileType', value)
 };
 const submit = () => {
   form.value
@@ -556,6 +584,12 @@ const submit = () => {
     padding: 20rpx 0;
     .title {
       font-weight: 700;
+    }
+  }
+  .uni-list{
+    display: flex;
+    .uni-list-cell{
+      margin-right: 46rpx;
     }
   }
 }
