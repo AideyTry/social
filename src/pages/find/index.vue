@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-21 21:50:58
+ * @LastEditTime: 2022-02-22 10:10:00
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -136,7 +136,7 @@ const complete = () => {
 
 
 const promiseSend = (item, index) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const blobUrl = URL.createObjectURL(item.chunk);
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
@@ -151,14 +151,22 @@ const promiseSend = (item, index) => {
       },
       success: (uploadFileRes) => {
         console.log("uploadFileRes===", uploadFileRes);
+        const { statusCode } = uploadFileRes
         // 上传完就从切片数组中删除当前部分
         console.log('index================================', index)
+        if(statusCode === 200){
         let parts = partList.value
         parts.splice(0, 1)
         partList.value = [...parts]
         console.log('partList=', partList)
-        resolve(index);
+        resolve(true);
+        } else {
+          resolve(false)
+        }
       },
+      fail: (err) => {
+        console.log('err=', err)
+      }
     });
   });
 };
@@ -220,8 +228,11 @@ const sendRequest = async () => {
       return
     }
     try {
-       await (requestList.value)[i]()
-    i++
+     const isStep = await (requestList.value)[i]()
+     console.log('isStep=', isStep)
+     if(isStep){
+      i++
+     }
     send()
     } catch (error) {
       throw new Error('err happened')
