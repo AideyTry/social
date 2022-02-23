@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-22 20:59:57
+ * @LastEditTime: 2022-02-23 15:40:34
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -64,18 +64,22 @@
             :localdata="hobbys"
             @change="hobbyChange"
           ></uni-data-checkbox> -->
-                <radio-group class="uni-list" @change="hobbyChange">
-                    <label class="uni-list-cell uni-list-cell-pd" v-for="(item,index) in hobbys" :key="index">
-                        <view>
-                            <radio :id="item.value" :value="item.value"></radio>
-                        </view>
-                          <view>
-                            <label class="label-2-text" :for="item.value">
-                                <text>{{item.text}}</text>
-                            </label>
-                        </view>
-                    </label>
-                </radio-group>
+          <radio-group class="uni-list" @change="hobbyChange">
+            <label
+              class="uni-list-cell uni-list-cell-pd"
+              v-for="(item, index) in hobbys"
+              :key="index"
+            >
+              <view>
+                <radio :id="item.value" :value="item.value"></radio>
+              </view>
+              <view>
+                <label class="label-2-text" :for="item.value">
+                  <text>{{ item.text }}</text>
+                </label>
+              </view>
+            </label>
+          </radio-group>
         </uni-forms-item>
       </view>
       <view class="info-item">
@@ -86,18 +90,22 @@
             :localdata="fileTypes"
             @change="typeChange"
           ></uni-data-checkbox> -->
-                          <radio-group class="uni-list" @change="typeChange">
-                    <label class="uni-list-cell uni-list-cell-pd" v-for="(item,index) in fileTypes" :key="index">
-                        <view>
-                            <radio :id="item.value" :value="item.value"></radio>
-                        </view>
-                          <view>
-                            <label class="label-2-text" :for="item.value">
-                                <text>{{item.text}}</text>
-                            </label>
-                        </view>
-                    </label>
-                </radio-group>
+          <radio-group class="uni-list" @change="typeChange">
+            <label
+              class="uni-list-cell uni-list-cell-pd"
+              v-for="(item, index) in fileTypes"
+              :key="index"
+            >
+              <view>
+                <radio :id="item.value" :value="item.value"></radio>
+              </view>
+              <view>
+                <label class="label-2-text" :for="item.value">
+                  <text>{{ item.text }}</text>
+                </label>
+              </view>
+            </label>
+          </radio-group>
         </uni-forms-item>
       </view>
       <view class="info-item">
@@ -196,6 +204,10 @@ const complete = () => {
   console.log("去调用接口合并文件");
   const params = {
     hash: hash.value,
+    title: formData.title,
+    hobby: formData.hobby,
+    fileType: formData.fileType,
+    content: formData.content,
   };
   mergeFile(params).then((data) => {
     console.log("data===", data);
@@ -209,9 +221,9 @@ const promiseSend = (item, index) => {
     const blobUrl = URL.createObjectURL(item.chunk);
     console.log("blobUrl===", blobUrl);
     const uploadTask = uni.uploadFile({
-      url: "/prod/files/uploadLargeFile",
+      // url: "/prod/files/uploadLargeFile",
       // url: "/upload/files/uploadLargeFile",
-      // url: "http://localhost:3000/files/uploadLargeFile",
+      url: "http://localhost:3000/files/uploadLargeFile",
       filePath: blobUrl,
       name: "file",
       fileType: "video",
@@ -450,19 +462,25 @@ const onSelectImage = async (e) => {
   const { tempFilePaths, tempFiles } = e;
   // uni-ui 上传组件使用
   // const file = tempFiles[0].file;
-    const file = tempFiles[0];
+  const file = tempFiles[0];
   const result = await fileParse(file, "base64");
   console.log("result===", result);
   uploadImage(
     qs.stringify({
       chunk: encodeURIComponent(result),
       filename: file.name,
+      title: formData.title,
+      hobby: formData.hobby,
+      fileType: formData.fileType,
+      content: formData.content,
     })
   ).then((data) => {
     console.log("data===", data);
-    const { data: { code } } = data
-    if(code === 200){
-      progressPercent.value = 100
+    const {
+      data: { code },
+    } = data;
+    if (code === 200) {
+      progressPercent.value = 100;
     }
   });
 };
@@ -544,21 +562,25 @@ const hobbyChange = (e) => {
     detail: { value },
   } = e;
   hobby.value = value;
-  form.value.setValue('hobby', value)
+  form.value.setValue("hobby", value);
 };
 const typeChange = (e) => {
   const {
     detail: { value },
   } = e;
   fileType.value = value;
-  form.value.setValue('fileType', value)
+  form.value.setValue("fileType", value);
 };
 const submit = () => {
   form.value
     .validate()
     .then((res) => {
       console.log("表单数据信息：", res);
-      const { fileType } = res;
+      const { fileType, title, content, hobby } = res;
+      formData.content = content
+      formData.title = title
+      formData.fileType = fileType
+      formData.hobby = hobby
       if (fileType === 0) {
         onUploadImage();
       } else {
@@ -586,9 +608,9 @@ const submit = () => {
       font-weight: 700;
     }
   }
-  .uni-list{
+  .uni-list {
     display: flex;
-    .uni-list-cell{
+    .uni-list-cell {
       margin-right: 46rpx;
     }
   }
