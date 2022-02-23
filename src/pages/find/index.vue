@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-23 15:40:34
+ * @LastEditTime: 2022-02-23 17:08:23
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -122,6 +122,7 @@
     </uni-forms>
     <button @tap="submit" type="primary">上传分享</button>
     <progress
+      v-if="uploadLoading"
       :percent="progressPercent"
       :fontSize="24"
       activeColor="#00f"
@@ -150,6 +151,7 @@ let uploadText = ref("暂停");
 let uploadFlag = ref(false);
 let uploadBtn = ref(false);
 let abort = ref(false);
+let uploadLoading = ref(false)
 
 const success = (e) => {
   console.log("e===", e);
@@ -212,6 +214,7 @@ const complete = () => {
   mergeFile(params).then((data) => {
     console.log("data===", data);
     uploadFlag.value = false;
+    uploadLoading.value = false
     // progressPercent.value  = 100
   });
 };
@@ -344,6 +347,7 @@ const sendRequest = async () => {
 
 const sends = async (tempFile) => {
   console.log("tempFiles===", tempFile);
+  uploadLoading.value = true
   const buffer = await fileParse(tempFile, "buffer");
   const spark = new SparkMD5.ArrayBuffer();
   let suffix;
@@ -465,6 +469,7 @@ const onSelectImage = async (e) => {
   const file = tempFiles[0];
   const result = await fileParse(file, "base64");
   console.log("result===", result);
+  uploadLoading.value = true
   uploadImage(
     qs.stringify({
       chunk: encodeURIComponent(result),
@@ -481,6 +486,7 @@ const onSelectImage = async (e) => {
     } = data;
     if (code === 200) {
       progressPercent.value = 100;
+      uploadLoading.value = false
     }
   });
 };
