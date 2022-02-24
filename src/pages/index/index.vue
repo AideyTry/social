@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-01-16 15:44:05
+ * @LastEditTime: 2022-02-24 17:18:18
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -35,7 +35,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center; */
-  padding: 0 32rpx;
+      /* background: #fdfdfd; */
+  /* padding: 0 32rpx; */
 }
 
 .logo {

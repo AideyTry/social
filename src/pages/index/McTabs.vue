@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-01-26 17:50:27
+ * @LastEditTime: 2022-02-24 22:47:35
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -13,6 +13,7 @@
       scroll-with-animaiton
       :enable-flex="true"
       @scroll="handleScroll"
+      class="nav-wraper"
     >
       <view class="nav">
         <view
@@ -90,13 +91,16 @@
               </template>
             </uni-list-item>
           </uni-list>
+          <!-- <view v-else-if="index === 3"> -->
+            <WaterFall v-else-if="index === 3" :list="mountaineers"/>
+          <!-- </view> -->
           <view v-else>待上线</view>
         </scroll-view>
         <!-- <slot></slot> -->
       </swiper-item>
     </swiper>
-  </view> </template
->:enable-flex="true"
+  </view> 
+</template>
 
 <script>
 export default {
@@ -109,7 +113,8 @@ export default {
 
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
-import { getVideoList } from "@/api/hobby.js";
+import { getVideoList, getHobbyList } from "@/api/hobby.js";
+import WaterFall from './WaterFall.vue'
 
 const list = ref([
   { title: "英语", content: [] },
@@ -130,9 +135,14 @@ const list = ref([
 let swiperIndex = ref(0);
 let navItemWidth = ref(0);
 const navItems = reactive([]);
-// let navItemWidth = ref(0)
+const strateies = {
+  'hobby0': (obj) => getEnglishVideos(obj),
+  'hobby3': (obj) => getMountaineers(obj),
+}
 const handleScroll = (e) => {
   console.log("e=", e);
+  const { detail: {current} } = e
+  console.log('current=', current)
 };
 const taggleNav = (index) => {
   swiperIndex.value = index;
@@ -143,6 +153,7 @@ const swiperChange = (e) => {
   } = e;
   swiperIndex.value = current;
   navItemWidth.value = navItems[swiperIndex.value].width;
+    strateies[`hobby${current}`]({pageNum: 1, pageSize: 10})
   console.log("e=", e);
   console.log("navItemWidth.value=====", navItemWidth.value);
 };
@@ -232,16 +243,40 @@ const goDetail = (item) => {
     url: `/pages/index/VideoDetail?id=${item.id}`,
   });
 };
+
+// 登山
+let mountaineers = ref([])
+let mountaineersTotal = ref(0)
+const getMountaineers = ({ pageNum = 1, pageSize = 10}) => {
+  const params = {
+    pageNum,
+    pageSize
+  }
+  console.log('hobby')
+  getHobbyList(params).then((data) => {
+    console.log("data===", data);
+    if (data.data.code === 200) {
+      console.log('data.data.data=', data.data.data)
+      mountaineers.value = data.data.data
+      mountaineersTotal.value = data.data.total
+    }
+  });
+};
+
 </script>
 
 <style lang="scss" scoped>
 .tabs {
 }
+.nav-wraper{
+  background: #fafafa;
+}
 .nav {
   white-space: nowrap;
   position: relative;
   height: 60rpx;
-  padding: 20rpx 0;
+  padding: 32rpx;
+  border-top: 1rpx solid #dcdfe6;
   border-bottom: 1rpx solid #dcdfe6;
   .nav-item {
     display: inline-block;
@@ -270,6 +305,8 @@ const goDetail = (item) => {
 }
 .swiper {
   height: calc(100vh - 80upx);
+  padding: 32rpx;
+      background: #fdfdfd;
 }
 .swiper-scroll {
   height: 100%;
