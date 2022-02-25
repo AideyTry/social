@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-02-25 13:32:39
+ * @LastEditTime: 2022-02-25 15:04:43
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -16,6 +16,7 @@
       }"
       v-for="item in waterfallList"
       :key="item.id"
+      @click="goDetail(item)"
     >
       <image
         mode="widthFix"
@@ -26,7 +27,7 @@
       <view class="hobby-info">
         <view class="info">
           <image class="avatar" mode="aspectFit" :src="item.avatar"></image>
-        <text>{{ item.nickname }}</text>
+        <text>{{ item.username }}</text>
         </view>
         <view>
           <svg class="icon" aria-hidden="true">
@@ -93,10 +94,11 @@ const imagePreLoading = async () => {
         let imageData = {};
         imageData.height =
           (waterfallImageWidth.value / image.width) * image.height + 160;
+        imageData.id = props.list[i].id;
         imageData.src = props.list[i].url;
         imageData.title = props.list[i].title;
         imageData.avatar = props.list[i].avatar;
-        imageData.nickname = props.list[i].nickname;
+        imageData.username = props.list[i].username;
         imageData.likes = props.list[i].likes;
         waterfallList.value.push(imageData);
         rankImage(imageData);
@@ -117,6 +119,12 @@ const rankImage = (imageData) => {
     imageData.height + waterfallImageBottom.value;
   console.log("imageData==", imageData);
 };
+
+const goDetail = (item) => {
+    uni.navigateTo({
+    url: `/pages/index/HobbyDetailMountain?id=${item.id}`,
+  });
+}
 
 onMounted(() => {
   console.log("list1=", props.list);

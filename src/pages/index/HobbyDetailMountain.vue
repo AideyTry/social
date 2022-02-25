@@ -1,0 +1,149 @@
+<!--
+ * @Author: Aiden(戴林波)
+ * @Date: 2022-02-25 14:59:08
+ * @LastEditTime: 2022-02-25 16:09:38
+ * @LastEditors: Aiden(戴林波)
+ * @Description: 
+ * @Email: jason_dlb@sina.cn
+-->
+<template>
+  <div class="hobby-detail">
+    <uni-swiper-dot
+      :info="info"
+      :current="current"
+      field="content"
+      :mode="mode"
+    >
+      <swiper class="swiper-box" @change="change">
+        <swiper-item v-for="(item, index) in info" :key="index">
+          <view class="swiper-item">
+            <image :src="item.content" class="image"></image>
+          </view>
+        </swiper-item>
+      </swiper>
+    </uni-swiper-dot>
+    <view class="author-wraper">
+      <view class="author">
+      <view class="author-info">
+        <image
+          class="avatar"
+          mode="aspectFit"
+          :src="hobbyInfo.avatar || ''"
+        ></image>
+        <text>{{ hobbyInfo.username || "" }}</text>
+      </view>
+      <view class="attention"></view>
+    </view>
+    </view>
+    <view class="content-wraper">
+      <view class="content">
+        <view class="title">
+          {{hobbyInfo.title}}
+        </view>
+        <view class="main">
+          {{hobbyInfo.content}}
+        </view>
+      </view>
+    </view>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted } from "vue";
+import { getHobbyDetail } from "@/api/hobby.js";
+
+export default {
+  onLoad: function(options) {
+    console.log("options===", options);
+  },
+  setup(props) {
+    let info = ref([
+      {
+        content:
+          "https://social-1308251497.cos.ap-guangzhou.myqcloud.com/images/4.jfif",
+      },
+    ]);
+    let current = ref(0);
+    let mode = ref("default");
+    const change = (e) => {
+      current.value = e.detail.current;
+    };
+
+    let hobbyInfo = ref({});
+    const initGetHobbyDetail = (id) => {
+      const params = { id };
+      getHobbyDetail(params).then((data) => {
+        console.log("data===", data);
+        if (data.data.code === 200) {
+          hobbyInfo.value = data.data.data;
+        }
+      });
+    };
+    onMounted(() => {
+      initGetHobbyDetail(props.id);
+    });
+    return {
+      hobbyInfo,
+      info,
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.hobby-detail {
+}
+.swiper-box {
+  width: 100%;
+  height: 750rpx;
+  .swiper-item {
+    width: 100%;
+    height: 100%;
+    .image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.author-wraper{
+  margin-top: 32rpx;
+  padding: 0 32rpx;
+}
+.author {
+  padding-bottom: 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e6e6e6;
+  .author-info {
+    display: flex;
+    align-items: center;
+  }
+  .avatar {
+    width: 52rpx;
+    height: 52rpx;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 20rpx;
+  }
+}
+.content-wraper{
+  margin-top: 32rpx;
+  padding: 0 32rpx;
+  .content{
+    padding-bottom: 32rpx;
+    border-bottom: 1px solid #e6e6e6;
+    .title{
+      font-size: 32rpx;
+      font-weight: 700;
+    }
+    .main{
+      margin-top: 20rpx;
+      color: #555;
+      letter-spacing: 6rpx;
+      text-indent: 2em;
+    }
+  }
+}
+</style>

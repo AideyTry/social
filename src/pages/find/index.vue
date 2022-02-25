@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-02-23 17:08:23
+ * @LastEditTime: 2022-02-25 14:20:49
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -136,12 +136,16 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, computed } from "vue";
+import { useStore } from "vuex";
 import qs from "qs";
 import SparkMD5 from "spark-md5";
 import { fileParse } from "../../utils/util";
 import { uploadImage, mergeFile } from "../../api/file";
 import { request } from "../../utils/request";
+
+const store = useStore();
+const userInfo = computed(() => store.state.user.userInfo).value;
 
 let src = ref("");
 let progressPercent = ref(0);
@@ -204,12 +208,15 @@ let sendIndex = ref(0);
  */
 const complete = () => {
   console.log("去调用接口合并文件");
+  const { avatar, username } = userInfo
   const params = {
     hash: hash.value,
     title: formData.title,
     hobby: formData.hobby,
     fileType: formData.fileType,
     content: formData.content,
+    avatar,
+    username
   };
   mergeFile(params).then((data) => {
     console.log("data===", data);
@@ -470,6 +477,7 @@ const onSelectImage = async (e) => {
   const result = await fileParse(file, "base64");
   console.log("result===", result);
   uploadLoading.value = true
+  const { avatar, username } = userInfo
   uploadImage(
     qs.stringify({
       chunk: encodeURIComponent(result),
@@ -478,6 +486,8 @@ const onSelectImage = async (e) => {
       hobby: formData.hobby,
       fileType: formData.fileType,
       content: formData.content,
+      avatar,
+      username
     })
   ).then((data) => {
     console.log("data===", data);

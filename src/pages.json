@@ -8,6 +8,12 @@
       }
     },
     {
+      "path": "pages/index/HobbyDetailMountain",
+      "style": {
+        "navigationBarTitleText": "登山"
+      }
+    },
+    {
       "path": "pages/index/VideoDetail",
       "style": {
         "navigationBarTitleText": "英语"
