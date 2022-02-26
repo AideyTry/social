@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-02-25 16:09:38
+ * @LastEditTime: 2022-02-26 22:49:19
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -32,7 +32,9 @@
         ></image>
         <text>{{ hobbyInfo.username || "" }}</text>
       </view>
-      <view class="attention"></view>
+      <view :class="{follow: !isFlollow, active: isFlollow}" @click="following">
+        <text>{{followText}}</text>
+      </view>
     </view>
     </view>
     <view class="content-wraper">
@@ -49,14 +51,22 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
+
 import { getHobbyDetail } from "@/api/hobby.js";
+import { setFollow, getFollow } from '@/api/communication.js'
+
 
 export default {
   onLoad: function(options) {
     console.log("options===", options);
   },
   setup(props) {
+    
+    const store = useStore();
+    const userInfo = computed(() => store.state.user.userInfo).value;
+
     let info = ref([
       {
         content:
@@ -65,6 +75,7 @@ export default {
     ]);
     let current = ref(0);
     let mode = ref("default");
+
     const change = (e) => {
       current.value = e.detail.current;
     };
@@ -79,10 +90,42 @@ export default {
         }
       });
     };
+
+    // 关注
+    let isFlollow = ref(false)
+    let followText = ref('关注')
+    const following = () => {
+      if(isFlollow.value) return
+      console.log('userInfo===', userInfo)
+      let params = { followId: 11 }
+      setFollow(params).then(data => {
+        console.log('data===', data)
+        if(data.data.code === 200){
+          followText.value = '已关注'
+          isFlollow.value = true
+        }
+      })
+    }
+
+    const initFlow = () => {
+      let params = { followId: 11 }
+      getFollow(params).then(data => {
+        console.log('data1===', data)
+        if(data.data.code === 200){
+           isFlollow.value = data.data.isFollow
+           data.data.isFollow ? followText.value = '已关注' : followText.value = '关注'
+        }
+      })
+    }
+
     onMounted(() => {
       initGetHobbyDetail(props.id);
+      initFlow()
     });
     return {
+      followText,
+      isFlollow,
+      following,
       hobbyInfo,
       info,
     };
@@ -126,6 +169,20 @@ export default {
     border-radius: 50%;
     background-color: #ccc;
     margin-right: 20rpx;
+  }
+  .follow{
+    border: 1rpx solid #ff2442;
+    border-radius: 8rpx;
+    color: #ff2442;
+    padding: 10rpx 20rpx;
+    font-size: 24rpx;
+  }
+  .active{
+    border: 1rpx solid #ccc;
+    border-radius: 8rpx;
+    color: #ccc;
+    padding: 10rpx 20rpx;
+    font-size: 24rpx;
   }
 }
 .content-wraper{
