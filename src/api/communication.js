@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 17:56:49
- * @LastEditTime: 2022-02-26 22:28:44
+ * @LastEditTime: 2022-02-27 11:11:08
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,4 +14,12 @@ export const setFollow = (params) => {
 
 export const getFollow = (params) => {
 	return request(`/communications/getFollow`,'GET', params)
+}
+
+export const getFollows = (params) => {
+	return request(`/communications/getFollows`,'GET', params)
+}
+
+export const getFans = (params) => {
+	return request(`/communications/getFans`,'GET', params)
 }

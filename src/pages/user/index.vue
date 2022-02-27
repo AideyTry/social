@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-01-09 20:30:03
+ * @LastEditTime: 2022-02-27 11:42:35
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -21,14 +21,19 @@
         <text>签&nbsp;&nbsp;名: {{ userInfo.motto }}</text>
       </view>
     </view>
+    <view class="fans-wraper">
+      <view class="follows"><text>关注</text>&nbsp;<text>{{ follows }}</text></view>
+      <view class="fans"><text>粉丝</text>&nbsp;<text>{{ fans }}</text></view>
+    </view>
     <button @click="onLogout">退出</button>
   </view>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { removeToken } from "../../utils/auth";
+import { getFollows, getFans } from "@/api/communication.js";
 
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
@@ -45,9 +50,34 @@ const onLogout = () => {
 
 const onUserInfo = () => {
   uni.navigateTo({
-    url: '/pages/user/info/index'
-});
+    url: "/pages/user/info/index",
+  });
+};
+
+// fans
+let follows = ref(0);
+let fans = ref(0);
+let getFollowsData = () => {
+  getFollows().then((data) => {
+    console.log("getfollows =", data);
+    if (data.data.code === 200) {
+      follows.value = data.data.follows;
+    }
+  });
+};
+let getFansData = () => {
+    getFans().then((data) => {
+    console.log("getfans =", data);
+    if (data.data.code === 200) {
+      fans.value = data.data.fans;
+    }
+  });
 }
+
+onMounted(() => {
+  getFollowsData();
+  getFansData()
+});
 </script>
 
 <style lang="scss" scoped>
@@ -78,4 +108,24 @@ const onUserInfo = () => {
   transform: translateY(-50%);
   font-size: 12rpx;
 }
+
+  .fans-wraper {
+    display: flex;
+    justify-content: center;
+  }
+  .follows {
+  }
+  .fans {
+    margin-left: 20rpx;
+    padding-left: 20rpx;
+    position: relative;
+  }
+  .fans:before {
+    content: "";
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    border-left: 1px solid #ccc;
+  }
 </style>
