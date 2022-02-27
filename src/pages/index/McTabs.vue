@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-02-24 22:47:35
+ * @LastEditTime: 2022-02-27 15:28:30
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -153,7 +153,7 @@ const swiperChange = (e) => {
   } = e;
   swiperIndex.value = current;
   navItemWidth.value = navItems[swiperIndex.value].width;
-    strateies[`hobby${current}`]({pageNum: 1, pageSize: 10})
+    strateies[`hobby${current}`]({pageNum: 1, pageSize: 100})
   console.log("e=", e);
   console.log("navItemWidth.value=====", navItemWidth.value);
 };

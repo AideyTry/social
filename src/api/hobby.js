@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 17:21:18
- * @LastEditTime: 2022-02-25 15:20:06
+ * @LastEditTime: 2022-02-27 15:27:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -24,6 +24,7 @@ export const videoDetail = (params) => {
 
 
 export const getHobbyList = (params) => {
+	console.log('params=', params)
 	return request(`/files/getHobbyList`,'GET', params)
 }
 

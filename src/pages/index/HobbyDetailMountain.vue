@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-02-26 22:49:19
+ * @LastEditTime: 2022-02-27 16:04:01
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -87,6 +87,7 @@ export default {
         console.log("data===", data);
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
+          initFlow()
         }
       });
     };
@@ -97,7 +98,7 @@ export default {
     const following = () => {
       if(isFlollow.value) return
       console.log('userInfo===', userInfo)
-      let params = { followId: 11 }
+      let params = { followId: hobbyInfo.value.user_id }
       setFollow(params).then(data => {
         console.log('data===', data)
         if(data.data.code === 200){
@@ -108,7 +109,8 @@ export default {
     }
 
     const initFlow = () => {
-      let params = { followId: 11 }
+      let params = { followId: hobbyInfo.value.user_id }
+      console.log('params===', params)
       getFollow(params).then(data => {
         console.log('data1===', data)
         if(data.data.code === 200){
@@ -119,8 +121,8 @@ export default {
     }
 
     onMounted(() => {
+      console.log('userInfo===', userInfo)
       initGetHobbyDetail(props.id);
-      initFlow()
     });
     return {
       followText,
