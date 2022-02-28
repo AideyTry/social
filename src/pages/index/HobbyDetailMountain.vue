@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-02-27 16:04:01
+ * @LastEditTime: 2022-02-28 14:29:53
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -45,6 +45,7 @@
         <view class="main">
           {{hobbyInfo.content}}
         </view>
+        <view class="publish-date"><text>发布于: </text><text>{{publishDate}}</text></view>
       </view>
     </view>
   </div>
@@ -53,6 +54,27 @@
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import * as dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import updateLocale from 'dayjs/plugin/updateLocale'
+dayjs.extend(relativeTime)
+dayjs.extend(updateLocale)
+
+dayjs.updateLocale('en', {
+  relativeTime: {
+    s: '%d秒前',
+    m: "1分钟前",
+    mm: "%d分钟前",
+    h: "1小时前",
+    hh: "%d小时前",
+    d: "1天前",
+    dd: "%d天前",
+    M: "1个月前",
+    MM: "%d个月前",
+    y: "1年前",
+    yy: "%d年前"
+  }
+})
 
 import { getHobbyDetail } from "@/api/hobby.js";
 import { setFollow, getFollow } from '@/api/communication.js'
@@ -87,6 +109,7 @@ export default {
         console.log("data===", data);
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
+          publishDate.value = dayjs(data.data.data.create_time).toNow(true)
           initFlow()
         }
       });
@@ -107,6 +130,9 @@ export default {
         }
       })
     }
+
+    // 发布
+    let publishDate = ref(null)
 
     const initFlow = () => {
       let params = { followId: hobbyInfo.value.user_id }
@@ -130,6 +156,7 @@ export default {
       following,
       hobbyInfo,
       info,
+      publishDate
     };
   },
 };
@@ -202,6 +229,11 @@ export default {
       color: #555;
       letter-spacing: 6rpx;
       text-indent: 2em;
+    }
+    .publish-date{
+      margin-top: 20rpx;
+      color: #999;
+      font-size: 24rpx;
     }
   }
 }
