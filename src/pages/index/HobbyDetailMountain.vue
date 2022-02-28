@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-02-28 14:29:53
+ * @LastEditTime: 2022-02-28 23:07:22
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -24,29 +24,37 @@
     </uni-swiper-dot>
     <view class="author-wraper">
       <view class="author">
-      <view class="author-info">
-        <image
-          class="avatar"
-          mode="aspectFit"
-          :src="hobbyInfo.avatar || ''"
-        ></image>
-        <text>{{ hobbyInfo.username || "" }}</text>
+        <view class="author-info">
+          <image
+            class="avatar"
+            mode="aspectFit"
+            :src="hobbyInfo.avatar || ''"
+          ></image>
+          <text>{{ hobbyInfo.username || "" }}</text>
+        </view>
+        <view
+          :class="{ follow: !isFlollow, active: isFlollow }"
+          @click="following"
+        >
+          <text>{{ followText }}</text>
+        </view>
       </view>
-      <view :class="{follow: !isFlollow, active: isFlollow}" @click="following">
-        <text>{{followText}}</text>
-      </view>
-    </view>
     </view>
     <view class="content-wraper">
       <view class="content">
         <view class="title">
-          {{hobbyInfo.title}}
+          {{ hobbyInfo.title }}
         </view>
         <view class="main">
-          {{hobbyInfo.content}}
+          {{ hobbyInfo.content }}
         </view>
-        <view class="publish-date"><text>发布于: </text><text>{{publishDate}}</text></view>
+        <view class="publish-date"
+          ><text>发布于: </text><text>{{ publishDate }}</text></view
+        >
       </view>
+    </view>
+    <view class="comment-wraper">
+      <Comment :hobbyInfo="hobbyInfo" v-if="hobbyInfo.hobby_4_id" />
     </view>
   </div>
 </template>
@@ -54,38 +62,21 @@
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
-import * as dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import updateLocale from 'dayjs/plugin/updateLocale'
-dayjs.extend(relativeTime)
-dayjs.extend(updateLocale)
-
-dayjs.updateLocale('en', {
-  relativeTime: {
-    s: '%d秒前',
-    m: "1分钟前",
-    mm: "%d分钟前",
-    h: "1小时前",
-    hh: "%d小时前",
-    d: "1天前",
-    dd: "%d天前",
-    M: "1个月前",
-    MM: "%d个月前",
-    y: "1年前",
-    yy: "%d年前"
-  }
-})
 
 import { getHobbyDetail } from "@/api/hobby.js";
-import { setFollow, getFollow } from '@/api/communication.js'
+import { setFollow, getFollow, deleteFollow } from "@/api/communication.js";
+import Comment from "@/pages/components/Comment.vue";
 
+import { formatDate } from "@/utils/util.js";
 
 export default {
+  components: {
+    Comment,
+  },
   onLoad: function(options) {
     console.log("options===", options);
   },
   setup(props) {
-    
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
 
@@ -109,45 +100,65 @@ export default {
         console.log("data===", data);
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
-          publishDate.value = dayjs(data.data.data.create_time).toNow(true)
-          initFlow()
+          publishDate.value = formatDate(data.data.data.create_time);
+          initFlow();
         }
       });
     };
 
     // 关注
-    let isFlollow = ref(false)
-    let followText = ref('关注')
+    let isFlollow = ref(false);
+    let followText = ref("关注");
     const following = () => {
-      if(isFlollow.value) return
-      console.log('userInfo===', userInfo)
-      let params = { followId: hobbyInfo.value.user_id }
-      setFollow(params).then(data => {
-        console.log('data===', data)
-        if(data.data.code === 200){
-          followText.value = '已关注'
-          isFlollow.value = true
+      if (isFlollow.value) {
+        uni.showModal({
+          content: "确认不再关注？",
+          success: function(res) {
+            if (res.confirm) {
+              let params = { followId: hobbyInfo.value.user_id };
+              deleteFollow(params).then((data) => {
+                if (data.data.code === 200) {
+                  followText.value = "关注";
+                  isFlollow.value = false;
+                }
+              });
+            } else if (res.cancel) {
+              console.log("用户点击取消");
+            }
+          },
+        });
+        return;
+      }
+      console.log("userInfo===", userInfo);
+      let params = { followId: hobbyInfo.value.user_id };
+      setFollow(params).then((data) => {
+        console.log("data===", data);
+        if (data.data.code === 200) {
+          followText.value = "已关注";
+          isFlollow.value = true;
         }
-      })
-    }
+      });
+    };
 
     // 发布
-    let publishDate = ref(null)
+    let publishDate = ref(null);
 
     const initFlow = () => {
-      let params = { followId: hobbyInfo.value.user_id }
-      console.log('params===', params)
-      getFollow(params).then(data => {
-        console.log('data1===', data)
-        if(data.data.code === 200){
-           isFlollow.value = data.data.isFollow
-           data.data.isFollow ? followText.value = '已关注' : followText.value = '关注'
+      let params = { followId: hobbyInfo.value.user_id };
+      console.log("params===", params);
+      getFollow(params).then((data) => {
+        console.log("data1===", data);
+        if (data.data.code === 200) {
+          isFlollow.value = data.data.isFollow;
+          data.data.isFollow
+            ? (followText.value = "已关注")
+            : (followText.value = "关注");
         }
-      })
-    }
+      });
+    };
 
     onMounted(() => {
-      console.log('userInfo===', userInfo)
+      console.log("userInfo===", userInfo);
       initGetHobbyDetail(props.id);
     });
     return {
@@ -156,7 +167,7 @@ export default {
       following,
       hobbyInfo,
       info,
-      publishDate
+      publishDate,
     };
   },
 };
@@ -178,7 +189,7 @@ export default {
   }
 }
 
-.author-wraper{
+.author-wraper {
   margin-top: 32rpx;
   padding: 0 32rpx;
 }
@@ -199,14 +210,14 @@ export default {
     background-color: #ccc;
     margin-right: 20rpx;
   }
-  .follow{
+  .follow {
     border: 1rpx solid #ff2442;
     border-radius: 8rpx;
     color: #ff2442;
     padding: 10rpx 20rpx;
     font-size: 24rpx;
   }
-  .active{
+  .active {
     border: 1rpx solid #ccc;
     border-radius: 8rpx;
     color: #ccc;
@@ -214,27 +225,31 @@ export default {
     font-size: 24rpx;
   }
 }
-.content-wraper{
+.content-wraper {
   margin-top: 32rpx;
   padding: 0 32rpx;
-  .content{
+  .content {
     padding-bottom: 32rpx;
     border-bottom: 1px solid #e6e6e6;
-    .title{
+    .title {
       font-size: 32rpx;
       font-weight: 700;
     }
-    .main{
+    .main {
       margin-top: 20rpx;
       color: #555;
       letter-spacing: 6rpx;
       text-indent: 2em;
     }
-    .publish-date{
+    .publish-date {
       margin-top: 20rpx;
       color: #999;
       font-size: 24rpx;
     }
   }
+}
+.comment-wraper {
+  margin-top: 32rpx;
+  padding: 0 32rpx;
 }
 </style>
