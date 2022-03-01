@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-28 14:49:16
- * @LastEditTime: 2022-02-28 22:31:52
+ * @LastEditTime: 2022-03-01 10:14:46
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,6 +19,7 @@
         :src="hobbyInfo.avatar || ''"
       ></image>
       <input
+        v-model="inputString"
         type="text"
         class="comment-input"
         placeholder="喜欢就给个评论支持一下呗~"
@@ -34,11 +35,11 @@
         ></image>
       </view>
       <view class="comment-info">
-        <view class="userinfo"><text>{{item.username}}</text></view>
+        <view class="userinfo"><text>{{item.username}}</text><text v-if="item.isAuthor" class="is-author">作者</text></view>
         <view class="comment-content"
           ><text
             >{{item.comment}}</text
-          ><text v-if="item.isAuthor" class="is-author">作者</text></view>
+          ></view>
           <view>
               <text>{{$filters.commentTime(item.create_time)}}</text>
           </view>
@@ -61,7 +62,7 @@ const props = defineProps({
     default: {},
   },
 });
-
+let inputString = ref('')
 let total = ref(0)
 let comments = ref([])
 console.log("props=", props);
@@ -76,6 +77,7 @@ const confirm = (e) => {
     }
     setComment(params).then(data => {
         if(data.statusCode === 200){
+          inputString.value = ''
             getCommentData()
         }
     })
@@ -140,6 +142,7 @@ onMounted(() => {
           background-color: #dfdfdf;
           font-size: 24rpx;
           border-radius: 10rpx;
+          color: #888;
       }
       .userinfo {
         color: #ddd;
