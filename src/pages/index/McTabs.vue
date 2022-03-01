@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-02-27 15:28:30
+ * @LastEditTime: 2022-03-01 10:37:05
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -92,7 +92,10 @@
             </uni-list-item>
           </uni-list>
           <!-- <view v-else-if="index === 3"> -->
+            <WaterFall v-else-if="index === 1" :list="werewolfs"/>
+            <WaterFall v-else-if="index === 2" :list="scriptKills"/>
             <WaterFall v-else-if="index === 3" :list="mountaineers"/>
+            <WaterFall v-else-if="index === 4" :list="travels"/>
           <!-- </view> -->
           <view v-else>待上线</view>
         </scroll-view>
@@ -137,7 +140,10 @@ let navItemWidth = ref(0);
 const navItems = reactive([]);
 const strateies = {
   'hobby0': (obj) => getEnglishVideos(obj),
+  'hobby1': (obj) => getWerewolf(obj),
+  'hobby2': (obj) => getScriptKill(obj),
   'hobby3': (obj) => getMountaineers(obj),
+  'hobby4': (obj) => getTravel(obj)
 }
 const handleScroll = (e) => {
   console.log("e=", e);
@@ -250,7 +256,8 @@ let mountaineersTotal = ref(0)
 const getMountaineers = ({ pageNum = 1, pageSize = 10}) => {
   const params = {
     pageNum,
-    pageSize
+    pageSize,
+    hobby: 4
   }
   console.log('hobby')
   getHobbyList(params).then((data) => {
@@ -259,6 +266,66 @@ const getMountaineers = ({ pageNum = 1, pageSize = 10}) => {
       console.log('data.data.data=', data.data.data)
       mountaineers.value = data.data.data
       mountaineersTotal.value = data.data.total
+    }
+  });
+};
+
+// 狼人杀
+let werewolfs = ref([])
+let werewolfsTotal = ref(0)
+const getWerewolf = ({ pageNum = 1, pageSize = 10}) => {
+  const params = {
+    pageNum,
+    pageSize,
+    hobby: 2
+  }
+  console.log('hobby')
+  getHobbyList(params).then((data) => {
+    console.log("data===", data);
+    if (data.data.code === 200) {
+      console.log('data.data.data=', data.data.data)
+      werewolfs.value = data.data.data
+      werewolfsTotal.value = data.data.total
+    }
+  });
+};
+
+// 剧本杀
+let scriptKills = ref([])
+let scriptKillsTotal = ref(0)
+const getScriptKill = ({ pageNum = 1, pageSize = 10}) => {
+  const params = {
+    pageNum,
+    pageSize,
+    hobby: 3
+  }
+  console.log('hobby')
+  getHobbyList(params).then((data) => {
+    console.log("data===", data);
+    if (data.data.code === 200) {
+      console.log('data.data.data=', data.data.data)
+      scriptKills.value = data.data.data
+      scriptKillsTotal.value = data.data.total
+    }
+  });
+};
+
+// 旅游
+let travels = ref([])
+let travelsTotal = ref(0)
+const getTravel = ({ pageNum = 1, pageSize = 10}) => {
+  const params = {
+    pageNum,
+    pageSize,
+    hobby: 5
+  }
+  console.log('hobby')
+  getHobbyList(params).then((data) => {
+    console.log("data===", data);
+    if (data.data.code === 200) {
+      console.log('data.data.data=', data.data.data)
+      travels.value = data.data.data
+      travelsTotal.value = data.data.total
     }
   });
 };
