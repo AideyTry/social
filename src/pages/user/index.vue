@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-02-27 11:42:35
+ * @LastEditTime: 2022-03-01 23:34:51
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,7 +25,20 @@
       <view class="follows"><text>关注</text>&nbsp;<text>{{ follows }}</text></view>
       <view class="fans"><text>粉丝</text>&nbsp;<text>{{ fans }}</text></view>
     </view>
-    <button @click="onLogout">退出</button>
+    <view class="publish-wraper">
+      <view class="my-publishs" @click="changeTab">
+        <text>我发布的</text>
+        <view :class="{active: activeIndex}"></view>
+      </view>
+      <view class="my-likes" @click="changeTab">
+        <text>我喜欢的</text>
+        <view :class="{active: !activeIndex}"></view>
+      </view>
+    </view>
+    <view>
+      <InfoList :list="publishs" v-if="publishs.length"/>
+    </view>
+    <button @click="onLogout" style="margin-top: 20rpx;">退出</button>
   </view>
 </template>
 
@@ -34,6 +47,9 @@ import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { removeToken } from "../../utils/auth";
 import { getFollows, getFans } from "@/api/communication.js";
+import { getPublish } from "@/api/publish.js"
+
+import InfoList from '@/pages/components/InfoList.vue'
 
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
@@ -74,9 +90,29 @@ let getFansData = () => {
   });
 }
 
+// publish
+let activeIndex = ref(true)
+let publishs = ref([])
+
+const getPublishData = () => {
+  getPublish().then(data => {
+    console.log('data getPublish=', data)
+    if(data.data.code === 200){
+      publishs.value = data.data.data
+    }
+  })
+}
+
+const changeTab = () => {
+  activeIndex.value = !activeIndex.value
+}
+
+
+
 onMounted(() => {
   getFollowsData();
   getFansData()
+  getPublishData()
 });
 </script>
 
@@ -127,5 +163,30 @@ onMounted(() => {
     top: 10%;
     left: 0;
     border-left: 1px solid #ccc;
+  }
+  .publish-wraper{
+    display: flex;
+    justify-content: center;
+    margin: 20rpx 0;
+    padding-top: 20rpx;
+    border-top: 1rpx solid #ccc;
+    // border-bottom: 1rpx solid #ccc;
+    .my-publishs, .my-likes{
+      font-size: 28rpx;
+      position: relative;
+    }
+    .my-likes{
+      margin-left: 40rpx;
+    }
+    .active{
+          position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+    bottom: -10rpx;
+    width: 100%;
+    height: 0.1875rem;
+    border-radius: 0.125rem;
+    background-color: #FF8200;
+    }
   }
 </style>
