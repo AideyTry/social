@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 17:56:49
- * @LastEditTime: 2022-02-28 23:05:46
+ * @LastEditTime: 2022-03-04 20:27:21
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -35,4 +35,12 @@ export const setComment = (params) => {
 
 export const getComment = (params) => {
 	return request(`/communications/getComment`,'GET', params)
+}
+
+export const setLike = (params) => {
+	return request(`/communications/setLike`,'POST', params)
+}
+
+export const getLike = (params) => {
+	return request(`/communications/getLike`,'GET', params)
 }

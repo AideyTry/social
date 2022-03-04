@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-02-25 15:04:43
+ * @LastEditTime: 2022-03-04 21:47:06
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -30,7 +30,10 @@
         <text>{{ item.username }}</text>
         </view>
         <view>
-          <svg class="icon" aria-hidden="true">
+          <svg v-if="item.likeFlag" class="icon" aria-hidden="true" @click.stop="like(item)">
+            <use xlink:href="#icon-xihuan1"></use>
+          </svg>
+          <svg v-else class="icon" aria-hidden="true" @click.stop="like(item)">
             <use xlink:href="#icon-xihuan"></use>
           </svg>
           <text style="margin-left: 10rpx;">{{item.likes}}</text>
@@ -124,6 +127,33 @@ const goDetail = (item) => {
     uni.navigateTo({
     url: `/pages/index/HobbyDetailMountain?id=${item.id}`,
   });
+}
+
+// 点赞
+const like = (item) => {
+  console.log('item=', item)
+  // item.likeFlag = true
+  let likeIds = uni.getStorageSync('like') || []
+  if(likeIds.includes(item.id)){
+    console.log('isOK=', likeIds)
+    for(let i = 0;i < likeIds.length; i++){
+      if(likeIds[i] === item.id){
+        likeIds.splice(i, 1)
+      }
+    }
+    item.likes -= 1
+    item.likeFlag = false
+    uni.setStorageSync('like', likeIds)
+  } else {
+      
+  item.likes += 1
+  item.likeFlag = true
+  console.log('likeIds=', likeIds)
+  likeIds.unshift(item.id)
+  uni.setStorageSync('like', likeIds)
+  }
+
+
 }
 
 onMounted(() => {
