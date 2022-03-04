@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-03-01 10:37:05
+ * @LastEditTime: 2022-03-05 03:29:53
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -92,17 +92,17 @@
             </uni-list-item>
           </uni-list>
           <!-- <view v-else-if="index === 3"> -->
-            <WaterFall v-else-if="index === 1" :list="werewolfs"/>
-            <WaterFall v-else-if="index === 2" :list="scriptKills"/>
-            <WaterFall v-else-if="index === 3" :list="mountaineers"/>
-            <WaterFall v-else-if="index === 4" :list="travels"/>
+          <WaterFall v-else-if="index === 1" :list="werewolfs" />
+          <WaterFall v-else-if="index === 2" :list="scriptKills" />
+          <WaterFall v-else-if="index === 3" :list="mountaineers" />
+          <WaterFall v-else-if="index === 4" :list="travels" />
           <!-- </view> -->
           <view v-else>待上线</view>
         </scroll-view>
         <!-- <slot></slot> -->
       </swiper-item>
     </swiper>
-  </view> 
+  </view>
 </template>
 
 <script>
@@ -117,7 +117,7 @@ export default {
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import { getVideoList, getHobbyList } from "@/api/hobby.js";
-import WaterFall from './WaterFall.vue'
+import WaterFall from "./WaterFall.vue";
 
 const list = ref([
   { title: "英语", content: [] },
@@ -139,16 +139,18 @@ let swiperIndex = ref(0);
 let navItemWidth = ref(0);
 const navItems = reactive([]);
 const strateies = {
-  'hobby0': (obj) => getEnglishVideos(obj),
-  'hobby1': (obj) => getWerewolf(obj),
-  'hobby2': (obj) => getScriptKill(obj),
-  'hobby3': (obj) => getMountaineers(obj),
-  'hobby4': (obj) => getTravel(obj)
-}
+  hobby0: (obj) => getEnglishVideos(obj),
+  hobby1: (obj) => getWerewolf(obj),
+  hobby2: (obj) => getScriptKill(obj),
+  hobby3: (obj) => getMountaineers(obj),
+  hobby4: (obj) => getTravel(obj),
+};
 const handleScroll = (e) => {
   console.log("e=", e);
-  const { detail: {current} } = e
-  console.log('current=', current)
+  const {
+    detail: { current },
+  } = e;
+  console.log("current=", current);
 };
 const taggleNav = (index) => {
   swiperIndex.value = index;
@@ -159,7 +161,7 @@ const swiperChange = (e) => {
   } = e;
   swiperIndex.value = current;
   navItemWidth.value = navItems[swiperIndex.value].width;
-    strateies[`hobby${current}`]({pageNum: 1, pageSize: 100})
+  strateies[`hobby${current}`]({ pageNum: 1, pageSize: 100 });
   console.log("e=", e);
   console.log("navItemWidth.value=====", navItemWidth.value);
 };
@@ -173,46 +175,47 @@ onMounted(() => {
     navItemWidth.value = navItems[swiperIndex.value].width;
     console.log("items===", items);
     console.log("navItemWidth===", navItemWidth.value);
-    getEnglishVideos({ pageNum:1, pageSize: 10 });
+    getEnglishVideos({ pageNum: 1, pageSize: 10 });
   }
 });
 const result = computed(() => `${navItemWidth.value}rpx`);
 
 // 英语
 let videos = ref([]);
-let pageNum = ref(1)
-let pageSize = ref(10)
-let total = ref(0)
-var getEnglishVideos = ({ pageNum = 1, pageSize = 10}) => {
+let pageNum = ref(1);
+let pageSize = ref(10);
+let total = ref(0);
+var getEnglishVideos = ({ pageNum = 1, pageSize = 10 }) => {
   const params = {
     pageNum,
-    pageSize
-  }
+    pageSize,
+  };
   getVideoList(params).then((data) => {
     console.log("data===", data);
     if (data.data.code === 200) {
       videos.value = videos.value.concat(data.data.data);
-      total.value = data.data.total
+      total.value = data.data.total;
     }
   });
 };
 
 const onScrolltolower = (e) => {
-  if(Math.ceil(total.value / pageSize.value) <= pageNum.value){
-    return
+  if (swiperIndex.value === 0) {
+    if (Math.ceil(total.value / pageSize.value) <= pageNum.value) {
+      return;
+    }
+    pageNum.value++;
+    getEnglishVideos({ pageNum: pageNum.value, pageSize: pageSize.value });
   }
-  pageNum.value++
-  getEnglishVideos({pageNum: pageNum.value, pageSize: pageSize.value})
-  
 };
 // 暂时不用
 const onScroll = (e) => {
   const items = uni.createSelectorQuery().selectAll(".content-item");
   console.log("items===", items);
   console.log("onScroll=", e);
-  let scrollHeight = null
-  let scrollTop = null
-  let height = null
+  let scrollHeight = null;
+  let scrollTop = null;
+  let height = null;
 
   const view = uni
     .createSelectorQuery()
@@ -220,8 +223,8 @@ const onScroll = (e) => {
     .scrollOffset((res) => {
       console.log("res===============================", res);
       console.log("竖直滚动位置" + res.scrollTop);
-      scrollHeight = res.scrollHeight
-      scrollTop = res.scrollTop
+      scrollHeight = res.scrollHeight;
+      scrollTop = res.scrollTop;
     })
     .exec();
   view
@@ -233,14 +236,14 @@ const onScroll = (e) => {
       (data) => {
         // console.log("得到节点信息" + JSON.stringify(data));
         console.log("节点的高为" + data.height);
-        height = parseInt(data.height)
+        height = parseInt(data.height);
       }
     )
     .exec();
 
-    if(scrollHeight === (scrollTop + height)){
-      console.log('滚动加载了更多了')
-    }
+  if (scrollHeight === scrollTop + height) {
+    console.log("滚动加载了更多了");
+  }
 };
 
 const goDetail = (item) => {
@@ -251,91 +254,90 @@ const goDetail = (item) => {
 };
 
 // 登山
-let mountaineers = ref([])
-let mountaineersTotal = ref(0)
-const getMountaineers = ({ pageNum = 1, pageSize = 10}) => {
+let mountaineers = ref([]);
+let mountaineersTotal = ref(0);
+const getMountaineers = ({ pageNum = 1, pageSize = 10 }) => {
   const params = {
     pageNum,
     pageSize,
-    hobby: 4
-  }
-  console.log('hobby')
+    hobby: 4,
+  };
+  console.log("hobby");
   getHobbyList(params).then((data) => {
     console.log("data===", data);
     if (data.data.code === 200) {
-      console.log('data.data.data=', data.data.data)
-      mountaineers.value = data.data.data
-      mountaineersTotal.value = data.data.total
+      console.log("data.data.data=", data.data.data);
+      mountaineers.value = data.data.data;
+      mountaineersTotal.value = data.data.total;
     }
   });
 };
 
 // 狼人杀
-let werewolfs = ref([])
-let werewolfsTotal = ref(0)
-const getWerewolf = ({ pageNum = 1, pageSize = 10}) => {
+let werewolfs = ref([]);
+let werewolfsTotal = ref(0);
+const getWerewolf = ({ pageNum = 1, pageSize = 10 }) => {
   const params = {
     pageNum,
     pageSize,
-    hobby: 2
-  }
-  console.log('hobby')
+    hobby: 2,
+  };
+  console.log("hobby");
   getHobbyList(params).then((data) => {
     console.log("data===", data);
     if (data.data.code === 200) {
-      console.log('data.data.data=', data.data.data)
-      werewolfs.value = data.data.data
-      werewolfsTotal.value = data.data.total
+      console.log("data.data.data=", data.data.data);
+      werewolfs.value = data.data.data;
+      werewolfsTotal.value = data.data.total;
     }
   });
 };
 
 // 剧本杀
-let scriptKills = ref([])
-let scriptKillsTotal = ref(0)
-const getScriptKill = ({ pageNum = 1, pageSize = 10}) => {
+let scriptKills = ref([]);
+let scriptKillsTotal = ref(0);
+const getScriptKill = ({ pageNum = 1, pageSize = 10 }) => {
   const params = {
     pageNum,
     pageSize,
-    hobby: 3
-  }
-  console.log('hobby')
+    hobby: 3,
+  };
+  console.log("hobby");
   getHobbyList(params).then((data) => {
     console.log("data===", data);
     if (data.data.code === 200) {
-      console.log('data.data.data=', data.data.data)
-      scriptKills.value = data.data.data
-      scriptKillsTotal.value = data.data.total
+      console.log("data.data.data=", data.data.data);
+      scriptKills.value = data.data.data;
+      scriptKillsTotal.value = data.data.total;
     }
   });
 };
 
 // 旅游
-let travels = ref([])
-let travelsTotal = ref(0)
-const getTravel = ({ pageNum = 1, pageSize = 10}) => {
+let travels = ref([]);
+let travelsTotal = ref(0);
+const getTravel = ({ pageNum = 1, pageSize = 10 }) => {
   const params = {
     pageNum,
     pageSize,
-    hobby: 5
-  }
-  console.log('hobby')
+    hobby: 5,
+  };
+  console.log("hobby");
   getHobbyList(params).then((data) => {
     console.log("data===", data);
     if (data.data.code === 200) {
-      console.log('data.data.data=', data.data.data)
-      travels.value = data.data.data
-      travelsTotal.value = data.data.total
+      console.log("data.data.data=", data.data.data);
+      travels.value = data.data.data;
+      travelsTotal.value = data.data.total;
     }
   });
 };
-
 </script>
 
 <style lang="scss" scoped>
 .tabs {
 }
-.nav-wraper{
+.nav-wraper {
   background: #fafafa;
 }
 .nav {
@@ -373,7 +375,7 @@ const getTravel = ({ pageNum = 1, pageSize = 10}) => {
 .swiper {
   height: calc(100vh - 80upx);
   padding: 32rpx;
-      background: #fdfdfd;
+  background: #fdfdfd;
 }
 .swiper-scroll {
   height: 100%;
