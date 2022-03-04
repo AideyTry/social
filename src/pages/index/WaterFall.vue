@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-03-04 23:25:09
+ * @LastEditTime: 2022-03-05 03:24:03
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -111,6 +111,7 @@ const imagePreLoading = async () => {
         resolve(imageData);
       };
     });
+    getLikes()
     console.log("img==", img);
   }
 };
@@ -160,7 +161,27 @@ const like = (item) => {
     console.log('like data=', data)
   })
 
+}
 
+const getLikes = () => {
+  const params = {
+    hobby: 4
+  }
+  getLike(params).then(data => {
+    console.log('getLike=', data)
+                if (data.data.code === 200) {
+          const ids = data.data.likes.map(item => item.hobby_id)
+          uni.setStorageSync('like', ids)
+          for(let i= 0; i < waterfallList.value.length; i++){
+            if(ids.includes(waterfallList.value[i].id)){
+              waterfallList.value[i].likeFlag = true
+            } else {
+              waterfallList.value[i].likeFlag = false
+            }
+          }
+          console.log('waterfallList====', waterfallList.value)
+        }
+  })
 }
 
 onMounted(() => {
