@@ -26,6 +26,10 @@
 	flex-wrap: wrap;
 	align-items: center;
 }
+.row-flex{
+	display: flex;
+	align-items: center;
+}
 
 .col {
 	flex-basis: 0;

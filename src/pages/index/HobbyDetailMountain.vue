@@ -1,14 +1,14 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-02-28 23:07:22
+ * @LastEditTime: 2022-03-06 19:36:05
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <div class="hobby-detail">
-    <uni-swiper-dot
+    <!-- <uni-swiper-dot
       :info="info"
       :current="current"
       field="content"
@@ -21,7 +21,12 @@
           </view>
         </swiper-item>
       </swiper>
-    </uni-swiper-dot>
+    </uni-swiper-dot> -->
+    <view class="swiper-box">
+      <view class="swiper-item">
+      <image :src="hobbyInfo.url" class="image"></image>
+      </view>
+    </view>
     <view class="author-wraper">
       <view class="author">
         <view class="author-info">
@@ -77,6 +82,7 @@ export default {
     console.log("options===", options);
   },
   setup(props) {
+    console.log('props=', props)
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
 
@@ -94,8 +100,9 @@ export default {
     };
 
     let hobbyInfo = ref({});
-    const initGetHobbyDetail = (id) => {
-      const params = { id };
+    const initGetHobbyDetail = (obj) => {
+      const { id, hobby } = obj
+      const params = { id, hobby };
       getHobbyDetail(params).then((data) => {
         console.log("data===", data);
         if (data.data.code === 200) {
@@ -159,7 +166,7 @@ export default {
 
     onMounted(() => {
       console.log("userInfo===", userInfo);
-      initGetHobbyDetail(props.id);
+      initGetHobbyDetail({id: props.id, hobby: props.hobby});
     });
     return {
       followText,
@@ -183,7 +190,7 @@ export default {
     width: 100%;
     height: 100%;
     .image {
-      width: 100%;
+      width: inherit;
       height: 100%;
     }
   }

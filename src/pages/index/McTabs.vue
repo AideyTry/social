@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-03-05 03:29:53
+ * @LastEditTime: 2022-03-06 19:26:30
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -92,10 +92,10 @@
             </uni-list-item>
           </uni-list>
           <!-- <view v-else-if="index === 3"> -->
-          <WaterFall v-else-if="index === 1" :list="werewolfs" />
-          <WaterFall v-else-if="index === 2" :list="scriptKills" />
-          <WaterFall v-else-if="index === 3" :list="mountaineers" />
-          <WaterFall v-else-if="index === 4" :list="travels" />
+          <WaterFall v-else-if="index === 1" :list="werewolfs" :activeIndex="2" />
+          <WaterFall v-else-if="index === 2" :list="scriptKills" :activeIndex="3"/>
+          <WaterFall v-else-if="index === 3" :list="mountaineers" :activeIndex="4"/>
+          <WaterFall v-else-if="index === 4" :list="travels" :activeIndex="5"/>
           <!-- </view> -->
           <view v-else>待上线</view>
         </scroll-view>

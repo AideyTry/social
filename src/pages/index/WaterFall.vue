@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-03-05 03:24:03
+ * @LastEditTime: 2022-03-06 19:33:59
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -66,6 +66,10 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  activeIndex: {
+    type: Number,
+    default: 1,
+  }
 });
 let waterfallList = ref([]); // 需要渲染的数据列表
 let waterfallImageWidth = ref(328); // 每一列宽度
@@ -128,8 +132,10 @@ const rankImage = (imageData) => {
 };
 
 const goDetail = (item) => {
+  console.log('item=', item)
+  console.log('props===', props)
     uni.navigateTo({
-    url: `/pages/index/HobbyDetailMountain?id=${item.id}`,
+    url: `/pages/index/HobbyDetailMountain?id=${item.id}&hobby=${props.activeIndex}`,
   });
 }
 

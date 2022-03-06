@@ -11,25 +11,25 @@
     <!-- #ifdef H5 || APP-PLUS -->
     <view class="login">
       <form @submit="formSubmit" @reset="formReset" class="login-in">
-        <view class="row uni-form-item uni-column">
-          <text class="col-8 title">手机号：</text>
+        <view class="row-flex uni-form-item uni-column">
+          <text class="title">手机号：</text>
           <input
-            class="col-16 uni-input"
+            class="uni-input"
             name="phone"
             placeholder="请输入手机号"
             @input="onInput"
           />
         </view>
-        <view class="row uni-form-item uni-column">
-          <text class="col-8 title">验证码：</text>
+        <view class="row-flex uni-form-item uni-column">
+          <text class="title">验证码：</text>
           <input
-            class="col-8 uni-input"
+            class="uni-input"
             name="code"
             placeholder="请输入验证码"
             @input="onInputCode"
           />
           <button
-            class="col-8 code"
+            class="code"
             v-if="codeVisible"
             :disabled="!sendCaptchaEnabled"
             @click="sendCaptcha"
@@ -118,7 +118,7 @@ export default {
       loginVisible: true,
       sendCaptchaEnabled: true,
       codeMessage: "获取验证码",
-      counterTimer: 30,
+      counterTimer: 60,
       phoneNumber: null,
     };
   },
@@ -156,7 +156,7 @@ export default {
       this.codeMessage = "重新发送";
       const timer = setInterval(() => {
         if (this.counterTimer <= 0) {
-          this.counterTimer = 30;
+          this.counterTimer = 60;
           this.sendCaptchaEnabled = true;
           clearInterval(timer);
           this.codeMessage = "获取验证码";
@@ -241,8 +241,8 @@ export default {
 
 .code {
   font-size: 14rpx;
-  height: 80rpx;
-  line-height: 80rpx;
+  height: 60rpx;
+  line-height: 60rpx;
 }
 
 .uni-btn-v {
