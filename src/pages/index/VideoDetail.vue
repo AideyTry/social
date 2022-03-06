@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 21:17:51
- * @LastEditTime: 2022-02-23 12:13:33
+ * @LastEditTime: 2022-03-06 20:01:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -57,7 +57,7 @@ export default {
 
     const getM3u8Resorce = () => {
       const video = document.querySelector("#video");
-      const videoSrc = "https://www.mancao.social/video/output.m3u8";
+      const videoSrc = "https://social-1308251497.cos.ap-guangzhou.myqcloud.com/video/695c8c8a78f7e9a184a17db72e734a63/695c8c8a78f7e9a184a17db72e734a63.m3u8";
       console.log("Hls===", Hls);
       if (Hls.isSupported()) {
         var hls = new Hls();
@@ -73,7 +73,7 @@ export default {
     const options = reactive({
       width: '100%',
       height: '280px',
-      src: "https://social-1308251497.cos.ap-guangzhou.myqcloud.com/video/695c8c8a78f7e9a184a17db72e734a63.m3u8", //视频源
+      src: "https://social-1308251497.cos.ap-guangzhou.myqcloud.com/video/695c8c8a78f7e9a184a17db72e734a63/695c8c8a78f7e9a184a17db72e734a63.m3u8", //视频源
       type: "m3u8", //视频类型
     });
 
