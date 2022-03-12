@@ -55,8 +55,7 @@
       </view>
       <view class="other-login">
         <button
-          open-type="getUserInfo"
-          @getuserinfo="getuserinfo"
+          @click="wechatLogin"
           withCredentials="true"
           class="login-way wechat"
         >
@@ -64,16 +63,14 @@
         </button>
         <!-- </view> -->
         <button
-          open-type="getUserInfo"
-          @getuserinfo="getuserinfo"
+          @click="qqLogin"
           withCredentials="true"
           class="login-way wechat"
         >
           <view class="m-icon m-icon-QQ"></view>
         </button>
         <button
-          open-type="getUserInfo"
-          @getuserinfo="getuserinfo"
+          @click="weiboLogin"
           withCredentials="true"
           class="login-way wechat"
         >
@@ -108,7 +105,7 @@ import { sendCode, codePhoneLogin } from "../../api/user.js";
 import { setToken } from "../../utils/auth.js";
 
 /*  #ifdef  MP-WEIXIN  */
-import { loginWechat } from '../../api/wechat'
+import { loginWechat } from "../../api/wechat";
 /*  #endif  */
 export default {
   data() {
@@ -122,7 +119,7 @@ export default {
     };
   },
   methods: {
-    onInput: function (e) {
+    onInput: function(e) {
       console.log("input e=", e);
       if (/^1[3456789]\d{9}$/.test(e.detail.value)) {
         this.codeVisible = true;
@@ -131,7 +128,7 @@ export default {
         this.codeVisible = false;
       }
     },
-    onInputCode: function (e) {
+    onInputCode: function(e) {
       console.log("code=", e);
       if (/^\d{6}$/.test(e.detail.value)) {
         this.loginVisible = false;
@@ -139,7 +136,7 @@ export default {
         this.loginVisible = true;
       }
     },
-    sendCaptcha: function (e) {
+    sendCaptcha: function(e) {
       console.log("button e=", e);
       if (!this.sendCaptchaEnabled) {
         return;
@@ -164,7 +161,7 @@ export default {
         this.counterTimer--;
       }, 1000);
     },
-    formSubmit: function (e) {
+    formSubmit: function(e) {
       console.log("e=", e);
       console.log(
         "form发生了submit事件，携带数据为：" + JSON.stringify(e.detail.value)
@@ -189,25 +186,43 @@ export default {
         }
       });
     },
-    miniProLogin: function (e) {
+    miniProLogin: function(e) {
       console.log("e===", e);
       uni.login({
         provider: "weixin",
-        success: function (loginRes) {
+        success: function(loginRes) {
           console.log("loginRes=", loginRes.authResult);
         },
       });
     },
-    getInfo: function (e) {
+    wechatLogin: function() {
+      uni.showToast({
+        title: "待上线",
+        duration: 2000,
+      });
+    },
+    qqLogin: function() {
+      uni.showToast({
+        title: "待上线",
+        duration: 2000,
+      });
+    },
+    weiboLogin: function() {
+      uni.showToast({
+        title: "待上线",
+        duration: 2000,
+      });
+    },
+    getInfo: function(e) {
       console.log("登录e=", e);
       uni.login({
-        provider: 'weixin',
-        success: function (loginRes) {
-          console.log('loginRes====', loginRes);
-          const { code } = loginRes
+        provider: "weixin",
+        success: function(loginRes) {
+          console.log("loginRes====", loginRes);
+          const { code } = loginRes;
           loginWechat({
-            code
-          }).then('res===', res)
+            code,
+          }).then("res===", res);
         },
       });
     },
@@ -217,7 +232,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("../../static/iconfont/iconfont-mc/iconfont.css");
-.btn-block{
+.btn-block {
   height: 46px;
   line-height: 46px;
 }
