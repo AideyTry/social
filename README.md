@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-02 16:11:01
- * @LastEditTime: 2022-03-13 00:59:30
+ * @LastEditTime: 2022-03-13 01:07:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -22,4 +22,4 @@
 
 ### 重点思路
 - 文件上传流程图
-![文件上传](assets/fileUploadFlow.png)
+![文件上传](/assets/fileUploadFlow.png)
