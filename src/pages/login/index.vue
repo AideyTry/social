@@ -30,7 +30,6 @@
           />
           <button
             class="code"
-            v-if="codeVisible"
             :disabled="!sendCaptchaEnabled"
             @click="sendCaptcha"
           >
@@ -234,19 +233,20 @@ export default {
   display: flex;
   justify-content: center;
 }
-
 .uni-form-item .title {
-  padding: 20rpx 0;
+  padding: 40rpx 0;
+  font-size: 32rpx;
 }
 
 .code {
+  width: 208rpx;
   font-size: 14rpx;
-  height: 60rpx;
-  line-height: 60rpx;
+  height: 68rpx;
+  line-height: 68rpx;
 }
 
 .uni-btn-v {
-  margin-top: 20rpx;
+  margin-top: 40rpx;
 }
 
 .cut-off-line {
