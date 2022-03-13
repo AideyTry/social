@@ -1,6 +1,6 @@
 <template>
   <view class="login-wraper">
-    <uni-title type="h1" align="center" title="蔓草"></uni-title>
+    <uni-title type="h1" align="center" title="蔓草兴趣"></uni-title>
     <view class="image">
       <image
         style="width: 100%; height: 100%"
