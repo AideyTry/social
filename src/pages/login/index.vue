@@ -8,8 +8,8 @@
         mode=""
       ></image>
     </view>
-    <!-- #ifdef H5 || APP-PLUS -->
     <view class="login">
+      <!-- #ifdef H5 || APP-PLUS -->
       <form @submit="formSubmit" @reset="formReset" class="login-in">
         <view class="row-flex uni-form-item uni-column">
           <text class="title">手机号：</text>
@@ -48,6 +48,8 @@
           </button>
         </view>
       </form>
+      <!-- #endif -->
+      <!-- #ifdef APP-PLUS -->
       <view class="cut-off-line row">
         <view class="col-8 line-left"></view>
         <text>其他登录方式</text>
@@ -77,8 +79,9 @@
           <view class="m-icon m-icon-weibo"></view>
         </button>
       </view>
+      <!-- #endif -->
     </view>
-    <!-- #endif -->
+
     <!-- #ifdef MP-WEIXIN -->
     <button
       type="primary"
