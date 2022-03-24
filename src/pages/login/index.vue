@@ -1,12 +1,15 @@
 <template>
   <view class="login-wraper">
-    <uni-title type="h1" align="center" title="蔓草兴趣"></uni-title>
-    <view class="image">
-      <image
+    <view class="image-wraper">
+      <!-- <image
         style="width: 100%; height: 100%"
         src="../../static/images/login-bg.gif"
         mode=""
-      ></image>
+      ></image> -->
+      <image
+      class="image"
+      src="../../static/logo.png"></image>
+      <text class="logo-title">蔓草兴趣</text>
     </view>
     <view class="login">
       <!-- #ifdef H5 || APP-PLUS -->
@@ -101,6 +104,7 @@
     </button>
 
     <!-- #endif -->
+    <view class="gov-wraper"><uni-link class="gov" :showUnderLine="false" href="https://beian.miit.gov.cn/" text="粤ICP备2021179573号-1"></uni-link></view>
   </view>
 </template>
 <script>
@@ -235,12 +239,31 @@ export default {
 
 <style lang="scss" scoped>
 @import url("../../static/iconfont/iconfont-mc/iconfont.css");
+.login-wraper{
+  // background-color: #fdfdfd;
+}
 .btn-block {
   height: 46px;
   line-height: 46px;
 }
+.image-wraper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 200rpx 0;
 .image {
-  height: 600rpx;
+  height: 284rpx;
+  width: 284rpx;
+  border-radius: 100%;
+}
+.logo-title{
+  margin-top: 40rpx;
+  font-size: 64rpx;
+  font-family: "Times New Roman", Times, serif;
+  color: #434343;
+  font-weight: 600;
+}
 }
 
 .login {
@@ -258,9 +281,12 @@ export default {
 
 .code {
   width: 208rpx;
-  font-size: 14rpx;
+  font-size: 24rpx;
   height: 68rpx;
   line-height: 68rpx;
+}
+uni-button::after{
+  border: none!important;
 }
 
 .uni-btn-v {
@@ -310,6 +336,16 @@ export default {
 }
 
 .auth-btn {
-  margin-top: 50rpx;
+  margin-top: 80rpx;
 }
+.gov-wraper{
+  position: fixed;
+  bottom: 30rpx;
+   width: 100%;
+}
+.gov{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  }
 </style>
