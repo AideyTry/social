@@ -33,7 +33,7 @@
           />
           <button
             class="code"
-            :disabled="!sendCaptchaEnabled"
+            :disabled="(!sendCaptchaEnabled || codeVisible)"
             @click="sendCaptcha"
           >
             {{ codeMessage
@@ -117,7 +117,7 @@ import { loginWechat } from "../../api/wechat";
 export default {
   data() {
     return {
-      codeVisible: false,
+      codeVisible: true,
       loginVisible: true,
       sendCaptchaEnabled: true,
       codeMessage: "获取验证码",
@@ -129,10 +129,10 @@ export default {
     onInput: function(e) {
       console.log("input e=", e);
       if (/^1[3456789]\d{9}$/.test(e.detail.value)) {
-        this.codeVisible = true;
+        this.codeVisible = false;
         this.phoneNumber = e.detail.value;
       } else {
-        this.codeVisible = false;
+        this.codeVisible = true;
       }
     },
     onInputCode: function(e) {
@@ -251,18 +251,18 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 200rpx 0;
+  padding: 100rpx 0;
 .image {
-  height: 284rpx;
-  width: 284rpx;
+  height: 180rpx;
+  width: 180rpx;
   border-radius: 100%;
 }
 .logo-title{
-  margin-top: 40rpx;
-  font-size: 64rpx;
+  margin-top: 6rpx;
+  font-size: 56rpx;
   font-family: "Times New Roman", Times, serif;
   color: #434343;
-  font-weight: 600;
+  font-weight: 500;
 }
 }
 
