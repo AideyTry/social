@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-20 17:46:39
- * @LastEditTime: 2022-01-27 16:00:07
+ * @LastEditTime: 2022-03-24 12:09:23
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -55,7 +55,7 @@ export const user = {
             }else if(!validateObjAttr(userInfo)){
                 uni.showModal({
                     title: '提示',
-                    content: '请完善头像、昵称、生日等个人信息资料',
+                    content: '请完善头像、昵称等个人信息资料',
                     success: function (res) {
                         if (res.confirm) {
                             uni.reLaunch({
