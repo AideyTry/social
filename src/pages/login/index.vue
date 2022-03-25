@@ -240,7 +240,9 @@ export default {
 <style lang="scss" scoped>
 @import url("../../static/iconfont/iconfont-mc/iconfont.css");
 .login-wraper{
-  // background-color: #fdfdfd;
+  background-color: #fdfdfd;
+  position: relative;
+  height: 100vh;
 }
 .btn-block {
   height: 46px;
@@ -336,12 +338,12 @@ uni-button::after{
 }
 
 .auth-btn {
-  margin-top: 80rpx;
+  margin-top: 60rpx;
 }
 .gov-wraper{
-  position: fixed;
-  bottom: 30rpx;
-   width: 100%;
+  position: absolute;
+  bottom: 100rpx;
+  width: 100%;
 }
 .gov{
   display: flex;
