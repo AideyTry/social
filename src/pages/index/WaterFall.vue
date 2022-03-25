@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-03-25 16:23:20
+ * @LastEditTime: 2022-03-25 17:01:36
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,7 +25,7 @@
         :style="{ width: waterfallImageWidth + 'rpx' }"
         :src="item.src"
       ></image>
-     <svg class="video-icon" aria-hidden="true" @click.stop="like(item)">
+     <svg class="video-icon" v-if="item.fileType" aria-hidden="true" @click.stop="like(item)">
         <use xlink:href="#icon-videofill"></use>
       </svg>
       </view>
