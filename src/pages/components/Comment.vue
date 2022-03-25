@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-28 14:49:16
- * @LastEditTime: 2022-03-01 10:14:46
+ * @LastEditTime: 2022-03-25 15:45:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -89,7 +89,7 @@ const getCommentData = () => {
     }
     getComment(params).then(data => {
             console.log('data666666===', data)
-            if(data.statusCode === 200){
+            if(data.data.code === 200){
                 comments.value = data.data.data
                 total.value= data.data.data.length
             }

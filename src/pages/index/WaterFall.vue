@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-03-06 19:33:59
+ * @LastEditTime: 2022-03-25 16:23:20
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,11 +18,17 @@
       :key="item.id"
       @click="goDetail(item)"
     >
+      <view class="waterfall-image-wrapper">
       <image
+        class="waterfall-image"
         mode="widthFix"
         :style="{ width: waterfallImageWidth + 'rpx' }"
         :src="item.src"
       ></image>
+     <svg class="video-icon" aria-hidden="true" @click.stop="like(item)">
+        <use xlink:href="#icon-videofill"></use>
+      </svg>
+      </view>
       <view class="hobby-title" ref="hobbyTitle">{{ item.title }}</view>
       <view class="hobby-info">
         <view class="info">
@@ -213,6 +219,24 @@ watchEffect(() => {
 .waterfall-item {
   position: absolute;
   float: left;
+}
+.waterfall-image-wrapper{
+  position: relative;
+  .waterfall-image{
+    position: absolue;
+  }
+  .video-icon{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2em;
+    height: 2em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    opacity: 0.6;
+  }
 }
 .hobby-title {
   position: relative;

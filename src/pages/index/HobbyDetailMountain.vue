@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-03-06 19:36:05
+ * @LastEditTime: 2022-03-25 15:48:55
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -24,7 +24,8 @@
     </uni-swiper-dot> -->
     <view class="swiper-box">
       <view class="swiper-item">
-      <image :src="hobbyInfo.url" class="image"></image>
+      <image v-if="hobbyInfo.fileType === 0" :src="hobbyInfo.url" class="image"></image>
+      <VideoPlayer v-else :options="options" :key="hobbyInfo.id"></VideoPlayer>
       </view>
     </view>
     <view class="author-wraper">
@@ -65,18 +66,20 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 
 import { getHobbyDetail } from "@/api/hobby.js";
 import { setFollow, getFollow, deleteFollow } from "@/api/communication.js";
 import Comment from "@/pages/components/Comment.vue";
+import VideoPlayer from "@/pages/components/VideoPlayer.vue";
 
 import { formatDate } from "@/utils/util.js";
 
 export default {
   components: {
     Comment,
+    VideoPlayer
   },
   onLoad: function(options) {
     console.log("options===", options);
@@ -85,6 +88,11 @@ export default {
     console.log('props=', props)
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
+
+   const options = reactive({
+      poster: '',
+      src: "", //视频源
+    });
 
     let info = ref([
       {
@@ -108,6 +116,8 @@ export default {
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
           publishDate.value = formatDate(data.data.data.create_time);
+          options.poster = data.data.data.url
+          options.src = data.data.data.video_url
           initFlow();
         }
       });
@@ -175,6 +185,7 @@ export default {
       hobbyInfo,
       info,
       publishDate,
+      options
     };
   },
 };

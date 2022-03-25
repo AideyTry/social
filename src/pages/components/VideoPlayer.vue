@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-19 14:23:05
- * @LastEditTime: 2022-03-19 23:50:59
+ * @LastEditTime: 2022-03-25 15:48:11
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -32,6 +32,7 @@ const src = ref("");
 const poster = ref("")
 
 const videoInit = () => {
+  console.log('props.options=', props.options)
   src.value = props.options.src;
   poster.value = props.options.poster
 };
