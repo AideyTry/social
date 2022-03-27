@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-03-25 15:48:55
+ * @LastEditTime: 2022-03-27 16:36:20
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,7 +25,7 @@
     <view class="swiper-box">
       <view class="swiper-item">
       <image v-if="hobbyInfo.fileType === 0" :src="hobbyInfo.url" class="image"></image>
-      <VideoPlayer v-else :options="options" :key="hobbyInfo.id"></VideoPlayer>
+      <VideoPlayer v-if="hobbyInfo.fileType === 1" :options="options" :key="hobbyInfo.id"></VideoPlayer>
       </view>
     </view>
     <view class="author-wraper">
