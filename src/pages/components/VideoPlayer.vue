@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-19 14:23:05
- * @LastEditTime: 2022-03-25 15:48:11
+ * @LastEditTime: 2022-03-27 16:04:42
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,13 +9,13 @@
 <template>
   <view class="video-wraper">
     <!-- #ifdef H5 -->
-    <video id="video" ref="refdVideo" :src="src" :poster="poster" class="video"></video>
+    <video id="video" ref="refdVideo" :src="srcObj.src" :poster="srcObj.poster" class="video"></video>
     <!-- #endif -->
   </view>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 // import Hls2 from "hls.js";
 
 const props = defineProps({
@@ -28,26 +28,17 @@ const props = defineProps({
   },
 });
 
-const src = ref("");
+const srcObj = reactive({
+  src: '',
+  poster: ''
+})
 const poster = ref("")
 
 const videoInit = () => {
   console.log('props.options=', props.options)
-  src.value = props.options.src;
-  poster.value = props.options.poster
+  srcObj.src = props.options.src;
+  srcObj.poster = props.options.poster
 };
-
-watch(
-  () => {
-    return props.options;
-  },
-  (state) => {
-    videoInit();
-  },
-  {
-    deep: true,
-  }
-);
 
 onMounted(() => {
     videoInit();

@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:41:15
- * @LastEditTime: 2022-02-27 15:44:05
+ * @LastEditTime: 2022-03-27 14:36:31
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -45,7 +45,7 @@ export const request = (url, method, data = {}, contentType = 'application/json'
 			},
 			success: res => {
 				resolve(res)
-				showToast(res.data.msg)
+				// showToast(res.data.msg)
 			},
 			fail: (err) => {
 				showToast('网络请求失败')
