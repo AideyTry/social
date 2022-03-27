@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-19 14:23:05
- * @LastEditTime: 2022-03-27 16:04:42
+ * @LastEditTime: 2022-03-27 16:22:17
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, watch, onMounted, reactive } from "vue";
 // import Hls2 from "hls.js";
 
 const props = defineProps({
@@ -39,6 +39,18 @@ const videoInit = () => {
   srcObj.src = props.options.src;
   srcObj.poster = props.options.poster
 };
+
+watch(
+  () => {
+    return props.options;
+  },
+  (state) => {
+    videoInit();
+  },
+  {
+    deep: true,
+  }
+);
 
 onMounted(() => {
     videoInit();
