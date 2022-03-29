@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-03-29 18:09:54
+ * @LastEditTime: 2022-03-29 22:36:24
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -97,8 +97,9 @@
           <WaterFall v-else-if="index === 3" :list="mountaineers" :activeIndex="4"/>
           <WaterFall v-else-if="index === 4" :list="travels" :activeIndex="5"/>
           <WaterFall v-else-if="index === 5" :list="videoList" :activeIndex="6"/>
+          <WaterFall v-else-if="index === 6" :list="movies" :activeIndex="7"/>
           <!-- </view> -->
-          <view v-else>待上线</view>
+          <!-- <view v-else>待上线</view> -->
         </scroll-view>
         <!-- <slot></slot> -->
       </swiper-item>
@@ -153,7 +154,8 @@ const strateies = {
   hobby2: (obj) => getScriptKill(obj),
   hobby3: (obj) => getMountaineers(obj),
   hobby4: (obj) => getTravel(obj),
-  hobby5: (obj) => getvideoList(obj)
+  hobby5: (obj) => getvideoList(obj),
+  hobby6: (obj) => getMovies(obj)
 };
 const handleScroll = (e) => {
   console.log("e=", e);
@@ -359,6 +361,26 @@ const getvideoList = ({ pageNum = 1, pageSize = 10 }) => {
       console.log("data.data.data=", data.data.data);
       videoList.value = data.data.data;
       videoListTotal.value = data.data.total;
+    }
+  });
+};
+
+// 电影
+let movies = ref([]);
+let moviesTotal = ref(0);
+const getMovies = ({ pageNum = 1, pageSize = 10 }) => {
+  const params = {
+    pageNum,
+    pageSize,
+    hobby: 7,
+  };
+  console.log("hobby");
+  getHobbyList(params).then((data) => {
+    console.log("data===", data);
+    if (data.data.code === 200) {
+      console.log("data.data.data=", data.data.data);
+      movies.value = data.data.data;
+      moviesTotal.value = data.data.total;
     }
   });
 };

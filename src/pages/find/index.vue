@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-03-25 16:59:43
+ * @LastEditTime: 2022-03-29 22:50:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -567,6 +567,8 @@ let hobbys = reactive([
   { value: 1, text: "剧本杀", disable: false },
   { value: 2, text: "登山", disable: false },
   { value: 3, text: "旅游", disable: false },
+  { value: 4, text: "视频", disable: false },
+  { value: 5, text: "电影", disable: false },
 ]);
 let fileTypes = reactive([
   { value: 0, text: "图片", disable: false },
