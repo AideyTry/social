@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-03-29 10:24:22
+ * @LastEditTime: 2022-03-29 23:43:46
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -83,6 +83,9 @@ export default {
   },
   onLoad: function(options) {
     console.log("options===", options);
+  },
+  onReady: function(){
+
   },
   setup(props) {
     console.log('props=', props)
@@ -176,8 +179,36 @@ export default {
       });
     };
 
+    // 导航标题
+    const onNavTitle = (obj) => {
+              const { hobby } = obj
+ const strateies = {
+     'hobby2': () => uni.setNavigationBarTitle({
+    title: '狼人杀'
+  }),
+     'hobby3': () => uni.setNavigationBarTitle({
+    title: '剧本杀'
+  }),
+     'hobby4': () => uni.setNavigationBarTitle({
+    title: '登山'
+  }),
+     'hobby5': () => uni.setNavigationBarTitle({
+    title: '旅游'
+  }),
+     'hobby6': () => uni.setNavigationBarTitle({
+    title: '视频'
+  }),
+     'hobby7': () => uni.setNavigationBarTitle({
+    title: '电影'
+  })
+ }
+ strateies[`hobby${hobby}`]()
+
+    }
+
     onMounted(() => {
       console.log("userInfo===", userInfo);
+      onNavTitle(props)
       initGetHobbyDetail({id: props.id, hobby: props.hobby});
     });
     return {
