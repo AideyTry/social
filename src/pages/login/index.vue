@@ -104,7 +104,7 @@
     </button>
 
     <!-- #endif -->
-    <view class="gov-wraper"><uni-link class="gov" :showUnderLine="false" href="https://beian.miit.gov.cn/" text="粤ICP备2021179573号-1"></uni-link></view>
+    <view class="gov-wraper"><uni-link class="gov" :showUnderLine="false" href="https://beian.miit.gov.cn/" text="粤ICP备2021179573号"></uni-link></view>
   </view>
 </template>
 <script>

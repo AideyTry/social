@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-03-27 16:03:33
+ * @LastEditTime: 2022-03-29 18:17:06
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -178,7 +178,7 @@ const like = (item) => {
 
 const getLikes = () => {
   const params = {
-    hobby: 4
+    hobby: props.activeIndex
   }
   getLike(params).then(data => {
     console.log('getLike=', data)
