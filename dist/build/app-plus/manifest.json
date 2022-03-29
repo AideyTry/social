@@ -5,7 +5,7 @@
     "iPad"
   ],
   "id": "__UNI__15CCA6A",
-  "name": "蔓草",
+  "name": "蔓草兴趣",
   "version": {
     "name": "1.0.0",
     "code": "100"
@@ -159,10 +159,6 @@
         {
           "pagePath": "pages/find/index",
           "text": "分享"
-        },
-        {
-          "pagePath": "pages/message/index",
-          "text": "消息"
         },
         {
           "pagePath": "pages/user/index",

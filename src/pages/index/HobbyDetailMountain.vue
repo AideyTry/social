@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-03-27 16:36:20
+ * @LastEditTime: 2022-03-29 10:24:22
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,7 +25,7 @@
     <view class="swiper-box">
       <view class="swiper-item">
       <image v-if="hobbyInfo.fileType === 0" :src="hobbyInfo.url" class="image"></image>
-      <VideoPlayer v-if="hobbyInfo.fileType === 1" :options="options" :key="hobbyInfo.id"></VideoPlayer>
+      <VideoPlayer v-if="hobbyInfo.fileType === 1" :options="{src: hobbyInfo.video_url, poster: hobbyInfo.url}" :key="hobbyInfo.id"></VideoPlayer>
       </view>
     </view>
     <view class="author-wraper">
@@ -116,6 +116,8 @@ export default {
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
           publishDate.value = formatDate(data.data.data.create_time);
+          console.log('hobbyInfo.value===', hobbyInfo.value)
+          console.log('data.data.data.url===', data.data.data.url)
           options.poster = data.data.data.url
           options.src = data.data.data.video_url
           initFlow();
