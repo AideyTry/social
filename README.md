@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-02 16:11:01
- * @LastEditTime: 2022-03-13 01:08:47
+ * @LastEditTime: 2022-03-30 11:10:00
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -12,7 +12,7 @@
 # 蔓草兴趣
 ### 简介
 - 蔓草兴趣为一款兴趣爱好分享社交应用
-- Web网址: https://www.mancao.social
+- h5网址: https://www.mancao.social
 
 ### 后端服务仓库地址
 - https://github.com/AideyTry/mancao-back-end
