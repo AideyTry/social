@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-03-29 22:50:28
+ * @LastEditTime: 2022-03-30 18:10:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -46,7 +46,12 @@
     </view> -->
     <uni-forms ref="form" :modelValue="formData" :rules="rules">
       <view class="info-item">
-        <uni-forms-item required label="标    题：" name="title">
+        <uni-forms-item
+          required
+          label="标    题："
+          name="title"
+          label-width="80"
+        >
           <uni-easyinput
             v-model="title"
             placeholder="请输入标题"
@@ -57,7 +62,12 @@
         <!-- <view class="title-wraper">
           <text class="title">个人签名</text>
         </view> -->
-        <uni-forms-item required label="兴    趣：" name="hobby">
+        <uni-forms-item
+          required
+          label="兴    趣："
+          name="hobby"
+          label-width="80"
+        >
           <!-- <uni-data-checkbox
             :value="hobby"
             :multiple="false"
@@ -83,7 +93,12 @@
         </uni-forms-item>
       </view>
       <view class="info-item">
-        <uni-forms-item required label="文件类型：" name="fileType">
+        <uni-forms-item
+          required
+          label="文件类型："
+          name="fileType"
+          label-width="80"
+        >
           <!-- <uni-data-checkbox
             :multiple="false"
             :value="fileType"
@@ -93,8 +108,8 @@
           <radio-group class="uni-list" @change="typeChange">
             <label
               class="uni-list-cell uni-list-cell-pd"
-              v-for="(item, index) in fileTypes"
-              :key="index"
+              v-for="item in fileTypes"
+              :key="item.value"
             >
               <view>
                 <radio :id="item.value" :value="item.value"></radio>
@@ -109,7 +124,12 @@
         </uni-forms-item>
       </view>
       <view class="info-item">
-        <uni-forms-item required label="内    容：" name="content">
+        <uni-forms-item
+          required
+          label="内    容："
+          name="content"
+          label-width="80"
+        >
           <uni-easyinput
             type="textarea"
             :maxlength="-1"
@@ -136,7 +156,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, computed } from "vue";
+import { reactive, ref, computed, watch } from "vue";
 import { useStore } from "vuex";
 import qs from "qs";
 import SparkMD5 from "spark-md5";
@@ -155,7 +175,7 @@ let uploadText = ref("暂停");
 let uploadFlag = ref(false);
 let uploadBtn = ref(false);
 let abort = ref(false);
-let uploadLoading = ref(false)
+let uploadLoading = ref(false);
 
 const success = (e) => {
   console.log("e===", e);
@@ -208,7 +228,7 @@ let sendIndex = ref(0);
  */
 const complete = () => {
   console.log("去调用接口合并文件");
-  const { avatar, username } = userInfo
+  const { avatar, username } = userInfo;
   const params = {
     hash: hash.value,
     title: formData.title,
@@ -216,12 +236,12 @@ const complete = () => {
     fileType: formData.fileType,
     content: formData.content,
     avatar,
-    username
+    username,
   };
   mergeFile(params).then((data) => {
     console.log("data===", data);
     uploadFlag.value = false;
-    uploadLoading.value = false
+    uploadLoading.value = false;
     // progressPercent.value  = 100
   });
 };
@@ -354,7 +374,7 @@ const sendRequest = async () => {
 
 const sends = async (tempFile) => {
   console.log("tempFiles===", tempFile);
-  uploadLoading.value = true
+  uploadLoading.value = true;
   const buffer = await fileParse(tempFile, "buffer");
   const spark = new SparkMD5.ArrayBuffer();
   let suffix;
@@ -476,8 +496,8 @@ const onSelectImage = async (e) => {
   const file = tempFiles[0];
   const result = await fileParse(file, "base64");
   console.log("result===", result);
-  uploadLoading.value = true
-  const { avatar, username } = userInfo
+  uploadLoading.value = true;
+  const { avatar, username } = userInfo;
   uploadImage(
     qs.stringify({
       chunk: encodeURIComponent(result),
@@ -487,7 +507,7 @@ const onSelectImage = async (e) => {
       fileType: formData.fileType,
       content: formData.content,
       avatar,
-      username
+      username,
     })
   ).then((data) => {
     console.log("data===", data);
@@ -496,7 +516,7 @@ const onSelectImage = async (e) => {
     } = data;
     if (code === 200) {
       progressPercent.value = 100;
-      uploadLoading.value = false
+      uploadLoading.value = false;
     }
   });
 };
@@ -568,9 +588,8 @@ let hobbys = reactive([
   { value: 2, text: "登山", disable: false },
   { value: 3, text: "旅游", disable: false },
   { value: 4, text: "视频", disable: false },
-  { value: 5, text: "电影", disable: false },
 ]);
-let fileTypes = reactive([
+let fileTypes = ref([
   { value: 0, text: "图片", disable: false },
   { value: 1, text: "视频", disable: false },
 ]);
@@ -595,10 +614,10 @@ const submit = () => {
     .then((res) => {
       console.log("表单数据信息：", res);
       const { fileType, title, content, hobby } = res;
-      formData.content = content
-      formData.title = title
-      formData.fileType = fileType
-      formData.hobby = hobby
+      formData.content = content;
+      formData.title = title;
+      formData.fileType = fileType;
+      formData.hobby = hobby;
       if (fileType === 0) {
         onUploadImage();
       } else {
@@ -609,11 +628,40 @@ const submit = () => {
       console.log("表单错误信息：", err);
     });
 };
+
+// 监听
+watch(
+  () => {
+    return hobby.value;
+  },
+  (state) => {
+    console.log("state=", state);
+    switch (state) {
+      case 0:
+      case 1:
+        fileTypes.value = [{ value: 0, text: "图片", disable: false }];
+        break;
+      case 2:
+      case 3:
+        fileTypes.value = [
+          { value: 0, text: "图片", disable: false },
+          { value: 1, text: "视频", disable: false },
+        ];
+        break;
+      case 4:
+        fileTypes.value = [{ value: 1, text: "视频", disable: false }];
+        break;
+    }
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <style lang="scss" scoped>
 .share-wraper {
-  padding-top: 100rpx;
+  padding: 100rpx 30rpx 0;
   .progress-large-file {
     display: flex;
   }

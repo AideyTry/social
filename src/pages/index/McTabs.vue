@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-03-29 22:36:24
+ * @LastEditTime: 2022-03-30 17:18:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -97,7 +97,7 @@
           <WaterFall v-else-if="index === 3" :list="mountaineers" :activeIndex="4"/>
           <WaterFall v-else-if="index === 4" :list="travels" :activeIndex="5"/>
           <WaterFall v-else-if="index === 5" :list="videoList" :activeIndex="6"/>
-          <WaterFall v-else-if="index === 6" :list="movies" :activeIndex="7"/>
+          <!-- <WaterFall v-else-if="index === 6" :list="movies" :activeIndex="7"/> -->
           <!-- </view> -->
           <!-- <view v-else>待上线</view> -->
         </scroll-view>
@@ -139,10 +139,6 @@ const list = ref([
     {
     title: "视频",
     content: [],
-  },
-    {
-    title: "电影",
-    content: [],
   }
 ]);
 let swiperIndex = ref(0);
@@ -154,8 +150,8 @@ const strateies = {
   hobby2: (obj) => getScriptKill(obj),
   hobby3: (obj) => getMountaineers(obj),
   hobby4: (obj) => getTravel(obj),
-  hobby5: (obj) => getvideoList(obj),
-  hobby6: (obj) => getMovies(obj)
+  hobby5: (obj) => getvideoList(obj)
+  // hobby6: (obj) => getMovies(obj)
 };
 const handleScroll = (e) => {
   console.log("e=", e);
@@ -366,24 +362,24 @@ const getvideoList = ({ pageNum = 1, pageSize = 10 }) => {
 };
 
 // 电影
-let movies = ref([]);
-let moviesTotal = ref(0);
-const getMovies = ({ pageNum = 1, pageSize = 10 }) => {
-  const params = {
-    pageNum,
-    pageSize,
-    hobby: 7,
-  };
-  console.log("hobby");
-  getHobbyList(params).then((data) => {
-    console.log("data===", data);
-    if (data.data.code === 200) {
-      console.log("data.data.data=", data.data.data);
-      movies.value = data.data.data;
-      moviesTotal.value = data.data.total;
-    }
-  });
-};
+// let movies = ref([]);
+// let moviesTotal = ref(0);
+// const getMovies = ({ pageNum = 1, pageSize = 10 }) => {
+//   const params = {
+//     pageNum,
+//     pageSize,
+//     hobby: 7,
+//   };
+//   console.log("hobby");
+//   getHobbyList(params).then((data) => {
+//     console.log("data===", data);
+//     if (data.data.code === 200) {
+//       console.log("data.data.data=", data.data.data);
+//       movies.value = data.data.data;
+//       moviesTotal.value = data.data.total;
+//     }
+//   });
+// };
 </script>
 
 <style lang="scss" scoped>
