@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-09 17:32:15
- * @LastEditTime: 2022-01-10 21:46:59
+ * @LastEditTime: 2022-03-31 13:48:17
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -15,7 +15,7 @@
         <view class="title" v-show="title">{{ title }}</view>
         <!-- </slot> -->
         <view class="content-hint"
-          >请按实际情况认真选择性别，确认后性别无法修改！</view
+          >确定性别后无法修改！</view
         >
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
           <!-- <slot name="content"> -->
@@ -29,7 +29,7 @@
         </uni-forms>
         <!-- <slot name="btn"> -->
         <view class="btnbox">
-          <button type="primary" @click="submitForm" class="btn">确定</button>
+          <button @click="submitForm" class="btn">确定</button>
         </view>
         <!-- </slot> -->
       </view>
@@ -112,9 +112,9 @@ const submitForm = () => {
   height: 100vh;
   z-index: 10000;
   .content-hint {
-    text-indent: 2em;
-    margin: 20rpx 0;
-    color: #00d0ff;
+    margin: 40rpx 0;
+    color: #363636;
+    text-align: center;
   }
   ._shade {
     width: 100%;
@@ -149,7 +149,7 @@ const submitForm = () => {
         font-size: 32rpx;
         font-weight: bold;
         padding: 15rpx 0 0;
-        color: #06f;
+        color: #363636;
         // border-bottom: 1upx solid #e1e1e1;
       }
       .content {
