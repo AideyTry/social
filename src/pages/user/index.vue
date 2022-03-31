@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-03-05 15:33:34
+ * @LastEditTime: 2022-03-30 18:21:20
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,7 +14,7 @@
           :src="userInfo.avatar ? userInfo.avatar : defaultAvatar"
           class="avatar"
         ></image>
-        <text class="avatar-title">请上传图片</text>
+        <text class="avatar-title" v-if="!userInfo.avatar">请上传图片</text>
       </view>
       <view class="userinfo-detail">
         <text>用户名：{{ userInfo.username }}</text>

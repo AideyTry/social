@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-03-30 18:10:58
+ * @LastEditTime: 2022-03-31 10:09:47
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -503,7 +503,7 @@ const onSelectImage = async (e) => {
       chunk: encodeURIComponent(result),
       filename: file.name,
       title: formData.title,
-      hobby: formData.hobby,
+      hobby: parseInt(formData.hobby),
       fileType: formData.fileType,
       content: formData.content,
       avatar,
