@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-03-03 22:58:55
+ * @LastEditTime: 2022-04-05 16:22:06
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -21,7 +21,9 @@
     <view class="ul">
       <view class="li" v-for="item in infoList" :key="item.id">
         <view class="comment">
-          <view>回复</view>
+          <svg class="replay-icon" aria-hidden="true">
+            <use xlink:href="#icon-pinglunhuifu"></use>
+          </svg>
           <view><text>2</text></view>
         </view>
         <view class="publish-info">
@@ -50,7 +52,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 const props = defineProps({
   list: {
     type: Array,
@@ -58,10 +60,22 @@ const props = defineProps({
   },
 });
 let infoList = ref([]);
+
+watch(
+  () => props.list,
+  (state) => {
+    console.log("state=", state);
+    infoList.value = state;
+  },
+  {
+    deep: true,
+  }
+);
+
 onMounted(() => {
   console.log("props=", props);
-  infoList.value = props.list;
-  console.log("infoList.value=", infoList.value);
+
+  // console.log("infoList.value=", infoList.value);
 });
 </script>
 
@@ -90,8 +104,13 @@ onMounted(() => {
     height: 50rpx;
     border-radius: 10rpx;
   }
-  .username,.update-time {
+  .username,
+  .update-time {
     margin-left: 30rpx;
   }
 }
+  .replay-icon{
+    width: 1.2rem;
+    height: 1.2rem;
+  }
 </style>

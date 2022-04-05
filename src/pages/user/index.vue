@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-03-30 18:21:20
+ * @LastEditTime: 2022-04-05 16:44:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -40,7 +40,7 @@
       </view>
     </view>
     <view>
-      <InfoList :list="publishs" v-if="publishs.length" />
+      <InfoList :list="publishs"/>
     </view>
     <button @click="onLogout" style="margin-top: 20rpx;">退出</button>
   </view>
@@ -99,6 +99,7 @@ let activeIndex = ref(0);
 let publishs = ref([]);
 
 const getPublishData = () => {
+  publishs.value = []
   getPublish().then((data) => {
     console.log("data getPublish=", data);
     if (data.data.code === 200) {
@@ -110,10 +111,11 @@ const getPublishData = () => {
 // 喜爱
 let likes = ref([]);
 const getMylikesData = () => {
+  publishs.value = []
   getMylikes().then((data) => {
     console.log("data likes=", data);
     if (data.data.code === 200) {
-      likes.value = data.data.data;
+      publishs.value = data.data.data;
     }
   });
 };
