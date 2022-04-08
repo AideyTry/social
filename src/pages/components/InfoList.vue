@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-04-08 10:26:07
+ * @LastEditTime: 2022-04-08 14:25:03
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,7 +19,7 @@
       ></uni-list-item>
     </uni-list> -->
     <view class="ul">
-      <view class="li" v-for="item in infoList" :key="item.id">
+      <view class="li" v-for="item in infoList" :key="item.id"  @click="goDetail(item)">
         <view class="comment">
           <svg class="replay-icon" aria-hidden="true">
             <use xlink:href="#icon-pinglunhuifu"></use>
@@ -39,6 +39,13 @@
               >{{ $filters.commentTime(item.create_time) }}&nbsp;更新</text
             >
           </view>
+        </view>
+        <view class="img">
+            <image
+              class="img-url"
+              mode="aspectFit"
+              :src="item.url || ''"
+            ></image>
         </view>
       </view>
     </view>
@@ -60,6 +67,13 @@ const props = defineProps({
   },
 });
 let infoList = ref([]);
+
+const goDetail = (item) => {
+  console.log('item=', item)
+    uni.navigateTo({
+    url: `/pages/index/HobbyDetailMountain?id=${item.id}&hobby=${item.hobby}`,
+  });
+}
 
 watch(
   () => props.list,
@@ -84,6 +98,15 @@ onMounted(() => {
   display: flex;
   padding: 20rpx;
   border-bottom: 1rpx solid #ccc;
+  .img{
+    margin-left: 20rpx;
+    width: 133rpx;
+    height: 100rpx;
+    .img-url{
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 .publish-info {
   margin-left: 40rpx;
