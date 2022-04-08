@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-04-05 16:22:06
+ * @LastEditTime: 2022-04-08 10:26:07
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -24,7 +24,7 @@
           <svg class="replay-icon" aria-hidden="true">
             <use xlink:href="#icon-pinglunhuifu"></use>
           </svg>
-          <view><text>2</text></view>
+          <view><text>{{item.comments || 0}}</text></view>
         </view>
         <view class="publish-info">
           <view class="title">{{ item.title }} </view>
@@ -32,7 +32,7 @@
             <image
               class="avatar"
               mode="aspectFit"
-              :src="item.url || ''"
+              :src="item.avatar || ''"
             ></image>
             <text class="username">{{ item.username }}</text>
             <text class="update-time"
