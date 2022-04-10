@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-04-05 16:44:39
+ * @LastEditTime: 2022-04-10 23:30:50
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -23,10 +23,12 @@
     </view>
     <view class="fans-wraper">
       <view class="follows"
-        ><text>关注</text>&nbsp;<text>{{ follows }}</text></view
+        @click="goFollows"
+        ><text>关注</text>&nbsp;<text>{{ follows.length }}</text></view
       >
       <view class="fans"
-        ><text>粉丝</text>&nbsp;<text>{{ fans }}</text></view
+        @click="goFans"
+        ><text>粉丝</text>&nbsp;<text>{{ fans.length }}</text></view
       >
     </view>
     <view class="publish-wraper">
@@ -75,8 +77,8 @@ const onUserInfo = () => {
 };
 
 // fans
-let follows = ref(0);
-let fans = ref(0);
+let follows = ref([]);
+let fans = ref([]);
 let getFollowsData = () => {
   getFollows().then((data) => {
     console.log("getfollows =", data);
@@ -93,6 +95,26 @@ let getFansData = () => {
     }
   });
 };
+
+const goFollows = () => {
+  const userids = []
+  for(let item of follows.value){
+    userids.push(item.follow_id)
+  }
+  uni.navigateTo({
+    url: `/pages/user/info/Follow?type=${0}&userids=${encodeURIComponent(JSON.stringify(userids))}`,
+  });
+}
+
+const goFans = () => {
+  const userids = []
+  for(let item of fans.value){
+    userids.push(item.user_id)
+  }
+  uni.navigateTo({
+    url: `/pages/user/info/Follow?type=${1}&userids=${encodeURIComponent(JSON.stringify(userids))}`,
+  });
+}
 
 // publish
 let activeIndex = ref(0);

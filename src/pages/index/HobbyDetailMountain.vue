@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-03-29 23:43:46
+ * @LastEditTime: 2022-04-10 21:59:13
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -60,7 +60,7 @@
       </view>
     </view>
     <view class="comment-wraper">
-      <Comment :hobbyInfo="hobbyInfo" v-if="hobbyInfo.hobby_4_id" />
+      <Comment v-if="hobbyInfo.id" :hobbyInfo="hobbyInfo" :key="hobbyInfo.id"/>
     </view>
   </div>
 </template>
@@ -158,6 +158,12 @@ export default {
         if (data.data.code === 200) {
           followText.value = "已关注";
           isFlollow.value = true;
+        } else if(data.data.code === 400) {
+          uni.showToast({
+            title: data.data.msg,
+            icon: 'none',
+            duration: 2000
+          })
         }
       });
     };
@@ -181,6 +187,7 @@ export default {
 
     // 导航标题
     const onNavTitle = (obj) => {
+      console.log('obj===================================================================================', obj)
               const { hobby } = obj
  const strateies = {
      'hobby2': () => uni.setNavigationBarTitle({

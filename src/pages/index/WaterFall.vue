@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-03-29 18:17:06
+ * @LastEditTime: 2022-04-10 14:14:35
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -169,7 +169,7 @@ const like = (item) => {
   likeIds.unshift(item.id)
   uni.setStorageSync('like', likeIds)
   }
-  const params = { hobby: 4, hobbyId: item.id }
+  const params = { hobby: props.activeIndex, hobbyId: item.id }
   setLike(params).then(data => {
     console.log('like data=', data)
   })

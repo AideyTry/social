@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-28 14:49:16
- * @LastEditTime: 2022-03-25 15:45:28
+ * @LastEditTime: 2022-04-10 16:12:13
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -55,7 +55,7 @@ export default {
 </script>
 <script setup>
 import { setComment, getComment } from "@/api/communication.js";
-import { ref, onMounted } from "vue";
+import { ref, nextTick, onMounted } from "vue";
 const props = defineProps({
   hobbyInfo: {
     type: Object,
@@ -73,7 +73,8 @@ const confirm = (e) => {
     let params = {
         comment: value,
         detailUserId: props.hobbyInfo.user_id,
-        hobbyId: props.hobbyInfo.hobby_4_id
+        hobbyId: props.hobbyInfo[`hobby_${props.hobbyInfo.hobby}_id`],
+        hobby: props.hobbyInfo.hobby
     }
     setComment(params).then(data => {
         if(data.statusCode === 200){
@@ -84,8 +85,10 @@ const confirm = (e) => {
 }
 
 const getCommentData = () => {
+  console.log('props.hobbyInfo=======================', props.hobbyInfo)
     let params = {
-        hobbyId: props.hobbyInfo.hobby_4_id
+        hobbyId: props.hobbyInfo[`hobby_${props.hobbyInfo.hobby}_id`],
+        hobby: props.hobbyInfo.hobby
     }
     getComment(params).then(data => {
             console.log('data666666===', data)
@@ -97,7 +100,9 @@ const getCommentData = () => {
 }
 
 onMounted(() => {
+  nextTick(() => {
     getCommentData()
+  })
 })
 </script>
 

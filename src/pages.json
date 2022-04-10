@@ -71,6 +71,13 @@
       }
     },
     {
+      "path": "pages/user/info/Follow",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
       "path": "pages/user/info/Editor",
       "style": {
         "navigationBarTitleText": "",
