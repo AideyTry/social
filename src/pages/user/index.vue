@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-04-10 23:30:50
+ * @LastEditTime: 2022-04-11 22:50:36
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -42,7 +42,7 @@
       </view>
     </view>
     <view>
-      <InfoList :list="publishs"/>
+      <InfoList :list="publishs" :activeIndex="activeIndex"/>
     </view>
     <button @click="onLogout" style="margin-top: 20rpx;">退出</button>
   </view>

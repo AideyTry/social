@@ -103,6 +103,22 @@
           "titleNView": false
         }
       }
+    },
+    {
+      "path": "pages/user/info/PublicDetail",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/user/info/LikeDetail",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
     }
   ],
   /*  #ifdef MP-WEIXIN  */
