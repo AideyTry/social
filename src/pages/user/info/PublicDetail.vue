@@ -60,6 +60,7 @@ import { ref, reactive, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 
 import { getHobbyDetail } from "@/api/hobby.js";
+import { deletePublish } from "@/api/publish.js";
 import { setFollow, getFollow, deleteFollow } from "@/api/communication.js";
 import Comment from "@/pages/components/Comment.vue";
 import VideoPlayer from "@/pages/components/VideoPlayer.vue";
@@ -126,16 +127,45 @@ export default {
     let publishDate = ref(null);
 
     // 编辑
-    let operations = ref([
-      "编辑",
-      "删除",
-    ]);
+    let operations = ref(["编辑", "删除"]);
     let activeOperationIndex = ref(0);
+    const onUpdate = () => {};
+    const onDelete = (info) => {
+      console.log("info==", info);
+      uni.showModal({
+        title: "删除",
+        content: "确定删除？",
+        success: function(res) {
+          if (res.confirm) {
+            const params = {
+              hobby: props.hobby,
+              id: props.id,
+            };
+            deletePublish(params).then((data) => {
+              if (data.data.code === 200) {
+                uni.showToast({
+                  title: '删除成功',
+                  duration: 2000
+                });
+                goBack()
+              }
+            });
+          } else if (res.cancel) {
+          }
+        },
+      });
+    };
     const onEdit = (e) => {
       const {
         detail: { value },
       } = e;
+      console.log("value=", value);
       activeOperationIndex.value = value;
+      if (activeOperationIndex.value === 1) {
+        onDelete(props);
+      } else {
+        onUpdate(props);
+      }
     };
 
     onMounted(() => {
@@ -150,7 +180,7 @@ export default {
       goBack,
       onEdit,
       operations,
-      activeOperationIndex
+      activeOperationIndex,
     };
   },
 };
