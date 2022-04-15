@@ -1,31 +1,25 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-04-10 21:59:13
+ * @LastEditTime: 2022-04-15 14:45:16
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <div class="hobby-detail">
-    <!-- <uni-swiper-dot
-      :info="info"
-      :current="current"
-      field="content"
-      :mode="mode"
-    >
-      <swiper class="swiper-box" @change="change">
-        <swiper-item v-for="(item, index) in info" :key="index">
+    <view class="swiper-box" v-if="hobbyInfo.fileType === 0">
+      <swiper class="swiper-box" :indicator-dots="hobbyInfo.photos.length > 1">
+        <swiper-item v-for="(item, index) in hobbyInfo.photos" :key="index">
           <view class="swiper-item">
-            <image :src="item.content" class="image"></image>
+            <image :src="item" class="image"></image>
           </view>
         </swiper-item>
       </swiper>
-    </uni-swiper-dot> -->
-    <view class="swiper-box">
+    </view>
+    <view class="swiper-box" v-if="hobbyInfo.fileType === 1">
       <view class="swiper-item">
-      <image v-if="hobbyInfo.fileType === 0" :src="hobbyInfo.url" class="image"></image>
-      <VideoPlayer v-if="hobbyInfo.fileType === 1" :options="{src: hobbyInfo.video_url, poster: hobbyInfo.url}" :key="hobbyInfo.id"></VideoPlayer>
+      <VideoPlayer :options="{src: hobbyInfo.video_url, poster: hobbyInfo.url}" :key="hobbyInfo.id"></VideoPlayer>
       </view>
     </view>
     <view class="author-wraper">
@@ -103,12 +97,6 @@ export default {
           "https://social-1308251497.cos.ap-guangzhou.myqcloud.com/images/4.jfif",
       },
     ]);
-    let current = ref(0);
-    let mode = ref("default");
-
-    const change = (e) => {
-      current.value = e.detail.current;
-    };
 
     let hobbyInfo = ref({});
     const initGetHobbyDetail = (obj) => {

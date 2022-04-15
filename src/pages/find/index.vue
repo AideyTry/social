@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-03-31 10:09:47
+ * @LastEditTime: 2022-04-15 14:59:47
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -491,17 +491,25 @@ const onSelectImage = async (e) => {
   console.log("image=", e);
   if (!e) return;
   const { tempFilePaths, tempFiles } = e;
-  // uni-ui 上传组件使用
-  // const file = tempFiles[0].file;
-  const file = tempFiles[0];
-  const result = await fileParse(file, "base64");
-  console.log("result===", result);
   uploadLoading.value = true;
+  const files = Object.assign([], tempFiles)
+  const fileAll = []
+  for(let item of files){
+    const chunk = await fileParse(item, "base64")
+    fileAll.push({
+      filename: item.name,
+      chunk: chunk
+    })
+  }
+  const buffer = await fileParse(tempFiles[0], "buffer");
+  const spark = new SparkMD5.ArrayBuffer();
+  spark.append(buffer);
+  const hash = spark.end();
   const { avatar, username } = userInfo;
   uploadImage(
     qs.stringify({
-      chunk: encodeURIComponent(result),
-      filename: file.name,
+      fileAll,
+      hash,
       title: formData.title,
       hobby: parseInt(formData.hobby),
       fileType: formData.fileType,
