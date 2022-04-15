@@ -22,15 +22,18 @@
         </view>
       </view>
     </view>
-    <view class="swiper-box">
+    <view class="swiper-box" v-if="hobbyInfo.fileType === 0">
+      <swiper class="swiper-box" :indicator-dots="hobbyInfo.photos.length > 1">
+        <swiper-item v-for="(item, index) in hobbyInfo.photos" :key="index">
+          <view class="swiper-item">
+            <image :src="item" class="image" mode="aspectFit"></image>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+    <view class="swiper-box" v-if="hobbyInfo.fileType === 1">
       <view class="swiper-item">
-        <image
-          v-if="hobbyInfo.fileType === 0"
-          :src="hobbyInfo.url"
-          class="image"
-        ></image>
         <VideoPlayer
-          v-if="hobbyInfo.fileType === 1"
           :options="{ src: hobbyInfo.video_url, poster: hobbyInfo.url }"
           :key="hobbyInfo.id"
         ></VideoPlayer>
@@ -191,7 +194,7 @@ export default {
 }
 .swiper-box {
   width: 100%;
-  height: 750rpx;
+  height: 554rpx;
   .swiper-item {
     width: 100%;
     height: 100%;

@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-04-15 14:45:16
+ * @LastEditTime: 2022-04-15 16:59:35
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -12,7 +12,7 @@
       <swiper class="swiper-box" :indicator-dots="hobbyInfo.photos.length > 1">
         <swiper-item v-for="(item, index) in hobbyInfo.photos" :key="index">
           <view class="swiper-item">
-            <image :src="item" class="image"></image>
+            <image :src="item" class="image" mode="aspectFit"></image>
           </view>
         </swiper-item>
       </swiper>
@@ -224,7 +224,7 @@ export default {
 }
 .swiper-box {
   width: 100%;
-  height: 750rpx;
+  height: 554rpx;
   .swiper-item {
     width: 100%;
     height: 100%;
