@@ -132,7 +132,12 @@ export default {
     // 编辑
     let operations = ref(["编辑", "删除"]);
     let activeOperationIndex = ref(0);
-    const onUpdate = () => {};
+    const onUpdate = (info) => {
+      console.log("info==", info);
+      uni.navigateTo({
+        url: `/pages/user/info/EditDetail?id=${info.id}&hobby=${info.hobby}`,
+      });
+    };
     const onDelete = (info) => {
       console.log("info==", info);
       uni.showModal({
@@ -147,10 +152,10 @@ export default {
             deletePublish(params).then((data) => {
               if (data.data.code === 200) {
                 uni.showToast({
-                  title: '删除成功',
-                  duration: 2000
+                  title: "删除成功",
+                  duration: 2000,
                 });
-                goBack()
+                goBack();
               }
             });
           } else if (res.cancel) {

@@ -113,6 +113,14 @@
       }
     },
     {
+      "path": "pages/user/info/EditDetail",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
       "path": "pages/user/info/LikeDetail",
       "style": {
         "app-plus": {
