@@ -34,7 +34,7 @@
             v-for="(item, index) in photos"
             :key="index"
           >
-            <image mode="aspectFill" :src="item" class="photo"></image>
+            <image mode="aspectFill" :src="item.path" class="photo"></image>
           </view>
           <view class="photo-add-wraper" @click="addImage">
             <text class="photo-add">+</text>
@@ -93,14 +93,16 @@
 <script>
 import { ref, reactive, onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import qs from "qs";
 
 import { getHobbyDetail } from "@/api/hobby.js";
-import { deletePublish } from "@/api/publish.js";
+import { deletePublish, updatePublish } from "@/api/publish.js";
 import { setFollow, getFollow, deleteFollow } from "@/api/communication.js";
 import Comment from "@/pages/components/Comment.vue";
 import VideoPlayer from "@/pages/components/VideoPlayer.vue";
 
 import { formatDate } from "@/utils/util.js";
+import { fileParse } from "@/utils/util.js";
 
 export default {
   components: {
@@ -139,13 +141,12 @@ export default {
       const { id, hobby } = obj;
       const params = { id, hobby };
       getHobbyDetail(params).then((data) => {
-        console.log("data===", data);
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
           publishDate.value = formatDate(data.data.data.create_time);
-          photos.value = hobbyInfo.value.photos;
-          console.log("hobbyInfo.value===", hobbyInfo.value);
-          console.log("data.data.data.url===", data.data.data.url);
+          photos.value = hobbyInfo.value.photos.map((element) => ({
+            path: element,
+          }));
           options.poster = data.data.data.url;
           options.src = data.data.data.video_url;
         }
@@ -224,9 +225,8 @@ export default {
         sourceType: ["album"], //从相册选择
         success: function(res) {
           console.log("res===", res);
-          photos.value = photos.value.concat(
-            JSON.parse(JSON.stringify(res.tempFilePaths))
-          );
+          const { tempFiles } = res;
+          photos.value = photos.value.concat(tempFiles);
           console.log("photos.value====", photos.value);
         },
       });
@@ -235,15 +235,13 @@ export default {
     const form = ref(null);
 
     const changeTitle = (e) => {
-      console.log("title e=", e);
-      const { detail: value } = e
-      hobbyInfo.value.title.value = value
+      const { detail: value } = e;
+      hobbyInfo.value.title.value = value;
     };
 
     const changeContent = (e) => {
-      console.log("changeContent e=", e);
-      const { detail: value } = e
-      hobbyInfo.value.content.value = value
+      const { detail: value } = e;
+      hobbyInfo.value.content.value = value;
     };
 
     /**
@@ -256,15 +254,44 @@ export default {
     const submit = () => {
       form.value
         .validate()
-        .then((res) => {
+        .then(async (res) => {
           console.log("表单数据信息：", res);
-          const { title, content } = res
-          console.log('title, content====', title, content)
-          console.log('photos===', photos.value)
-          const remoteUrls = photos.value.filter(item => item.includes('social-1308251497'))
-          const blobUrls = photos.value.filter(item => item.includes('blob:'))
-          console.log('remoteUrls===', remoteUrls)
-          console.log('blobUrls==', blobUrls)
+          const { title, content } = res;
+          const remoteUrls = photos.value.filter((item) =>
+            item.path.includes("social-1308251497")
+          );
+          const blobUrls = photos.value.filter((item) =>
+            item.path.includes("blob:")
+          );
+          const fileAll = [];
+          for (let item of blobUrls) {
+            const chunk = await fileParse(item, "base64");
+            fileAll.push({
+              filename: item.name,
+              chunk: chunk,
+            });
+          }
+          // const buffer = await fileParse(tempFiles[0], "buffer");
+          // const spark = new SparkMD5.ArrayBuffer();
+          // spark.append(buffer);
+          // const hash = spark.end();
+
+          const urls = remoteUrls[0].path.match(/myqcloud.com\/(\S*)/)[1];
+          const uploadHash = urls.match(/(\S*)\//)[1];
+          const remotePhotos = remoteUrls.map(item => (item.path))
+
+          const params = {
+            uploadHash,
+            uploadFiles: fileAll,
+            remotePhotos,
+            title,
+            id: parseInt(props.id),
+            hobby: parseInt(props.hobby),
+            content,
+          };
+          updatePublish(qs.stringify(params)).then((data) => {
+            console.log("data=", data);
+          });
         })
         .catch((err) => {
           console.log("表单错误信息：", err);
@@ -272,7 +299,6 @@ export default {
     };
 
     onMounted(() => {
-      console.log("userInfo===", userInfo);
       initGetHobbyDetail({ id: props.id, hobby: props.hobby });
     });
     return {
