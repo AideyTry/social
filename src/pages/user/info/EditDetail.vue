@@ -25,7 +25,12 @@
             v-for="(item, index) in photos"
             :key="index"
           >
-              <image mode="aspectFill" :src="item.path" class="photo" @click="onEdit(item, index)"></image>
+            <image
+              mode="aspectFill"
+              :src="item.path"
+              class="photo"
+              @click="onEdit(item, index)"
+            ></image>
           </view>
           <view class="photo-add-wraper" @click="addImage">
             <text class="photo-add">+</text>
@@ -161,30 +166,30 @@ export default {
       console.log("info==", info);
     };
     const onDelete = (index) => {
-      if(photos.value.length <= 1){
+      if (photos.value.length <= 1) {
         uni.showModal({
-          content: '至少需要发布一张图片',
-          confirmText: '知道了',
+          content: "至少需要发布一张图片",
+          confirmText: "知道了",
           showCancel: false,
-          success: function (res) {
+          success: function(res) {
             if (res.confirm) {
-              console.log('用户点击确定');
+              console.log("用户点击确定");
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log("用户点击取消");
             }
-          }
+          },
         });
-        return
+        return;
       }
-      photos.value.splice(index, 1)
-      console.log('photos.value===========', photos.value)
+      photos.value.splice(index, 1);
+      console.log("photos.value===========", photos.value);
     };
     const onEdit = (item, index) => {
-      console.log('item, index===', item, index)
+      console.log("item, index===", item, index);
       uni.showActionSheet({
         itemList: operations,
-        success: function (res) {
-          console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+        success: function(res) {
+          console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
           activeOperationIndex.value = res.tapIndex;
           if (activeOperationIndex.value === 1) {
             onDelete(index);
@@ -192,9 +197,9 @@ export default {
             onUpdate(props);
           }
         },
-        fail: function (res) {
+        fail: function(res) {
           console.log(res.errMsg);
-        }
+        },
       });
     };
 
@@ -268,7 +273,7 @@ export default {
 
           const urls = remoteUrls[0].path.match(/myqcloud.com\/(\S*)/)[1];
           const uploadHash = urls.match(/(\S*)\//)[1];
-          const remotePhotos = remoteUrls.map(item => (item.path))
+          const remotePhotos = remoteUrls.map((item) => item.path);
 
           const params = {
             uploadHash,
@@ -280,6 +285,20 @@ export default {
             content,
           };
           updatePublish(qs.stringify(params)).then((data) => {
+            if (data.data.code === 200) {
+              uni.showToast({
+                title: data.data.msg,
+                duration: 2000,
+              });
+              uni.switchTab({
+                url: "/pages/user/index",
+                success() {
+                  let page = getCurrentPages().pop(); //跳转页面成功之后
+                  if (!page) return;
+                  page.onLoad(); //如果页面存在，则重新刷新页面
+                },
+              });
+            }
             console.log("data=", data);
           });
         })
