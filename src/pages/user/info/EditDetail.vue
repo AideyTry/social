@@ -12,15 +12,6 @@
             ></image>
             <text>{{ hobbyInfo.username || "" }}</text>
           </view>
-          <view>
-            <picker
-              :range="operations"
-              :value="activeOperationIndex"
-              @change="onEdit"
-            >
-              <text>...</text>
-            </picker>
-          </view>
         </view>
       </view>
       <scroll-view
@@ -34,7 +25,7 @@
             v-for="(item, index) in photos"
             :key="index"
           >
-            <image mode="aspectFill" :src="item.path" class="photo"></image>
+              <image mode="aspectFill" :src="item.path" class="photo" @click="onEdit(item, index)"></image>
           </view>
           <view class="photo-add-wraper" @click="addImage">
             <text class="photo-add">+</text>
@@ -165,47 +156,46 @@ export default {
 
     // 编辑
     let operations = ref(["编辑", "删除"]);
-    const defaultAvatar = "/static/images/default_avatar.png";
     let activeOperationIndex = ref(0);
     const onUpdate = (info) => {
       console.log("info==", info);
     };
-    const onDelete = (info) => {
-      console.log("info==", info);
-      uni.showModal({
-        title: "删除",
-        content: "确定删除？",
-        success: function(res) {
-          if (res.confirm) {
-            const params = {
-              hobby: props.hobby,
-              id: props.id,
-            };
-            deletePublish(params).then((data) => {
-              if (data.data.code === 200) {
-                uni.showToast({
-                  title: "删除成功",
-                  duration: 2000,
-                });
-                goBack();
-              }
-            });
-          } else if (res.cancel) {
+    const onDelete = (index) => {
+      if(photos.value.length <= 1){
+        uni.showModal({
+          content: '至少需要发布一张图片',
+          confirmText: '知道了',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定');
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
+        });
+        return
+      }
+      photos.value.splice(index, 1)
+      console.log('photos.value===========', photos.value)
+    };
+    const onEdit = (item, index) => {
+      console.log('item, index===', item, index)
+      uni.showActionSheet({
+        itemList: operations,
+        success: function (res) {
+          console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+          activeOperationIndex.value = res.tapIndex;
+          if (activeOperationIndex.value === 1) {
+            onDelete(index);
+          } else {
+            onUpdate(props);
           }
         },
+        fail: function (res) {
+          console.log(res.errMsg);
+        }
       });
-    };
-    const onEdit = (e) => {
-      const {
-        detail: { value },
-      } = e;
-      console.log("value=", value);
-      activeOperationIndex.value = value;
-      if (activeOperationIndex.value === 1) {
-        onDelete(props);
-      } else {
-        onUpdate(props);
-      }
     };
 
     // 显示的图片组
@@ -302,7 +292,6 @@ export default {
       initGetHobbyDetail({ id: props.id, hobby: props.hobby });
     });
     return {
-      defaultAvatar,
       hobbyInfo,
       photos,
       info,
