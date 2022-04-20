@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, toRefs  } from "vue";
 import { useStore } from "vuex";
 import qs from "qs";
 
@@ -140,7 +140,7 @@ export default {
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
           publishDate.value = formatDate(data.data.data.create_time);
-          photos.value = hobbyInfo.value.photos.map((element) => ({
+          photos.value = hobbyInfo.value.photos.map((element, index) => ({
             path: element,
           }));
           options.poster = data.data.data.url;
@@ -162,8 +162,17 @@ export default {
     // 编辑
     let operations = ref(["编辑", "删除"]);
     let activeOperationIndex = ref(0);
-    const onUpdate = (info) => {
-      console.log("info==", info);
+    const onUpdate = (index) => {
+      // photos.value.splice(index, 1);
+      uni.chooseImage({
+        count: 1, //默认9
+        sizeType: ["original", "compressed"], //可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album"], //从相册选择
+        success: function(res) {
+          const { tempFiles } = res;
+          photos.value[index] = tempFiles[0]
+        },
+      });
     };
     const onDelete = (index) => {
       if (photos.value.length <= 1) {
@@ -194,7 +203,7 @@ export default {
           if (activeOperationIndex.value === 1) {
             onDelete(index);
           } else {
-            onUpdate(props);
+            onUpdate(index);
           }
         },
         fail: function(res) {
@@ -252,17 +261,22 @@ export default {
         .then(async (res) => {
           console.log("表单数据信息：", res);
           const { title, content } = res;
-          const remoteUrls = photos.value.filter((item) =>
-            item.path.includes("social-1308251497")
+          const tempPhotos = photos.value.map((item, index) => ({
+            key: item,
+            index
+          }))
+          const remoteUrls = tempPhotos.filter((item) =>
+            item.key.path.includes("social-1308251497")
           );
-          const blobUrls = photos.value.filter((item) =>
-            item.path.includes("blob:")
+          const blobUrls = tempPhotos.filter((item) =>
+            item.key.path.includes("blob:")
           );
           const fileAll = [];
           for (let item of blobUrls) {
-            const chunk = await fileParse(item, "base64");
+            const chunk = await fileParse(item.key, "base64");
             fileAll.push({
-              filename: item.name,
+              index: item.index,
+              filename: item.key.name,
               chunk: chunk,
             });
           }
@@ -271,14 +285,13 @@ export default {
           // spark.append(buffer);
           // const hash = spark.end();
 
-          const urls = remoteUrls[0].path.match(/myqcloud.com\/(\S*)/)[1];
+          const urls = hobbyInfo.value.photos[0].match(/myqcloud.com\/(\S*)/)[1];
           const uploadHash = urls.match(/(\S*)\//)[1];
-          const remotePhotos = remoteUrls.map((item) => item.path);
-
+          const remotePhotos = remoteUrls.map((item) => ({index: item.index, path:item.key.path}));
           const params = {
             uploadHash,
-            uploadFiles: fileAll,
-            remotePhotos,
+            uploadFiles: fileAll.length > 0 ? fileAll : [],
+            remotePhotos: remotePhotos.length > 0 ?  remotePhotos :  [],
             title,
             id: parseInt(props.id),
             hobby: parseInt(props.hobby),
@@ -294,6 +307,7 @@ export default {
                 url: "/pages/user/index",
                 success() {
                   let page = getCurrentPages().pop(); //跳转页面成功之后
+                  console.log("page==============", page);
                   if (!page) return;
                   page.onLoad(); //如果页面存在，则重新刷新页面
                 },
