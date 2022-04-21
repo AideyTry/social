@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-04-11 22:50:55
+ * @LastEditTime: 2022-04-21 11:12:11
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -36,7 +36,7 @@
             ></image>
             <text class="username">{{ item.username }}</text>
             <text class="update-time"
-              >{{ $filters.commentTime(item.create_time) }}&nbsp;更新</text
+              >{{ $filters.commentTime(item.create_time || '') }}&nbsp;更新</text
             >
           </view>
         </view>
