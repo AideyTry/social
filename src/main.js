@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-02-28 22:18:33
+ * @LastEditTime: 2022-04-21 10:23:13
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,20 +9,15 @@
 import {
 	createSSRApp
 } from "vue";
-import { store } from '@/store/index'
+import { store } from './store/index'
 import './static/iconfont/iconfont.js'
-
-import vue3videoPlay from "vue3-video-play"; // 引入组件
-import "vue3-video-play/dist/style.css"; // 引入css
 
 import App from "./App.vue";
 import { formatDate } from './utils/util'
-// import dlbModal from './utils/hooks/dlbModal'
 
 export function createApp() {
 	const app = createSSRApp(App);
 	app.use(store)
-	app.use(vue3videoPlay)
 	app.config.globalProperties.$filters = {
 		filterRegion(value, array) {
 		  const proviceObj = array.find(element => element.code === value)
@@ -45,8 +40,7 @@ export function createApp() {
 			return formatDate(value)
 		},
 	  }
-	// uni.dlbModal = dlbModal
 	return {
-		app,
+		app
 	};
 }
