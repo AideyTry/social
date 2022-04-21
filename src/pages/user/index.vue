@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-04-11 22:50:36
+ * @LastEditTime: 2022-04-21 10:52:51
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -157,7 +157,7 @@ watchEffect(() => {
 onMounted(() => {
   getFollowsData();
   getFansData();
-  getPublishData();
+  // getPublishData();
 });
 </script>
 
