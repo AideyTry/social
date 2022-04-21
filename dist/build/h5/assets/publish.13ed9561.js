@@ -1,1 +1,0 @@
-import{r as s}from"./index.da08a463.js";const a=a=>(console.log("params===",a),s("/publishs/getPublish","GET",a)),l=a=>s("/publishs/deletePublish","POST",a),e=a=>s("/publishs/updatePublish","POST",a,"application/x-www-form-urlencoded"),o=a=>(console.log("params===",a),s("/publishs/getMylikes","GET",a));export{o as a,l as d,a as g,e as u};
