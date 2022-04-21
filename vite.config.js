@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-04-21 09:53:33
+ * @LastEditTime: 2022-04-21 10:01:43
  * @LastEditors: Aiden(戴林波)
  * @Description:
  * @Email: jason_dlb@sina.cn
@@ -57,6 +57,9 @@ export default defineConfig(({ command, mode }) => {
       'process.env': {
         BASE_URL: process.env.BASE_URL
       }
+    },
+    build: {
+      sourcemap: true,
     },
     server: {
       sourcemap: true,
