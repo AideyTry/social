@@ -11,14 +11,8 @@
           ></image>
           <text>{{ hobbyInfo.username || "" }}</text>
         </view>
-        <view>
-          <picker
-            :range="operations"
-            :value="activeOperationIndex"
-            @change="onEdit"
-          >
+        <view @click="onEdit">
             <text>...</text>
-          </picker>
         </view>
       </view>
     </view>
@@ -164,16 +158,28 @@ export default {
       });
     };
     const onEdit = (e) => {
-      const {
-        detail: { value },
-      } = e;
-      console.log("value=", value);
-      activeOperationIndex.value = value;
-      if (activeOperationIndex.value === 1) {
-        onDelete(props);
-      } else {
-        onUpdate(props);
-      }
+      uni.showActionSheet({
+        itemList: operations,
+        success: function(res) {
+          console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
+          activeOperationIndex.value = res.tapIndex;
+          if (activeOperationIndex.value === 1) {
+            onDelete(props);
+          } else {
+            onUpdate(props);
+          }
+        },
+        fail: function(res) {
+          console.log(res.errMsg);
+        },
+      });
+      // console.log("value=", value);
+      // activeOperationIndex.value = value;
+      // if (activeOperationIndex.value === 1) {
+      //   onDelete(props);
+      // } else {
+      //   onUpdate(props);
+      // }
     };
 
     onMounted(() => {
