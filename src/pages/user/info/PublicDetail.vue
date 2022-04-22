@@ -12,7 +12,7 @@
           <text>{{ hobbyInfo.username || "" }}</text>
         </view>
         <view @click="onEdit">
-            <text>...</text>
+          <text>...</text>
         </view>
       </view>
     </view>
@@ -149,7 +149,15 @@ export default {
                   title: "删除成功",
                   duration: 2000,
                 });
-                goBack();
+                uni.switchTab({
+                  url: "/pages/user/index",
+                  success() {
+                    let page = getCurrentPages().pop(); //跳转页面成功之后
+                    console.log("page==============", page);
+                    if (!page) return;
+                    page.onLoad(); //如果页面存在，则重新刷新页面
+                  },
+                });
               }
             });
           } else if (res.cancel) {

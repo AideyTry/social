@@ -92,7 +92,7 @@ import { useStore } from "vuex";
 import qs from "qs";
 
 import { getHobbyDetail } from "@/api/hobby.js";
-import { deletePublish, updatePublish } from "@/api/publish.js";
+import { deletePublish, updatePublish, updateVideoPublish } from "@/api/publish.js";
 import { setFollow, getFollow, deleteFollow } from "@/api/communication.js";
 import Comment from "@/pages/components/Comment.vue";
 import VideoPlayer from "@/pages/components/VideoPlayer.vue";
@@ -140,9 +140,11 @@ export default {
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
           publishDate.value = formatDate(data.data.data.create_time);
-          photos.value = hobbyInfo.value.photos.map((element, index) => ({
-            path: element,
-          }));
+          if(!data.data.data.video_url){
+            photos.value = hobbyInfo.value.photos.map((element, index) => ({
+              path: element,
+            }));
+          }
           options.poster = data.data.data.url;
           options.src = data.data.data.video_url;
         }
@@ -261,6 +263,33 @@ export default {
         .then(async (res) => {
           console.log("表单数据信息：", res);
           const { title, content } = res;
+          console.log('photos=====', photos.value)
+          if(photos.value.length <= 0){
+          const params = {
+            title,
+            id: parseInt(props.id),
+            hobby: parseInt(props.hobby),
+            content,
+          };
+            updateVideoPublish(params).then(data => {
+            if (data.data.code === 200) {
+              uni.showToast({
+                title: data.data.msg,
+                duration: 2000,
+              });
+              uni.switchTab({
+                url: "/pages/user/index",
+                success() {
+                  let page = getCurrentPages().pop(); //跳转页面成功之后
+                  console.log("page==============", page);
+                  if (!page) return;
+                  page.onLoad(); //如果页面存在，则重新刷新页面
+                },
+              });
+            }
+            })
+            return
+          }
           const tempPhotos = photos.value.map((item, index) => ({
             key: item,
             index
