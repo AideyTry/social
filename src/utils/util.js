@@ -1,18 +1,13 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-10 16:27:29
- * @LastEditTime: 2022-02-28 22:18:41
+ * @LastEditTime: 2022-04-22 09:57:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
  */
-import * as dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import updateLocale from 'dayjs/plugin/updateLocale'
-dayjs.extend(relativeTime)
-dayjs.extend(updateLocale)
-
-dayjs.updateLocale('en', {
+import moment from 'moment'
+moment.updateLocale('en', {
   relativeTime: {
     s: '%d秒前',
     m: "1分钟前",
@@ -41,6 +36,5 @@ export function fileParse(file, type = 'base64') {
 }
 
 export function formatDate(createTime){
-    console.log('createTime===', createTime)
-    return dayjs(createTime).toNow(true)
+    return moment(createTime).toNow(true)
 }

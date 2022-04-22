@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-04-21 11:12:11
+ * @LastEditTime: 2022-04-21 22:19:45
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -76,12 +76,12 @@ const goDetail = (item) => {
   console.log('item=', item)
   if(props.activeIndex === 0){
     uni.navigateTo({
-    url: `/pages/user/info/PublicDetail?id=${item.id}&hobby=${item.hobby}`,
+    url: `/pages/user/info/PublicDetail?id=${item.id}&hobby=${item.hobby}`
   });
   } else {
-  uni.navigateTo({
-    url: `/pages/user/info/LikeDetail?id=${item.id}&hobby=${item.hobby}`,
-  });
+    uni.navigateTo({
+      url: `/pages/user/info/LikeDetail?id=${item.id}&hobby=${item.hobby}`
+    });
   }
 }
 
