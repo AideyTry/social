@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-07 23:11:26
+ * @LastEditTime: 2022-05-07 23:45:46
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -31,7 +31,7 @@ export default {
       const config = {
         userID,
         token,
-        url: "ws://42.192.229.151:10003",
+        url: "wss://42.192.229.151:10003",
         platformID: 5,
       };
       openIM
