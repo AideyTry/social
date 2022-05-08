@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-05-07 13:31:29
+ * @LastEditTime: 2022-05-08 16:00:06
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -50,11 +50,13 @@ export default {
       imLogin(params).then((res) => {
         console.log("res========", res);
         if (res.statusCode === 200) {
-          if (res.data.data.token) {
-            setIMToken(res.data.data.token);
+          if (res.data.code !== 200) {
+            resiger();
             return;
           }
-          resiger();
+          if (res.data.data.token) {
+            setIMToken(res.data.data.token);
+          }
           // connectIM(res.data.data.userID, res.data.data.token);
         }
       });

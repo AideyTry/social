@@ -44,6 +44,13 @@
       }
     },
     {
+      "path": "pages/message/Chat",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
       "path": "pages/hobby/index",
       "style": {
         "navigationBarTitleText": "hobby",
