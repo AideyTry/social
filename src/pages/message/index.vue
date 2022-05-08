@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-08 10:12:07
+ * @LastEditTime: 2022-05-08 10:17:47
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -31,7 +31,7 @@ export default {
       const config = {
         userID,
         token,
-        url: "wss://mancao.social:10003",
+        url: "ws://172.17.0.16:10003",
         platformID: 5,
       };
       openIM
