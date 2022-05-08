@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-05-08 23:23:13
+ * @LastEditTime: 2022-05-09 00:13:16
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -26,7 +26,7 @@ export default {
   setup() {
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
-    const resiger = () => {
+    const register = () => {
       const params = {
         secret: "tuoyun",
         platform: 5,
@@ -51,13 +51,13 @@ export default {
       imLogin(params).then((res) => {
         console.log("res========", res);
         if (res.statusCode === 200) {
-          if (res.data.code !== 200) {
-            resiger();
+          if (res.data.errCode !== 0) {
+            register();
             return;
           }
-          if (res.data.token) {
+          if (res.data.data.token) {
             console.log('res.data.token=', res.data.token)
-            setIMToken(res.data.token);
+            setIMToken(res.data.data.token);
           }
           // connectIM(res.data.data.userID, res.data.data.token);
         }

@@ -40,7 +40,7 @@ export default {
         groupID: "", // 群聊ID，拉取群聊时传入，否则为“”
         startClientMsgID: "", // 上一次拉取的最后一条消息ID或空字符串,为空字符则从最新一条开始
         count: 10000, // 每次拉取条数
-        userID: "13817373289", // 用户ID，拉取单聊时传入，否则为“”
+        userID: props.userID, // 用户ID，拉取单聊时传入，否则为“”
       };
       openIM
         .getHistoryMessageList(options)
@@ -55,7 +55,7 @@ export default {
       const { value } = event.detail;
       inputString.value = value;
       const offlinePushInfo = {
-        title: "", // 推送标题
+        title: "you have a new message", // 推送标题
         desc: "", // 推送描述
         ex: "", // 扩展字段
         iOSPushSound: "", // ios推送声音
@@ -65,6 +65,7 @@ export default {
       openIM
         .createTextMessage(value)
         .then((res) => {
+            console.log('res========', res)
           console.log("message=", JSON.parse(res.data));
           const options = {
             recvID: props.userID,
@@ -75,6 +76,7 @@ export default {
           openIM
             .sendMessage(options)
             .then(({ data, errCode }) => {
+              console.log('data, errCode ============================', data, errCode )
               const SendMessage = JSON.parse(data);
               messageInfo.value.unshift(SendMessage);
               inputString.value = "";
