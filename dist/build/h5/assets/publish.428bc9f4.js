@@ -1,0 +1,2 @@
+import{r as s}from"./index.af3a3f97.js";const a=a=>(console.log("params===",a),s("/publishs/getPublish","GET",a)),l=a=>s("/publishs/deletePublish","POST",a),e=a=>s("/publishs/updatePublish","POST",a,"application/x-www-form-urlencoded"),i=a=>s("/publishs/updateVideoPublish","POST",a),o=a=>(console.log("params===",a),s("/publishs/getMylikes","GET",a));export{o as a,e as b,l as d,a as g,i as u};
+//# sourceMappingURL=publish.428bc9f4.js.map
