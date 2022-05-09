@@ -1,16 +1,22 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-08 21:07:15
+ * @LastEditTime: 2022-05-10 00:14:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
   <view>
-    <view v-for="item in convers" :key="item.userID" class="conver" @click="goChat(item)">
+    <view
+      v-for="item in convers"
+      :key="item.userID"
+      class="conver"
+      @click="goChat(item)"
+    >
       <view class="conver-msg">
-        <image
+        <view class="chat_bg_msg_icon-wraper">
+                  <image
           :src="
             item.faceURL && item.faceURL.includes('https://')
               ? item.faceURL
@@ -18,9 +24,11 @@
           "
           class="chat_bg_msg_icon"
         />
+        <view class="unread-total" v-if="unReadTotal"><text>{{unReadTotal}}</text></view>
+        </view>
         <view class="content-wraper">
           <text>{{ item.showName }}</text>
-          <text>{{ $filters.commentTime(item.latestMsgSendTime) }}</text>
+          <text>{{showLastMessage(item.latestMsg) }}</text>
         </view>
       </view>
       <text class="conver-time">{{
@@ -47,11 +55,23 @@ export default {
     let operationID = ref(null);
     const convers = ref([]);
     const goChat = (item) => {
-      console.log('item=', item)
+      console.log("item=", item);
       uni.navigateTo({
         url: `/pages/message/Chat?userID=${item.userID}&title=${item.showName}`,
       });
     };
+    const getAllConversationList = () => {
+            openIM
+              .getAllConversationList()
+              .then(({ data }) => {
+                console.log("data====", JSON.parse(data));
+                convers.value = JSON.parse(data);
+                      unReadMessage()
+              })
+              .catch((err) => {
+                console.log("err=", err);
+              });
+    }
     const connectIM = (userID, token) => {
       console.log("userID, token=====================", userID, token);
       const config = {
@@ -66,15 +86,7 @@ export default {
         .then((res) => {
           console.log("login suc...", res);
           if (res.errCode === 0) {
-            openIM
-              .getAllConversationList()
-              .then(({ data }) => {
-                console.log("data====", JSON.parse(data));
-                convers.value = JSON.parse(data);
-              })
-              .catch((err) => {
-                console.log("err=", err);
-              });
+            getAllConversationList()
           }
           operationID.value = res.operationID;
           //         openIM.getAllConversationList().then(res=>{
@@ -99,8 +111,36 @@ export default {
         });
     };
 
+    const showLastMessage = (lastData) => {
+      return JSON.parse(lastData).content
+    }
+
+    let unReadTotal = ref('')
+
+    const unReadMessage = () => {
+      openIM
+        .getTotalUnreadMsgCount()
+        .then(({ data }) => {
+          console.log("data===", data);
+          unReadTotal.value = data
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    };
+
+        const monitorOnRecv = () => {
+      openIM.on("OnRecvNewMessage", (data) => {
+        const RecvMessage = JSON.parse(data.data);
+        if (RecvMessage.contentType === 101) {
+         getAllConversationList()
+        }
+      });
+    };
+
     onMounted(() => {
       connectIM(userInfo.phone, getIMToken());
+      monitorOnRecv()
       // login();
       // resiger()
     });
@@ -108,7 +148,9 @@ export default {
       defaultAvatar,
       operationID,
       convers,
-      goChat
+      unReadTotal,
+      goChat,
+      showLastMessage
     };
   },
 };
@@ -122,6 +164,24 @@ export default {
   padding: 10rpx;
   .conver-msg {
     display: flex;
+  }
+  .chat_bg_msg_icon-wraper{
+    position: relative;
+  }
+  .unread-total{
+    position: absolute;
+    right: -12rpx;
+    top: -8rpx;;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    padding: 4rpx;
+    background: #f00;
+    color: #fff;
+    font-size: 12rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .chat_bg_msg_icon {
     width: 84rpx;

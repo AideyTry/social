@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-05-09 16:11:03
+ * @LastEditTime: 2022-05-09 22:09:41
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -45,7 +45,7 @@
       <InfoList :list="publishs" :activeIndex="activeIndex"/>
     </view>
     <button @click="onLogout" style="margin-top: 20rpx;">退出</button>
-    <view v-if="false">
+    <view v-if="true">
           <button @click="onOpenIMLogout">OpenIM logout</button>
     <button @click="onDeleteConversation">Delete Conversicon</button>
     </view>
