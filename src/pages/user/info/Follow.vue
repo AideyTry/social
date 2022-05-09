@@ -1,7 +1,7 @@
 <template>
   <view class="info-list">
     <view class="ul">
-      <view class="li" v-for="item in infoList" :key="item.id">
+      <view class="li" v-for="item in infoList" :key="item.id" @click="goUserDetail(item)">
        <view class="userinfo-wraper">
         <view class="avatar-wraper">
           <image
@@ -22,7 +22,7 @@
        </view>
        <view
           :class="{ follow: !isFlollow, active: isFlollow }"
-          @click="following(item)"
+          @click.stop="following(item)"
         >
           <text>{{ followText }}</text>
         </view>
@@ -128,6 +128,14 @@ export default {
       }
     };
 
+    // 跳转到好友详情
+    const goUserDetail = (info) => {
+      console.log('info======', info)
+          uni.navigateTo({
+    url: `/pages/user/info/User?id=${info.user_id}`,
+  });
+    }
+
     onMounted(() => {
       //   console.log("props=", JSON.parse(decodeURIComponent(props.userids)));
       getInfo(JSON.parse(decodeURIComponent(props.userids)));
@@ -137,7 +145,8 @@ export default {
       infoList,
       followText,
       isFlollow,
-      following
+      following,
+      goUserDetail
     };
   },
 };
