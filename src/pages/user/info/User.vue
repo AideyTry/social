@@ -1,11 +1,7 @@
 <template>
   <view class="userinfo-wraper">
     <view class="userinfo">
-      <image
-        mode="aspectFill"
-        :src="userInfo.avatar"
-        class="avatar"
-      ></image>
+      <image mode="aspectFill" :src="userInfo.avatar" class="avatar"></image>
       <view class="basic-info">
         <PickerRegion
           isDisabled
@@ -34,16 +30,12 @@
         v-for="(item, index) in userInfo.photos"
         :key="index"
       >
-        <image
-          mode="aspectFill"
-          :src="item"
-          class="photo"
-        ></image>
+        <image mode="aspectFill" :src="item" class="photo"></image>
       </view>
     </view>
     <uni-forms>
       <uni-forms-item label="签名">
-        <view>{{userInfo.motto || "暂未填写"}}</view>
+        <view>{{ userInfo.motto || "暂未填写" }}</view>
       </uni-forms-item>
       <uni-forms-item label="家乡">
         <PickerRegion
@@ -63,21 +55,32 @@
       </uni-forms-item>
     </uni-forms>
   </view>
+  <view class="send-msg">
+    <view class="chat">
+      <svg class="chat-icon" aria-hidden="true" @click.stop="goChat">
+        <use xlink:href="#icon-faxinxi"></use>
+      </svg>
+      <text>私聊</text>
+    </view>
+  </view>
 </template>
 
 <script>
 export default {
   onBackPress(options) {
-      console.log('options=', options)
+    console.log("options=", options);
   },
 };
 </script>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import moment from "moment";
 import PickerRegion from "./PickerRegion.vue";
-import { getFrendInfo } from '@/api/user.js'
+import openIM from "@/utils/openIM.js";
+import { getFrendInfo } from "@/api/user.js";
+import { getIMToken } from "@/utils/auth.js";
+import { useStore } from "vuex";
 
 const props = defineProps({
   id: {
@@ -86,36 +89,65 @@ const props = defineProps({
   },
 });
 
-let userInfo = ref({})
+let userInfo = ref({});
 
 const age = ref(moment().diff(userInfo.birthday, "years"));
 
 
+    const store = useStore();
+    const getUserInfo = computed(() => store.state.user.userInfo).value;
+
 // 获取好友信息
 const getFrend = () => {
-    const params = {
-        userId: props.id
+  const params = {
+    userId: props.id,
+  };
+  getFrendInfo(params).then((res) => {
+    console.log("好友=", res);
+    if (res.data.code === 200) {
+      userInfo.value = res.data.data;
+      console.log("userInfo.value=======", userInfo.value);
     }
-    getFrendInfo(params).then(res => {
-        console.log('好友=', res)
-        if(res.data.code === 200){
-            userInfo.value = res.data.data
-            console.log('userInfo.value=======', userInfo.value)
-        }
-    })
-}
+  });
+};
 
 // 预览图片
 const onPreviewImage = (item, index) => {
-    uni.previewImage({
-        current: index,
-        urls: userInfo.value.photos
+  uni.previewImage({
+    current: index,
+    urls: userInfo.value.photos,
+  });
+};
+
+// 聊天
+const goChat = () => {
+  const token = getIMToken();
+  console.log('token===', token)
+  console.log('userInfo.value.phone===', userInfo.value.phone)
+  const config = {
+    userID: getUserInfo.phone,
+    token,
+    url: "wss://mancao.social:20038",
+    platformID: 5,
+  };
+  openIM
+    .login(config)
+    .then((res) => {
+      console.log("login suc...", res);
+      if (res.errCode === 0) {
+        uni.navigateTo({
+          url: `/pages/message/Chat?userID=${userInfo.value.phone}&title=${userInfo.value.username}`,
+        });
+      }
     })
-}
+    .catch((err) => {
+      console.log("login failed...", err);
+    });
+};
 
 onMounted(() => {
   console.log("props===", props);
-  getFrend()
+  getFrend();
 });
 </script>
 
@@ -155,5 +187,28 @@ onMounted(() => {
 }
 .basic-info {
   display: flex;
+}
+.send-msg {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10rpx 0;
+  width: 100%;
+  background-color: #eaeaea;
+  .chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .chat-icon {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
 }
 </style>
