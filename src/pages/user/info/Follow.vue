@@ -2,6 +2,7 @@
   <view class="info-list">
     <view class="ul">
       <view class="li" v-for="item in infoList" :key="item.id">
+       <view class="userinfo-wraper">
         <view class="avatar-wraper">
           <image
             class="avatar"
@@ -18,6 +19,13 @@
             <text class="username">{{ item.motto }}</text>
           </view>
         </view>
+       </view>
+       <view
+          :class="{ follow: !isFlollow, active: isFlollow }"
+          @click="following(item)"
+        >
+          <text>{{ followText }}</text>
+        </view>
       </view>
     </view>
   </view>
@@ -26,10 +34,65 @@
 <script>
 import { ref, onMounted, watch } from "vue";
 import { getFollowsInfo, getFansInfo } from "@/api/communication.js";
+import { setFollow, getFollow, deleteFollow } from "@/api/communication.js";
 export default {
   name: "follow",
   setup(props) {
     let infoList = ref([]);
+
+        // 关注
+    let isFlollow = ref(false);
+    let followText = ref("关注");
+    const following = (info) => {
+      if (isFlollow.value) {
+        uni.showModal({
+          content: "确认不再关注？",
+          success: function(res) {
+            if (res.confirm) {
+              let params = { followId: info.user_id };
+              deleteFollow(params).then((data) => {
+                if (data.data.code === 200) {
+                  followText.value = "关注";
+                  isFlollow.value = false;
+                  getInfo(JSON.parse(decodeURIComponent(props.userids)));
+                }
+              });
+            } else if (res.cancel) {
+              console.log("用户点击取消");
+            }
+          },
+        });
+        return;
+      }
+      let params = { followId: info.user_id };
+      setFollow(params).then((data) => {
+        console.log("data===", data);
+        if (data.data.code === 200) {
+          followText.value = "已关注";
+          isFlollow.value = true;
+        } else if(data.data.code === 400) {
+          uni.showToast({
+            title: data.data.msg,
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      });
+    };
+
+    const initFlow = (info) => {
+      let params = { followId: info.user_id };
+      console.log("params===", params);
+      getFollow(params).then((data) => {
+        console.log("data1===", data);
+        if (data.data.code === 200) {
+          isFlollow.value = data.data.isFollow;
+          data.data.isFollow
+            ? (followText.value = "已关注")
+            : (followText.value = "关注");
+        }
+      });
+    };
 
     const getInfo = (userids) => {
       const params = {
@@ -44,6 +107,10 @@ export default {
               infoList.value = data.data.followsInfo;
               infoList.value = infoList.value.filter((element) => element);
               console.log("infoList.value====", infoList.value);
+              // initFlow(infoList.value);
+              infoList.value.forEach((item) => {
+                initFlow(item)
+              })
             }
           });
       } else if (parseInt(props.type) === 1) {
@@ -68,6 +135,9 @@ export default {
     });
     return {
       infoList,
+      followText,
+      isFlollow,
+      following
     };
   },
 };
@@ -76,8 +146,13 @@ export default {
 <style lang="scss" scoped>
 .li {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20rpx;
   border-bottom: 1rpx solid #ccc;
+  .userinfo-wraper{
+    display: flex;
+  }
   .avatar-wraper {
     width: 100rpx;
     height: 100rpx;
@@ -104,6 +179,21 @@ export default {
     color: #363636;
   }
 }
+
+  .follow {
+    border: 1rpx solid #ff2442;
+    border-radius: 8rpx;
+    color: #ff2442;
+    padding: 10rpx 20rpx;
+    font-size: 24rpx;
+  }
+  .active {
+    border: 1rpx solid #ccc;
+    border-radius: 8rpx;
+    color: #ccc;
+    padding: 10rpx 20rpx;
+    font-size: 24rpx;
+  }
 
 .userinfo {
   display: flex;

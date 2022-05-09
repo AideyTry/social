@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-04-21 10:52:51
+ * @LastEditTime: 2022-05-09 16:11:03
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -45,6 +45,10 @@
       <InfoList :list="publishs" :activeIndex="activeIndex"/>
     </view>
     <button @click="onLogout" style="margin-top: 20rpx;">退出</button>
+    <view v-if="false">
+          <button @click="onOpenIMLogout">OpenIM logout</button>
+    <button @click="onDeleteConversation">Delete Conversicon</button>
+    </view>
   </view>
 </template>
 
@@ -56,6 +60,8 @@ import { getFollows, getFans } from "@/api/communication.js";
 import { getPublish, getMylikes } from "@/api/publish.js";
 
 import InfoList from "@/pages/components/InfoList.vue";
+
+import openIM from "@/utils/openIM.js";
 
 const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
@@ -145,6 +151,22 @@ const getMylikesData = () => {
 const changeTab = (flag) => {
   activeIndex.value = flag;
 };
+
+const onOpenIMLogout = () => {
+  openIM.logout().then(({ data })=>{
+  console.log('logout=', data)
+}).catch(err=>{
+  console.log('logout err=', err)
+})
+}
+
+const onDeleteConversation = () => {
+  openIM.deleteConversation('single_13817373289').then(res=>{
+  console.log('delete res=', res)
+}).catch(err=>{
+  console.log('err=========', err)
+})
+}
 
 watchEffect(() => {
   if (activeIndex.value === 0) {
