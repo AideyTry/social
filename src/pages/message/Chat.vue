@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, watch } from "vue";
 import openIM from "@/utils/openIM.js";
 import { getIMToken } from "../../utils/auth.js";
 import { useStore } from "vuex";
@@ -26,6 +26,10 @@ export default {
   setup(props) {
     let inputString = ref("");
     const messageInfo = ref([]);
+
+    const store = useStore();
+    const userInfo = computed(() => store.state.user.userInfo).value;
+
     const monitorOnRecv = () => {
       openIM.on("OnRecvNewMessage", (data) => {
         const RecvMessage = JSON.parse(data.data);
@@ -65,7 +69,7 @@ export default {
       openIM
         .createTextMessage(value)
         .then((res) => {
-            console.log('res========', res)
+          console.log("res========", res);
           console.log("message=", JSON.parse(res.data));
           const options = {
             recvID: props.userID,
@@ -76,7 +80,11 @@ export default {
           openIM
             .sendMessage(options)
             .then(({ data, errCode }) => {
-              console.log('data, errCode ============================', data, errCode )
+              console.log(
+                "data, errCode ============================",
+                data,
+                errCode
+              );
               const SendMessage = JSON.parse(data);
               messageInfo.value.unshift(SendMessage);
               inputString.value = "";
@@ -89,6 +97,36 @@ export default {
           console.log("text err=", err);
         });
     };
+
+    watch(
+      () => messageInfo,
+      (count, prevCount) => {
+        console.log("count, prevCount====", count, prevCount);
+        const selfMessages = count.value.filter(
+          (item) => item.sendID === props.userID
+        );
+        console.log("selfMessages===", selfMessages);
+        console.log('props.userID=========================================', props.userID)
+        console.log('userInfo.phone===', userInfo.phone)
+        const msgIDList = selfMessages.map((element) => element.clientMsgID);
+        console.log("msgIDList===", msgIDList);
+        const options = {
+          userID: props.userID,
+          msgIDList,
+        };
+        openIM
+          .markC2CMessageAsRead(options)
+          .then(({ data }) => {
+            console.log("传入未读=", data);
+          })
+          .catch((err) => {
+            console.log("err===", err);
+          });
+      },
+      {
+        deep: true,
+      }
+    );
     onMounted(() => {
       uni.setNavigationBarTitle({
         title: props.title,

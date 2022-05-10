@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-10 00:14:58
+ * @LastEditTime: 2022-05-10 17:40:54
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -16,19 +16,21 @@
     >
       <view class="conver-msg">
         <view class="chat_bg_msg_icon-wraper">
-                  <image
-          :src="
-            item.faceURL && item.faceURL.includes('https://')
-              ? item.faceURL
-              : defaultAvatar
-          "
-          class="chat_bg_msg_icon"
-        />
-        <view class="unread-total" v-if="unReadTotal"><text>{{unReadTotal}}</text></view>
+          <image
+            :src="
+              item.faceURL && item.faceURL.includes('https://')
+                ? item.faceURL
+                : defaultAvatar
+            "
+            class="chat_bg_msg_icon"
+          />
+          <view class="unread-total" v-if="unReadTotal"
+            ><text>{{ unReadTotal }}</text></view
+          >
         </view>
         <view class="content-wraper">
           <text>{{ item.showName }}</text>
-          <text>{{showLastMessage(item.latestMsg) }}</text>
+          <text>{{ showLastMessage(item.latestMsg) }}</text>
         </view>
       </view>
       <text class="conver-time">{{
@@ -39,7 +41,7 @@
 </template>
 
 <script>
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, watch } from "vue";
 import openIM from "@/utils/openIM.js";
 import { getIMToken } from "../../utils/auth.js";
 import { useStore } from "vuex";
@@ -61,16 +63,23 @@ export default {
       });
     };
     const getAllConversationList = () => {
-            openIM
-              .getAllConversationList()
-              .then(({ data }) => {
-                console.log("data====", JSON.parse(data));
-                convers.value = JSON.parse(data);
-                      unReadMessage()
-              })
-              .catch((err) => {
-                console.log("err=", err);
-              });
+      openIM
+        .getAllConversationList()
+        .then(({ data }) => {
+          console.log("data====", JSON.parse(data));
+          convers.value = JSON.parse(data);
+          unReadMessage();
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    };
+    const getUnReadMsg = () => {
+      // debugger
+      openIM.on('OnTotalUnreadMessageCountChanged',(data)=>{
+        console.log('data unredd=', data)
+        debugger
+})
     }
     const connectIM = (userID, token) => {
       console.log("userID, token=====================", userID, token);
@@ -86,7 +95,8 @@ export default {
         .then((res) => {
           console.log("login suc...", res);
           if (res.errCode === 0) {
-            getAllConversationList()
+            getAllConversationList();
+            getUnReadMsg()
           }
           operationID.value = res.operationID;
           //         openIM.getAllConversationList().then(res=>{
@@ -112,35 +122,46 @@ export default {
     };
 
     const showLastMessage = (lastData) => {
-      return JSON.parse(lastData).content
-    }
+      return JSON.parse(lastData).content;
+    };
 
-    let unReadTotal = ref('')
+    let unReadTotal = ref("");
 
     const unReadMessage = () => {
       openIM
         .getTotalUnreadMsgCount()
         .then(({ data }) => {
           console.log("data===", data);
-          unReadTotal.value = data
+          console.log('Number(data)=', Number(data))
+          unReadTotal.value = data;
+          if(Number(data) > 0){
+          uni.setTabBarBadge({
+            index: 2,
+            text: '···'
+          });
+          }else {
+            uni.removeTabBarBadge({
+              index: 2
+            })
+          }
         })
         .catch((err) => {
           console.log("err=", err);
         });
     };
 
-        const monitorOnRecv = () => {
+    const monitorOnRecv = () => {
       openIM.on("OnRecvNewMessage", (data) => {
         const RecvMessage = JSON.parse(data.data);
         if (RecvMessage.contentType === 101) {
-         getAllConversationList()
+          getAllConversationList();
         }
       });
     };
 
     onMounted(() => {
       connectIM(userInfo.phone, getIMToken());
-      monitorOnRecv()
+      monitorOnRecv();
       // login();
       // resiger()
     });
@@ -150,7 +171,7 @@ export default {
       convers,
       unReadTotal,
       goChat,
-      showLastMessage
+      showLastMessage,
     };
   },
 };
@@ -165,13 +186,13 @@ export default {
   .conver-msg {
     display: flex;
   }
-  .chat_bg_msg_icon-wraper{
+  .chat_bg_msg_icon-wraper {
     position: relative;
   }
-  .unread-total{
+  .unread-total {
     position: absolute;
     right: -12rpx;
-    top: -8rpx;;
+    top: -8rpx;
     width: auto;
     height: auto;
     border-radius: 50%;
