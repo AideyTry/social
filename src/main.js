@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-04-22 09:58:22
+ * @LastEditTime: 2022-05-11 16:28:53
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -14,7 +14,7 @@ import { store } from './store/index'
 import './static/iconfont/iconfont.js'
 
 import App from "./App.vue";
-import { formatDate } from './utils/util'
+import { formatDate, formatMsgDate } from './utils/util'
 
 export function createApp() {
 	const app = createSSRApp(App);
@@ -40,6 +40,9 @@ export function createApp() {
 		commentTime(value){
 			return formatDate(value || '')
 		},
+		formatMsgDate(value){
+			return formatMsgDate(value || '')[4]
+		}
 	  }
 	return {
 		app

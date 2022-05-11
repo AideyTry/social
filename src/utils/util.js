@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-10 16:27:29
- * @LastEditTime: 2022-04-22 09:57:39
+ * @LastEditTime: 2022-05-11 16:26:32
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -38,3 +38,19 @@ export function fileParse(file, type = 'base64') {
 export function formatDate(createTime){
     return moment(createTime).toNow(true)
 }
+
+export const formatMsgDate = (timestamp) => {
+    const now = new Date(timestamp);
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const date = now.getDate();
+    const hour = now.getHours();
+    let minute= now.getMinutes();
+    if (minute.toString().length === 1) minute = "0" + minute;
+    let second = now.getSeconds();
+    if (second.toString().length === 1) second = "0" + second;
+    const str1 = year + "-" + month + "-" + date;
+    // const str2 = hour + ":" + minute + ":" + second
+    const str2 = hour + ":" + minute;
+    return [year, month, date, str1, str2];
+  };

@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-11 11:26:46
+ * @LastEditTime: 2022-05-11 16:30:33
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -34,7 +34,7 @@
         </view>
       </view>
       <text class="conver-time">{{
-        $filters.commentTime(item.latestMsgSendTime)
+        $filters.formatMsgDate(item.latestMsgSendTime)
       }}</text>
     </view>
   </view>

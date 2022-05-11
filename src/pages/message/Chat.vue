@@ -98,6 +98,26 @@ export default {
         });
     };
 
+    /**
+     * @description: 已读监听
+     * @param {*}
+     * @Author: 
+     * @return {*}
+     */    
+    const asRead = () => {
+      openIM.on("OnRecvC2CReadReceipt", (data) => {
+        JSON.parse(data.data).map(cr => {
+          cr.msgIDList.map(crt => {
+            messageInfo.value.find(ms => {
+              if(ms.clientMsgID === crt){
+                ms.isRead = true
+              }
+            })
+          })
+        })
+      });
+    };
+
     watch(
       () => messageInfo,
       (count, prevCount) => {
@@ -140,6 +160,7 @@ export default {
       });
       getConver();
       monitorOnRecv();
+      asRead();
     });
     return {
       inputString,

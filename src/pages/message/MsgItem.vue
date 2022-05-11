@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-05-07 23:18:37
- * @LastEditTime: 2022-05-10 17:24:58
+ * @LastEditTime: 2022-05-11 16:27:26
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,7 +18,7 @@
     />
     <view class="content-wraper" :class="{'chat_bg_msg_content_text': msg.sendID === selfID}">
       <text>{{ msg.content }}</text>
-      <text>{{ $filters.commentTime(msg.sendTime) }}</text>
+      <text>{{ $filters.formatMsgDate(msg.sendTime) }}</text>
     </view>
     <view :style="{color: msg.isRead ? '#999':'#428BE5'}" v-if="msg.sendID === selfID">{{msg.isRead ? '已读' : '未读'}}</view>
   </view>
