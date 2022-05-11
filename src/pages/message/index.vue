@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-10 17:40:54
+ * @LastEditTime: 2022-05-11 11:26:46
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -50,6 +50,10 @@ export default {
   components: {
     ChatContent,
   },
+  onShow(){
+    console.log('show======')
+    this.getAllConversationList()
+  },
   setup() {
     const defaultAvatar = "/static/images/default_avatar.png";
     const store = useStore();
@@ -77,8 +81,8 @@ export default {
     const getUnReadMsg = () => {
       // debugger
       openIM.on('OnTotalUnreadMessageCountChanged',(data)=>{
-        console.log('data unredd=', data)
-        debugger
+        console.log('data unredd=================', data)
+        // debugger
 })
     }
     const connectIM = (userID, token) => {
@@ -133,7 +137,7 @@ export default {
         .then(({ data }) => {
           console.log("data===", data);
           console.log('Number(data)=', Number(data))
-          unReadTotal.value = data;
+          unReadTotal.value = Number(data);
           if(Number(data) > 0){
           uni.setTabBarBadge({
             index: 2,
@@ -172,6 +176,7 @@ export default {
       unReadTotal,
       goChat,
       showLastMessage,
+      getAllConversationList
     };
   },
 };

@@ -106,8 +106,11 @@ export default {
           (item) => item.sendID === props.userID
         );
         console.log("selfMessages===", selfMessages);
-        console.log('props.userID=========================================', props.userID)
-        console.log('userInfo.phone===', userInfo.phone)
+        console.log(
+          "props.userID=========================================",
+          props.userID
+        );
+        console.log("userInfo.phone===", userInfo.phone);
         const msgIDList = selfMessages.map((element) => element.clientMsgID);
         console.log("msgIDList===", msgIDList);
         const options = {
@@ -117,7 +120,11 @@ export default {
         openIM
           .markC2CMessageAsRead(options)
           .then(({ data }) => {
-            console.log("传入未读=", data);
+            console.log("传入已读=", data);
+            openIM.markC2CMessageAsRead({
+              userID: props.userID,
+              msgIDList: [],
+            });
           })
           .catch((err) => {
             console.log("err===", err);
