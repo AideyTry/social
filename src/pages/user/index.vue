@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-05-09 22:09:41
+ * @LastEditTime: 2022-05-11 15:03:25
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -22,12 +22,10 @@
       </view>
     </view>
     <view class="fans-wraper">
-      <view class="follows"
-        @click="goFollows"
+      <view class="follows" @click="goFollows"
         ><text>关注</text>&nbsp;<text>{{ follows.length }}</text></view
       >
-      <view class="fans"
-        @click="goFans"
+      <view class="fans" @click="goFans"
         ><text>粉丝</text>&nbsp;<text>{{ fans.length }}</text></view
       >
     </view>
@@ -42,12 +40,12 @@
       </view>
     </view>
     <view>
-      <InfoList :list="publishs" :activeIndex="activeIndex"/>
+      <InfoList :list="publishs" :activeIndex="activeIndex" />
     </view>
     <button @click="onLogout" style="margin-top: 20rpx;">退出</button>
     <view v-if="true">
-          <button @click="onOpenIMLogout">OpenIM logout</button>
-    <button @click="onDeleteConversation">Delete Conversicon</button>
+      <button @click="onOpenIMLogout">OpenIM logout</button>
+      <button @click="onDeleteConversation">Delete Conversicon</button>
     </view>
   </view>
 </template>
@@ -103,31 +101,35 @@ let getFansData = () => {
 };
 
 const goFollows = () => {
-  const userids = []
-  for(let item of follows.value){
-    userids.push(item.follow_id)
+  const userids = [];
+  for (let item of follows.value) {
+    userids.push(item.follow_id);
   }
   uni.navigateTo({
-    url: `/pages/user/info/Follow?type=${0}&userids=${encodeURIComponent(JSON.stringify(userids))}`,
+    url: `/pages/user/info/Follow?type=${0}&userids=${encodeURIComponent(
+      JSON.stringify(userids)
+    )}`,
   });
-}
+};
 
 const goFans = () => {
-  const userids = []
-  for(let item of fans.value){
-    userids.push(item.user_id)
+  const userids = [];
+  for (let item of fans.value) {
+    userids.push(item.user_id);
   }
   uni.navigateTo({
-    url: `/pages/user/info/Follow?type=${1}&userids=${encodeURIComponent(JSON.stringify(userids))}`,
+    url: `/pages/user/info/Follow?type=${1}&userids=${encodeURIComponent(
+      JSON.stringify(userids)
+    )}`,
   });
-}
+};
 
 // publish
 let activeIndex = ref(0);
 let publishs = ref([]);
 
 const getPublishData = () => {
-  publishs.value = []
+  publishs.value = [];
   getPublish().then((data) => {
     console.log("data getPublish=", data);
     if (data.data.code === 200) {
@@ -139,7 +141,7 @@ const getPublishData = () => {
 // 喜爱
 let likes = ref([]);
 const getMylikesData = () => {
-  publishs.value = []
+  publishs.value = [];
   getMylikes().then((data) => {
     console.log("data likes=", data);
     if (data.data.code === 200) {
@@ -153,20 +155,37 @@ const changeTab = (flag) => {
 };
 
 const onOpenIMLogout = () => {
-  openIM.logout().then(({ data })=>{
-  console.log('logout=', data)
-}).catch(err=>{
-  console.log('logout err=', err)
-})
-}
+  openIM
+    .logout()
+    .then(({ data }) => {
+      console.log("logout=", data);
+    })
+    .catch((err) => {
+      console.log("logout err=", err);
+    });
+};
 
 const onDeleteConversation = () => {
-  openIM.deleteConversation('single_13817373289').then(res=>{
-  console.log('delete res=', res)
-}).catch(err=>{
-  console.log('err=========', err)
-})
-}
+  openIM
+    .getAllConversationList()
+    .then((res) => {
+      //注意 会话对象中latestMsg（会话最后一条消息）仍为Json字符串格式 若需要使用请自行转换
+      console.log("res========", res);
+      const conversData = JSON.parse(res.data);
+      conversData.forEach((item) => {
+        openIM
+          .deleteConversation(item.conversationID)
+          .then((res) => {
+            console.log("delete res=", res);
+          })
+          .catch((err) => {
+            console.log("err=========", err);
+          });
+      });
+      console.log("conversData=", conversData);
+    })
+    .catch((err) => {});
+};
 
 watchEffect(() => {
   if (activeIndex.value === 0) {
