@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:41:15
- * @LastEditTime: 2022-05-09 18:27:34
+ * @LastEditTime: 2022-05-12 15:49:13
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -41,4 +41,9 @@ export const getSchool = (params) => {
 export const editUserInfo = (params) => {
 	console.log('params=e==', params)
 	return request(`/users/editUserInfo`,'POST',JSON.stringify(params.form))
+}
+
+// 账号案例
+export const exampleLogin = (params) => {
+	return request(`/users/exampleLogin`,'POST',params)
 }

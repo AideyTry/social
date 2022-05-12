@@ -51,6 +51,8 @@
           </button>
         </view>
       </form>
+      <show-modal v-if="demoVisible" :title="'请选择账号'" :content="'请任意选择一个账号登录'" @close="onClose"></show-modal>
+      <vuew class="demo"><button class="demo-title" @click="openDemo">点击可使用演示账号登录</button></vuew>
       <!-- #endif -->
       <!-- #ifdef APP-PLUS -->
       <view class="cut-off-line row">
@@ -110,15 +112,20 @@
 <script>
 import { sendCode, codePhoneLogin } from "../../api/user.js";
 import { setToken } from "../../utils/auth.js";
+import ShowModal from '@/pages/components/ShowModal.vue';
 
 /*  #ifdef  MP-WEIXIN  */
 import { loginWechat } from "../../api/wechat";
 /*  #endif  */
 export default {
+  components: {
+    ShowModal: ShowModal
+  },
   data() {
     return {
       codeVisible: true,
       loginVisible: true,
+      demoVisible: false,
       sendCaptchaEnabled: true,
       codeMessage: "获取验证码",
       counterTimer: 60,
@@ -233,6 +240,12 @@ export default {
         },
       });
     },
+    openDemo: function(){
+      this.demoVisible = true
+    },
+    onClose: function(){
+      this.demoVisible = false
+    }
   },
 };
 </script>
@@ -350,4 +363,13 @@ uni-button::after{
   justify-content: center;
   width: 100%;
   }
+
+.demo{
+  display: flex;
+  justify-content: center;
+  .demo-title{
+  background-color: #42b983;
+  color: #fff;
+  }
+}
 </style>
