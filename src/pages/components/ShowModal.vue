@@ -43,6 +43,8 @@ export default {
 import { ref, reactive} from "vue";
 import { exampleLogin } from '@/api/user.js'
 import { setToken } from "@/utils/auth.js";
+import { useStore } from "vuex";
+const store = useStore();
 
 const props = defineProps({
   title: {
@@ -74,7 +76,6 @@ const onClose = () => {
 }
 
 const submitForm = () => {
-  const that = this;
   form.value
     .validate()
     .then((res) => {
@@ -90,7 +91,7 @@ const submitForm = () => {
           emit('close')
           console.log("成功");
           setToken(token);
-          that.$store.dispatch("user/GetUserInfo");
+          store.dispatch("user/GetUserInfo");
           uni.reLaunch({
             url: "/pages/index/index",
           });
