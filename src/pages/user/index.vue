@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-05-11 15:03:25
+ * @LastEditTime: 2022-05-12 17:05:57
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,7 +18,7 @@
       </view>
       <view class="userinfo-detail">
         <text>用户名：{{ userInfo.username }}</text>
-        <text>签&nbsp;&nbsp;名: {{ userInfo.motto }}</text>
+        <view class="motto"><text>签&nbsp;&nbsp;&nbsp;名：</text><text>{{ userInfo.motto }}</text></view>
       </view>
     </view>
     <view class="fans-wraper">
@@ -213,6 +213,9 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    .motto{
+      display: flex;
+    }
   }
 }
 .avatar-warper {
@@ -222,6 +225,7 @@ onMounted(() => {
   width: 150rpx;
   height: 150rpx;
   border-radius: 50%;
+  padding: 12rpx;
 }
 .avatar-title {
   position: absolute;
