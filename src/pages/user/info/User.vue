@@ -124,6 +124,10 @@ const goChat = () => {
   const token = getIMToken();
   console.log('token===', token)
   console.log('userInfo.value.phone===', userInfo.value.phone)
+    uni.navigateTo({
+    url: `/pages/message/Chat?userID=${userInfo.value.phone}&title=${userInfo.value.username}`,
+  });
+  return
   const config = {
     userID: getUserInfo.phone,
     token,

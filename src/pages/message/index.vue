@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-11 16:30:33
+ * @LastEditTime: 2022-05-12 10:48:07
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -24,8 +24,8 @@
             "
             class="chat_bg_msg_icon"
           />
-          <view class="unread-total" v-if="unReadTotal"
-            ><text>{{ unReadTotal }}</text></view
+          <view class="unread-total" v-if="item.unreadCount"
+            ><text>{{ item.unreadCount }}</text></view
           >
         </view>
         <view class="content-wraper">
@@ -58,7 +58,6 @@ export default {
     const defaultAvatar = "/static/images/default_avatar.png";
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
-    let operationID = ref(null);
     const convers = ref([]);
     const goChat = (item) => {
       console.log("item=", item);
@@ -70,7 +69,7 @@ export default {
       openIM
         .getAllConversationList()
         .then(({ data }) => {
-          console.log("data====", JSON.parse(data));
+          console.log("会话总数data====", JSON.parse(data));
           convers.value = JSON.parse(data);
           unReadMessage();
         })
@@ -78,13 +77,6 @@ export default {
           console.log("err=", err);
         });
     };
-    const getUnReadMsg = () => {
-      // debugger
-      openIM.on('OnTotalUnreadMessageCountChanged',(data)=>{
-        console.log('data unredd=================', data)
-        // debugger
-})
-    }
     const connectIM = (userID, token) => {
       console.log("userID, token=====================", userID, token);
       const config = {
@@ -100,25 +92,7 @@ export default {
           console.log("login suc...", res);
           if (res.errCode === 0) {
             getAllConversationList();
-            getUnReadMsg()
           }
-          operationID.value = res.operationID;
-          //         openIM.getAllConversationList().then(res=>{
-          // //注意 会话对象中latestMsg（会话最后一条消息）仍为Json字符串格式 若需要使用请自行转换
-          //         console.log('回话=', JSON.parse(res.data))
-          //         console.log('列表信息=', JSON.parse(JSON.parse(res.data)[0].latestMsg))
-          //       }).catch(err=>{
-
-          //       })
-          //   const options = {
-          //   offset: 0,
-          //   count: 20
-          // }
-          // openIM.getConversationListSplit(options).then(({ data })=>{
-          //   console.log('获取的数据=', data)
-          // }).catch(err=>{
-          //   console.log('err===', err)
-          // })
         })
         .catch((err) => {
           console.log("login failed...", err);
@@ -129,15 +103,12 @@ export default {
       return JSON.parse(lastData).content;
     };
 
-    let unReadTotal = ref("");
-
     const unReadMessage = () => {
       openIM
         .getTotalUnreadMsgCount()
         .then(({ data }) => {
           console.log("data===", data);
           console.log('Number(data)=', Number(data))
-          unReadTotal.value = Number(data);
           if(Number(data) > 0){
           uni.setTabBarBadge({
             index: 2,
@@ -171,9 +142,7 @@ export default {
     });
     return {
       defaultAvatar,
-      operationID,
       convers,
-      unReadTotal,
       goChat,
       showLastMessage,
       getAllConversationList
