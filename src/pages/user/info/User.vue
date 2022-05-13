@@ -90,8 +90,8 @@ const props = defineProps({
 });
 
 let userInfo = ref({});
+let age = ref('')
 
-const age = ref(moment().diff(userInfo.birthday, "years"));
 
 
     const store = useStore();
@@ -106,7 +106,7 @@ const getFrend = () => {
     console.log("好友=", res);
     if (res.data.code === 200) {
       userInfo.value = res.data.data;
-      console.log("userInfo.value=======", userInfo.value);
+      age.value = ref(moment().diff(userInfo.value.birthday, "years"));
     }
   });
 };

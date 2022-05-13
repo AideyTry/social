@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-01-23 21:30:43
+ * @LastEditTime: 2022-05-13 23:42:14
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -134,6 +134,7 @@ import { computed, ref, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import PickerRegion from "./PickerRegion.vue";
 import { editUserInfo } from "../../../api/user";
+import moment from "moment";
 
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
@@ -142,7 +143,7 @@ let formData = reactive({
   avatar: userInfo.avatar,
   username: userInfo.username,
   gender: userInfo.gender,
-  birthday: userInfo.birthday,
+  birthday: moment(userInfo.birthday).format('YYYY-MM-DD'),
   location: {
     provinceCode: userInfo.location && userInfo.location.provinceCode,
     cityCode: userInfo.location && userInfo.location.cityCode,
@@ -347,7 +348,7 @@ const currentDate = getDate({
   format: true,
 });
 console.log("currentDate===", currentDate);
-formData.birthday = currentDate;
+// formData.birthday = currentDate;
 let startDate = getDate("start");
 let endDate = getDate("end");
 
