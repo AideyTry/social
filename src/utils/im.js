@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-05-11 22:49:17
- * @LastEditTime: 2022-05-12 16:18:20
+ * @LastEditTime: 2022-05-12 17:35:12
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -65,7 +65,7 @@ export const connectIM = (userID, token) => {
       if (res.errCode === 0) {
         setTimeout(() => {
           unReadMessage()
-        }, 1500)
+        }, 0)
         monitorOnRecv()
       }
     })
