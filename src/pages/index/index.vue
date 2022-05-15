@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-05-11 22:50:51
+ * @LastEditTime: 2022-05-14 01:30:44
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,7 +19,20 @@ import { useStore } from "vuex";
 import { imRegister, imLogin } from "@/api/im.js";
 import { setIMToken } from "../../utils/auth.js";
 import McTabs from "./McTabs.vue";
+import { getTotalIM } from "@/utils/storage.js";
 export default {
+  onShow: function() {
+    if (getTotalIM() > 0) {
+      uni.setTabBarBadge({
+        index: 2,
+        text: "···",
+      });
+    } else {
+      uni.removeTabBarBadge({
+        index: 2,
+      });
+    }
+  },
   components: {
     McTabs,
   },
@@ -35,7 +48,7 @@ export default {
       imRegister(params).then((res) => {
         console.log("res========", res);
         if (res.statusCode === 200) {
-          console.log('res.data.token====', res.data.token)
+          console.log("res.data.token====", res.data.token);
           setIMToken(res.data.token);
           // connectIM(res.data.data.userID, res.data.data.token);
         }
@@ -56,7 +69,7 @@ export default {
             return;
           }
           if (res.data.data.token) {
-            console.log('res.data.token=', res.data.token)
+            console.log("res.data.token=", res.data.token);
             setIMToken(res.data.data.token);
           }
           // connectIM(res.data.data.userID, res.data.data.token);

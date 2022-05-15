@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-01-09 22:49:43
+ * @LastEditTime: 2022-05-15 14:26:15
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -19,12 +19,11 @@ export default {
         url: "pages/login/index",
       });
     } else {
-      this.$store.dispatch("user/GetUserInfo");
+      this.$store.dispatch("user/IMLogin");
     }
   },
   onShow: function () {
     console.log("App Show");
-
   },
   onHide: function () {
     console.log("App Hide");

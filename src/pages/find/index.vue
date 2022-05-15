@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-04-15 14:59:47
+ * @LastEditTime: 2022-05-14 01:31:13
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -154,6 +154,24 @@
     </view>
   </view>
 </template>
+
+<script>
+import { getTotalIM } from "@/utils/storage.js";
+export default {
+  onShow: function() {
+    if (getTotalIM() > 0) {
+      uni.setTabBarBadge({
+        index: 2,
+        text: "···",
+      });
+    } else {
+      uni.removeTabBarBadge({
+        index: 2,
+      });
+    }
+  },
+};
+</script>
 
 <script setup>
 import { reactive, ref, computed, watch } from "vue";
@@ -492,14 +510,14 @@ const onSelectImage = async (e) => {
   if (!e) return;
   const { tempFilePaths, tempFiles } = e;
   uploadLoading.value = true;
-  const files = Object.assign([], tempFiles)
-  const fileAll = []
-  for(let item of files){
-    const chunk = await fileParse(item, "base64")
+  const files = Object.assign([], tempFiles);
+  const fileAll = [];
+  for (let item of files) {
+    const chunk = await fileParse(item, "base64");
     fileAll.push({
       filename: item.name,
-      chunk: chunk
-    })
+      chunk: chunk,
+    });
   }
   const buffer = await fileParse(tempFiles[0], "buffer");
   const spark = new SparkMD5.ArrayBuffer();

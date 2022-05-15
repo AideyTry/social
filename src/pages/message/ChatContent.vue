@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-08 21:51:28
+ * @LastEditTime: 2022-05-14 01:53:07
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -10,13 +10,13 @@
   <view>
     <!-- <scroll-view scroll-y class="con"></scroll-view> -->
     <view class="con">
-        <MsgItem v-for="(item) in msgList" :key="item.clientMsgID" :msg="item" :selfID="userInfo.phone"></MsgItem>
+        <MsgItem v-for="(item) in msgList" :key="item.clientMsgID + currentDate" :msg="item" :selfID="userInfo.phone"></MsgItem>
     </view>
   </view>
 </template>
 
 <script>
-import { onMounted, computed } from "vue";
+import { onMounted, computed, ref } from "vue";
 import MsgItem from './MsgItem.vue'
 import { useStore } from "vuex";
 export default {
@@ -24,15 +24,22 @@ export default {
   components: {
       MsgItem
   },
+  onShow: function(){
+    this.currentDate = new Date() + Math.random()
+    console.log('this.currentDate===============================', this.currentDate)
+    console.log('msgList============', this.msgList)
+  },
   setup() {
-
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
+
+    let currentDate = ref('')
 
     onMounted(() => {
     });
     return {
-        userInfo
+        userInfo,
+        currentDate
     };
   },
 };

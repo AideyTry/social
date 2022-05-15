@@ -1,6 +1,6 @@
 <template>
   <view class="chat-wraper">
-    <ChatContent :key="messageInfo" :msgList="messageInfo"></ChatContent>
+    <ChatContent :key="currentDate" :msgList="messageInfo"></ChatContent>
     <view class="send-msg">
       <input
         type="text"
@@ -14,21 +14,30 @@
 </template>
 
 <script>
-import { onMounted, computed, ref, watch } from "vue";
+import { onMounted, computed, ref, watch, onUpdated, onBeforeUpdate } from "vue";
 import openIM from "@/utils/openIM.js";
 import { getIMToken } from "../../utils/auth.js";
 import { useStore } from "vuex";
 import ChatContent from "./ChatContent.vue";
+import { connectIM } from '@/utils/im.js'
 export default {
   components: {
     ChatContent,
+  },
+  onShow: function (showprops) {
+    this.currentDate = new Date() + Math.random()
+    setTimeout(() => {
+      this.getConver()
+    }, 1000)
   },
   setup(props) {
     let inputString = ref("");
     const messageInfo = ref([]);
 
     const store = useStore();
-    const userInfo = computed(() => store.state.user.userInfo).value;
+
+    console.log('store.state.user===========================================================================', store.getters['user/getUserInfo'])
+    const userInfo = computed(() => store.getters['user/getUserInfo']).value;
 
     const monitorOnRecv = () => {
       openIM.on("OnRecvNewMessage", (data) => {
@@ -40,6 +49,7 @@ export default {
     };
 
     const getConver = () => {
+      // connectIM(userInfo.phone, getIMToken())
       const options = {
         groupID: "", // 群聊ID，拉取群聊时传入，否则为“”
         startClientMsgID: "", // 上一次拉取的最后一条消息ID或空字符串,为空字符则从最新一条开始
@@ -52,10 +62,11 @@ export default {
           console.log("历史数据=", JSON.parse(data));
           messageInfo.value = [...JSON.parse(data).reverse()];
         })
-        .catch((err) => {});
+        .catch((err) => {
+          console.log('err 000000000000000000000000000000000000000000=', err)
+        });
     };
     const onConfirm = (event) => {
-      console.log("event=", event);
       const { value } = event.detail;
       inputString.value = value;
       const offlinePushInfo = {
@@ -65,12 +76,9 @@ export default {
         iOSPushSound: "", // ios推送声音
         iOSBadgeCount: false, // ios推送角标
       };
-      console.log("props.userID=", props.userID);
       openIM
         .createTextMessage(value)
         .then((res) => {
-          console.log("res========", res);
-          console.log("message=", JSON.parse(res.data));
           const options = {
             recvID: props.userID,
             groupID: "",
@@ -80,11 +88,6 @@ export default {
           openIM
             .sendMessage(options)
             .then(({ data, errCode }) => {
-              console.log(
-                "data, errCode ============================",
-                data,
-                errCode
-              );
               const SendMessage = JSON.parse(data);
               messageInfo.value.unshift(SendMessage);
               inputString.value = "";
@@ -121,18 +124,10 @@ export default {
     watch(
       () => messageInfo,
       (count, prevCount) => {
-        console.log("count, prevCount====", count, prevCount);
         const selfMessages = count.value.filter(
           (item) => item.sendID === props.userID
         );
-        console.log("selfMessages===", selfMessages);
-        console.log(
-          "props.userID=========================================",
-          props.userID
-        );
-        console.log("userInfo.phone===", userInfo.phone);
         const msgIDList = selfMessages.map((element) => element.clientMsgID);
-        console.log("msgIDList===", msgIDList);
         const options = {
           userID: props.userID,
           msgIDList,
@@ -160,12 +155,15 @@ export default {
       });
       getConver();
       monitorOnRecv();
-      asRead();
+      asRead()
     });
+    let currentDate = ref('')
     return {
       inputString,
       messageInfo,
       onConfirm,
+      currentDate,
+      getConver
     };
   },
 };

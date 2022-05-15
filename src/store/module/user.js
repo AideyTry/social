@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-20 17:46:39
- * @LastEditTime: 2022-05-11 22:57:13
+ * @LastEditTime: 2022-05-15 14:24:42
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -9,11 +9,20 @@
 import { getUserInfo } from '../../api/user'
 import { validataGender, validateObjAttr } from '../../utils/validate'
 import { login } from '@/utils/im.js'
+import {
+    getStoreUserInfo,
+    setStoreUserInfo
+  } from "@/utils/storage.js";
 
 export const user = {
     namespaced: true,
     state: {
-        userInfo: null || uni.getStorageSync('userInfo')
+        userInfo: null || getStoreUserInfo()
+    },
+    getters: {
+        getUserInfo: (state) => {
+            return state.userInfo || getStoreUserInfo()
+        }
     },
     mutations: {
         setUserInfo(state, userInfo){
@@ -67,7 +76,7 @@ export const user = {
                 });
             }
             state.userInfo = userInfo
-            uni.setStorageSync('userInfo', userInfo)
+            setStoreUserInfo(userInfo)
         }
     },
     actions: {
@@ -80,6 +89,9 @@ export const user = {
                 login()
                 commit('setUserInfo', data)
             }
+        },
+        async IMLogin ({commit}){
+            login()
         }
     }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-05-11 22:49:17
- * @LastEditTime: 2022-05-12 17:35:12
+ * @LastEditTime: 2022-05-15 14:26:02
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -13,6 +13,9 @@ import {
 import {
   setIMToken
 } from "@/utils/auth.js";
+import {
+  setTotalIM
+} from "@/utils/storage.js";
 import openIM from "@/utils/openIM.js";
 
 
@@ -22,18 +25,10 @@ const unReadMessage = () => {
     .then(({
       data
     }) => {
-      console.log("data===", data);
+      console.log("data==================================================================================", data);
       console.log('Number(data)=', Number(data))
-      if (Number(data) > 0) {
-        uni.setTabBarBadge({
-          index: 2,
-          text: '···'
-        });
-      } else {
-        uni.removeTabBarBadge({
-          index: 2
-        })
-      }
+      // uni.$emit('updateIMMsgCount',{total: Number(data)})
+      setTotalIM(Number(data))
     })
     .catch((err) => {
       console.log("err=", err);
@@ -63,9 +58,7 @@ export const connectIM = (userID, token) => {
     .then((res) => {
       console.log("login suc...", res);
       if (res.errCode === 0) {
-        setTimeout(() => {
-          unReadMessage()
-        }, 0)
+        unReadMessage()
         monitorOnRecv()
       }
     })
@@ -103,7 +96,7 @@ export const login = () => {
         return;
       }
       if (res.data.data.token) {
-        console.log('res.data.data.token=', res.data.data.token)
+        console.log('res.data.data.token=', res.data)
         setIMToken(res.data.data.token);
         connectIM(res.data.data.userID, res.data.data.token)
       }

@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-10 16:27:29
- * @LastEditTime: 2022-05-11 16:26:32
+ * @LastEditTime: 2022-05-14 00:26:02
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -52,5 +52,6 @@ export const formatMsgDate = (timestamp) => {
     const str1 = year + "-" + month + "-" + date;
     // const str2 = hour + ":" + minute + ":" + second
     const str2 = hour + ":" + minute;
-    return [year, month, date, str1, str2];
+    // return [year, month, date, str1, str2];
+    return '1'
   };

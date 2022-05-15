@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-05-12 17:05:57
+ * @LastEditTime: 2022-05-14 01:31:03
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,7 +18,10 @@
       </view>
       <view class="userinfo-detail">
         <text>用户名：{{ userInfo.username }}</text>
-        <view class="motto"><text>签&nbsp;&nbsp;&nbsp;名：</text><text>{{ userInfo.motto }}</text></view>
+        <view class="motto"
+          ><text>签&nbsp;&nbsp;&nbsp;名：</text
+          ><text>{{ userInfo.motto }}</text></view
+        >
       </view>
     </view>
     <view class="fans-wraper">
@@ -49,6 +52,24 @@
     </view>
   </view>
 </template>
+
+<script>
+import { getTotalIM } from "@/utils/storage.js";
+export default {
+  onShow: function() {
+    if (getTotalIM() > 0) {
+      uni.setTabBarBadge({
+        index: 2,
+        text: "···",
+      });
+    } else {
+      uni.removeTabBarBadge({
+        index: 2,
+      });
+    }
+  },
+};
+</script>
 
 <script setup>
 import { ref, computed, onMounted, watchEffect } from "vue";
@@ -213,7 +234,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    .motto{
+    .motto {
       display: flex;
     }
   }
