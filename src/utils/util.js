@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-10 16:27:29
- * @LastEditTime: 2022-05-15 15:50:43
+ * @LastEditTime: 2022-05-17 17:46:58
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -51,14 +51,11 @@ export const formatMsgDate = (timestamp) => {
             case '7': return '日';
         }
     }
-    var a = moment(new Date(), 'YYYY-MM-DD hh:mm:ss');
-    var b = moment(new Date(timestamp), 'YYYY-MM-DD hh:mm:ss');
-    const result = a.diff(b, 'days')
-    if(result <= 1){
+    if(moment(timestamp).isSameOrAfter(moment(), "day")){
        return moment(timestamp).format('H:mm');
-    } else if(result <=2){
+    } else if(moment(timestamp).isSameOrAfter(moment().subtract(1, 'day'), "day")){
         return `昨天${moment(timestamp).format('H:mm')}`;
-    } else if(result <= 7){
+    } else if(moment(timestamp).isSameOrAfter(moment().subtract(7, 'day'), "day")){
         return `星期${week(moment(timestamp).format('E'))} ${moment(timestamp).format('H:mm')}`;
     }else {
         return moment(timestamp).format('YYYY年M月D日 H:mm');
