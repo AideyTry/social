@@ -107,7 +107,6 @@ export default {
               infoList.value = data.data.followsInfo;
               infoList.value = infoList.value.filter((element) => element);
               console.log("infoList.value====", infoList.value);
-              // initFlow(infoList.value);
               infoList.value.forEach((item) => {
                 initFlow(item)
               })
@@ -122,7 +121,9 @@ export default {
             if (data.data.code === 200) {
               infoList.value = data.data.fansInfo;
               infoList.value = infoList.value.filter((element) => element);
-              console.log("infoList.value====", infoList.value);
+              infoList.value.forEach((item) => {
+                initFlow(item)
+              })
             }
           });
       }
@@ -200,7 +201,7 @@ export default {
     border: 1rpx solid #ccc;
     border-radius: 8rpx;
     color: #ccc;
-    padding: 10rpx 20rpx;
+    padding: 10rpx 10rpx;
     font-size: 24rpx;
   }
 
