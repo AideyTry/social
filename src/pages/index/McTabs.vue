@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-03-30 17:18:58
+ * @LastEditTime: 2022-06-22 15:23:25
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -174,6 +174,7 @@ const swiperChange = (e) => {
   console.log("navItemWidth.value=====", navItemWidth.value);
 };
 onMounted(() => {
+  //#ifdef H5
   const items = document.querySelectorAll(".nav-item");
   if (items.length > 0) {
     items.forEach((item) => {
@@ -185,6 +186,19 @@ onMounted(() => {
     console.log("navItemWidth===", navItemWidth.value);
     getEnglishVideos({ pageNum: 1, pageSize: 10 });
   }
+  //#endif
+
+  //#ifdef APP-PLUS || MP-WEIXIN
+   console.log('list====', list.value)
+   if(list.value.length > 0){
+      list.value.forEach(() => {
+          navItems.push({ width: 48 });
+   })
+    navItemWidth.value = navItems[swiperIndex.value].width;
+    console.log("navItemWidth===", navItemWidth.value);
+    getEnglishVideos({ pageNum: 1, pageSize: 10 });
+   }
+  //#endif
 });
 const result = computed(() => `${navItemWidth.value}rpx`);
 

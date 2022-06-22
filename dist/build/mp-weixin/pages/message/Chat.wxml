@@ -1,0 +1,1 @@
+<view class="chat-wraper data-v-62f0652a"><chat-content wx:if="{{b}}" class="data-v-62f0652a" key="{{a}}" u-i="62f0652a-0" bind:__l="__l" u-p="{{b}}"></chat-content><view class="send-msg data-v-62f0652a"><input type="text" placeholder="请输入消息" class="send data-v-62f0652a" bindconfirm="{{c}}" value="{{d}}" bindinput="{{e}}"/></view></view>

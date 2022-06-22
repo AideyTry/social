@@ -6,9 +6,11 @@
         <!-- <slot name="title"> -->
         <view class="title-wraper">
             <view class="title"><text>{{ props.title }}</text></view>
-                  <svg class="close-icon" aria-hidden="true" @click.stop="onClose">
-            <use xlink:href="#icon-guanbi1"></use>
-          </svg></view>
+              <!-- <svg class="close-icon" aria-hidden="true" @click.stop="onClose">
+              <use xlink:href="#icon-guanbi1"></use>
+              </svg> -->
+              <span class="iconfont close-icon" @click.stop="onClose">&#xe723;</span>
+          </view>
         <!-- </slot> -->
         <view class="content-hint"
           >{{props.content}}</view

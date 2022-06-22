@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-04-21 22:19:45
+ * @LastEditTime: 2022-06-22 14:07:03
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -21,9 +21,10 @@
     <view class="ul">
       <view class="li" v-for="item in infoList" :key="item.id"  @click="goDetail(item)">
         <view class="comment">
-          <svg class="replay-icon" aria-hidden="true">
+          <!-- <svg class="replay-icon" aria-hidden="true">
             <use xlink:href="#icon-pinglunhuifu"></use>
-          </svg>
+          </svg> -->
+          <span class="iconfont replay-icon">&#xe653;</span>
           <view><text>{{item.comments || 0}}</text></view>
         </view>
         <view class="publish-info">

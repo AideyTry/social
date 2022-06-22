@@ -12,7 +12,7 @@
       <text class="logo-title">蔓草兴趣</text>
     </view>
     <view class="login">
-      <!-- #ifdef H5 || APP-PLUS -->
+      <!-- #ifdef H5 || APP-PLUS || MP-WEIXIN -->
       <form @submit="formSubmit" @reset="formReset" class="login-in">
         <view class="row-flex uni-form-item uni-column">
           <text class="title">手机号：</text>

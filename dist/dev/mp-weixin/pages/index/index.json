@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "兴趣爱好",
+  "usingComponents": {
+    "mc-tabs": "./McTabs"
+  }
+}

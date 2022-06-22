@@ -1,0 +1,2 @@
+"use strict";var e=require("../common/vendor.js");exports.getIMToken=function(){return e.index.getStorageSync("TOKENIM")},exports.getToken=function(){return e.index.getStorageSync("TOKEN")},exports.removeToken=function(){return e.index.removeStorageSync("TOKEN")},exports.setIMToken=function(n){return e.index.setStorageSync("TOKENIM",n)},exports.setToken=function(n){return e.index.setStorageSync("TOKEN",n)};
+//# sourceMappingURL=auth.js.map

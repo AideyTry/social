@@ -57,9 +57,10 @@
   </view>
   <view class="send-msg">
     <view class="chat">
-      <svg class="chat-icon" aria-hidden="true" @click.stop="goChat">
+      <!-- <svg class="chat-icon" aria-hidden="true" @click.stop="goChat">
         <use xlink:href="#icon-faxinxi"></use>
-      </svg>
+      </svg> -->
+      <span class="iconfont chat-icon" @click.stop="goChat">&#xe6cf;</span>
       <text>私聊</text>
     </view>
   </view>

@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-04-10 14:14:35
+ * @LastEditTime: 2022-06-22 15:44:04
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -25,9 +25,10 @@
         :style="{ width: waterfallImageWidth + 'rpx' }"
         :src="item.src"
       ></image>
-     <svg class="video-icon" v-if="item.fileType" aria-hidden="true">
+     <!-- <svg class="video-icon" v-if="item.fileType" aria-hidden="true">
         <use xlink:href="#icon-videofill"></use>
-      </svg>
+      </svg> -->
+      <span v-if="item.fileType" class="iconfont video-icon">&#xe7c7;</span>
       </view>
       <view class="hobby-title" ref="hobbyTitle">{{ item.title }}</view>
       <view class="hobby-info">
@@ -36,12 +37,14 @@
         <text>{{ item.username }}</text>
         </view>
         <view>
-          <svg v-if="item.likeFlag" class="icon" aria-hidden="true" @click.stop="like(item)">
+          <!-- <svg v-if="item.likeFlag" class="icon" aria-hidden="true" @click.stop="like(item)">
             <use xlink:href="#icon-xihuan1"></use>
           </svg>
           <svg v-else class="icon" aria-hidden="true" @click.stop="like(item)">
             <use xlink:href="#icon-xihuan"></use>
-          </svg>
+          </svg> -->
+          <span v-if="item.likeFlag" style="color: #f00;" class="iconfont" @click.stop="like(item)">&#xe86f;</span>
+          <span v-else class="iconfont" @click.stop="like(item)">&#xe86f;</span>
           <text style="margin-left: 10rpx;">{{item.likes}}</text>
         </view>
       </view>

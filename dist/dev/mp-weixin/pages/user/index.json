@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "user",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "info-list": "../components/InfoList"
+  }
+}

@@ -1,0 +1,1 @@
+<view class="video-wraper data-v-facd1866"><video id="video" ref="refdVideo" src="{{a}}" poster="{{b}}" class="video data-v-facd1866"></video></view>

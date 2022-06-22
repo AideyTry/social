@@ -1,0 +1,2 @@
+"use strict";var e=require("../utils/request.js");exports.deletePublish=s=>e.request("/publishs/deletePublish","POST",s),exports.getMylikes=s=>(console.log("params===",s),e.request("/publishs/getMylikes","GET",s)),exports.getPublish=s=>(console.log("params===",s),e.request("/publishs/getPublish","GET",s)),exports.updatePublish=s=>e.request("/publishs/updatePublish","POST",s,"application/x-www-form-urlencoded"),exports.updateVideoPublish=s=>e.request("/publishs/updateVideoPublish","POST",s);
+//# sourceMappingURL=publish.js.map

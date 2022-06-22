@@ -1,0 +1,2 @@
+"use strict";const c={namespaced:!0,state:{show:!1,title:"标题",content:"内容",showCancel:!0,cancelText:"取消",cancelColor:"#000000",confirmText:"确定",confirmColor:"#576b95",success:null},mutations:{hideModal(c){c.hideTabBar&&wx.showTabBar(),c.show=!1},showModal(c,o){c=Object.assign(c,o),console.log("modal state=",c),c.show=!0},success(c,o){let s=c.success,e={cancel:!1,confirm:!1};"confirm"==o?e.confirm=!0:e.cancel=!0,s&&s(e)}},actions:{}};exports.modal=c;
+//# sourceMappingURL=modal.js.map

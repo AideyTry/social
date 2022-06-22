@@ -1,0 +1,2 @@
+"use strict";var e=require("../../../../common/vendor.js");const o={name:"uniList","mp-weixin":{options:{multipleSlots:!1}},props:{enableBackToTop:{type:[Boolean,String],default:!1},scrollY:{type:[Boolean,String],default:!1},border:{type:Boolean,default:!0}},created(){this.firstChildAppend=!1},methods:{loadMore(e){this.$emit("scrolltolower")}}};var r=e._export_sfc(o,[["render",function(o,r,t,n,a,d){return e.e({a:t.border},(t.border,{}),{b:t.border},(t.border,{}))}],["__scopeId","data-v-aff8594a"]]);wx.createComponent(r);
+//# sourceMappingURL=uni-list.js.map

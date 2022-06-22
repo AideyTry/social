@@ -1,0 +1,1 @@
+<view class="data-v-7f4370be"><view class="con data-v-7f4370be"><msg-item wx:for="{{a}}" wx:for-item="item" wx:key="a" class="data-v-7f4370be" u-i="{{item.b}}" bind:__l="__l" u-p="{{item.c}}"></msg-item></view></view>
