@@ -19,7 +19,10 @@
     </view>
     <view class="swiper-box" v-if="hobbyInfo.fileType === 1">
       <view class="swiper-item">
-      <VideoPlayer :options="{src: hobbyInfo.video_url, poster: hobbyInfo.url}" :key="hobbyInfo.id"></VideoPlayer>
+        <VideoPlayer
+          :options="{ src: hobbyInfo.video_url, poster: hobbyInfo.url }"
+          :key="hobbyInfo.id"
+        ></VideoPlayer>
       </view>
     </view>
     <view class="author-wraper">
@@ -54,7 +57,7 @@
       </view>
     </view>
     <view class="comment-wraper">
-      <Comment v-if="hobbyInfo.id" :hobbyInfo="hobbyInfo" :key="hobbyInfo.id"/>
+      <Comment v-if="hobbyInfo.id" :hobbyInfo="hobbyInfo" :key="hobbyInfo.id" />
     </view>
   </div>
 </template>
@@ -73,21 +76,19 @@ import { formatDate } from "@/utils/util.js";
 export default {
   components: {
     Comment,
-    VideoPlayer
+    VideoPlayer,
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     console.log("options===", options);
   },
-  onReady: function(){
-
-  },
+  onReady: function () {},
   setup(props) {
-    console.log('props=', props)
+    console.log("props=", props);
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
 
-   const options = reactive({
-      poster: '',
+    const options = reactive({
+      poster: "",
       src: "", //视频源
     });
 
@@ -100,17 +101,17 @@ export default {
 
     let hobbyInfo = ref({});
     const initGetHobbyDetail = (obj) => {
-      const { id, hobby } = obj
+      const { id, hobby } = obj;
       const params = { id, hobby };
       getHobbyDetail(params).then((data) => {
         console.log("data===", data);
         if (data.data.code === 200) {
           hobbyInfo.value = data.data.data;
           publishDate.value = formatDate(data.data.data.create_time);
-          console.log('hobbyInfo.value===', hobbyInfo.value)
-          console.log('data.data.data.url===', data.data.data.url)
-          options.poster = data.data.data.url
-          options.src = data.data.data.video_url
+          console.log("hobbyInfo.value===", hobbyInfo.value);
+          console.log("data.data.data.url===", data.data.data.url);
+          options.poster = data.data.data.url;
+          options.src = data.data.data.video_url;
           initFlow();
         }
       });
@@ -123,7 +124,7 @@ export default {
       if (isFlollow.value) {
         uni.showModal({
           content: "确认不再关注？",
-          success: function(res) {
+          success: function (res) {
             if (res.confirm) {
               let params = { followId: hobbyInfo.value.user_id };
               deleteFollow(params).then((data) => {
@@ -146,12 +147,12 @@ export default {
         if (data.data.code === 200) {
           followText.value = "已关注";
           isFlollow.value = true;
-        } else if(data.data.code === 400) {
+        } else if (data.data.code === 400) {
           uni.showToast({
             title: data.data.msg,
-            icon: 'none',
-            duration: 2000
-          })
+            icon: "none",
+            duration: 2000,
+          });
         }
       });
     };
@@ -175,36 +176,44 @@ export default {
 
     // 导航标题
     const onNavTitle = (obj) => {
-      console.log('obj===================================================================================', obj)
-              const { hobby } = obj
- const strateies = {
-     'hobby2': () => uni.setNavigationBarTitle({
-    title: '狼人杀'
-  }),
-     'hobby3': () => uni.setNavigationBarTitle({
-    title: '剧本杀'
-  }),
-     'hobby4': () => uni.setNavigationBarTitle({
-    title: '登山'
-  }),
-     'hobby5': () => uni.setNavigationBarTitle({
-    title: '旅游'
-  }),
-     'hobby6': () => uni.setNavigationBarTitle({
-    title: '视频'
-  }),
-     'hobby7': () => uni.setNavigationBarTitle({
-    title: '电影'
-  })
- }
- strateies[`hobby${hobby}`]()
-
-    }
+      console.log(
+        "obj===================================================================================",
+        obj
+      );
+      const { hobby } = obj;
+      const strateies = {
+        hobby2: () =>
+          uni.setNavigationBarTitle({
+            title: "狼人杀",
+          }),
+        hobby3: () =>
+          uni.setNavigationBarTitle({
+            title: "剧本杀",
+          }),
+        hobby4: () =>
+          uni.setNavigationBarTitle({
+            title: "登山",
+          }),
+        hobby5: () =>
+          uni.setNavigationBarTitle({
+            title: "旅游",
+          }),
+        hobby6: () =>
+          uni.setNavigationBarTitle({
+            title: "视频",
+          }),
+        hobby7: () =>
+          uni.setNavigationBarTitle({
+            title: "电影",
+          }),
+      };
+      strateies[`hobby${hobby}`]();
+    };
 
     onMounted(() => {
       console.log("userInfo===", userInfo);
-      onNavTitle(props)
-      initGetHobbyDetail({id: props.id, hobby: props.hobby});
+      onNavTitle(props);
+      initGetHobbyDetail({ id: props.id, hobby: props.hobby });
     });
     return {
       followText,
@@ -213,7 +222,7 @@ export default {
       hobbyInfo,
       info,
       publishDate,
-      options
+      options,
     };
   },
 };

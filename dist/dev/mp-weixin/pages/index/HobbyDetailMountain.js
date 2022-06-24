@@ -101,22 +101,22 @@ const _sfc_main = {
       console.log("obj===================================================================================", obj);
       const { hobby } = obj;
       const strateies = {
-        "hobby2": () => common_vendor.index.setNavigationBarTitle({
+        hobby2: () => common_vendor.index.setNavigationBarTitle({
           title: "\u72FC\u4EBA\u6740"
         }),
-        "hobby3": () => common_vendor.index.setNavigationBarTitle({
+        hobby3: () => common_vendor.index.setNavigationBarTitle({
           title: "\u5267\u672C\u6740"
         }),
-        "hobby4": () => common_vendor.index.setNavigationBarTitle({
+        hobby4: () => common_vendor.index.setNavigationBarTitle({
           title: "\u767B\u5C71"
         }),
-        "hobby5": () => common_vendor.index.setNavigationBarTitle({
+        hobby5: () => common_vendor.index.setNavigationBarTitle({
           title: "\u65C5\u6E38"
         }),
-        "hobby6": () => common_vendor.index.setNavigationBarTitle({
+        hobby6: () => common_vendor.index.setNavigationBarTitle({
           title: "\u89C6\u9891"
         }),
-        "hobby7": () => common_vendor.index.setNavigationBarTitle({
+        hobby7: () => common_vendor.index.setNavigationBarTitle({
           title: "\u7535\u5F71"
         })
       };

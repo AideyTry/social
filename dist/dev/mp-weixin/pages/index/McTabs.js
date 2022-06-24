@@ -13,9 +13,9 @@ const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-ico
 const _easycom_uni_list_item = () => "../../uni_modules/uni-list/components/uni-list-item/uni-list-item.js";
 const _easycom_uni_list = () => "../../uni_modules/uni-list/components/uni-list/uni-list.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_uni_list_item + _easycom_uni_list + WaterFall)();
+  (_easycom_uni_icons + _easycom_uni_list_item + _easycom_uni_list + WaterFallApp)();
 }
-const WaterFall = () => "./WaterFall.js";
+const WaterFallApp = () => "./WaterFallApp.js";
 const __default__ = {
   name: "McTabs",
   mounted() {
@@ -66,6 +66,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
       console.log("current=", current);
     };
     const taggleNav = (index) => {
+      console.log("swiperIndex========================", index);
       swiperIndex.value = index;
     };
     const swiperChange = (e) => {
@@ -266,43 +267,46 @@ const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
               color: "#999"
             }),
             d: "60f14796-0-" + i0
-          } : index === 1 ? {
-            f: "60f14796-3-" + i0,
-            g: common_vendor.p({
+          } : {}, {
+            e: index === 1 && common_vendor.unref(swiperIndex) === index
+          }, index === 1 && common_vendor.unref(swiperIndex) === index ? {
+            f: common_vendor.unref(werewolfs),
+            g: "60f14796-3-" + i0,
+            h: common_vendor.p({
               list: common_vendor.unref(werewolfs),
               activeIndex: 2
             })
-          } : index === 2 ? {
-            i: "60f14796-4-" + i0,
-            j: common_vendor.p({
+          } : index === 2 && common_vendor.unref(swiperIndex) === index ? {
+            j: common_vendor.unref(scriptKills),
+            k: "60f14796-4-" + i0,
+            l: common_vendor.p({
               list: common_vendor.unref(scriptKills),
               activeIndex: 3
             })
-          } : index === 3 ? {
-            l: "60f14796-5-" + i0,
-            m: common_vendor.p({
+          } : index === 3 && common_vendor.unref(swiperIndex) === index ? {
+            n: "60f14796-5-" + i0,
+            o: common_vendor.p({
               list: common_vendor.unref(mountaineers),
               activeIndex: 4
             })
-          } : index === 4 ? {
-            o: "60f14796-6-" + i0,
-            p: common_vendor.p({
+          } : index === 4 && common_vendor.unref(swiperIndex) === index ? {
+            q: "60f14796-6-" + i0,
+            r: common_vendor.p({
               list: common_vendor.unref(travels),
               activeIndex: 5
             })
-          } : index === 5 ? {
-            r: "60f14796-7-" + i0,
-            s: common_vendor.p({
+          } : index === 5 && common_vendor.unref(swiperIndex) === index ? {
+            t: "60f14796-7-" + i0,
+            v: common_vendor.p({
               list: common_vendor.unref(videoList),
               activeIndex: 6
             })
           } : {}, {
-            e: index === 1,
-            h: index === 2,
-            k: index === 3,
-            n: index === 4,
-            q: index === 5,
-            t: index
+            i: index === 2 && common_vendor.unref(swiperIndex) === index,
+            m: index === 3 && common_vendor.unref(swiperIndex) === index,
+            p: index === 4 && common_vendor.unref(swiperIndex) === index,
+            s: index === 5 && common_vendor.unref(swiperIndex) === index,
+            w: index
           });
         }),
         d: common_vendor.o$1(onScrolltolower),

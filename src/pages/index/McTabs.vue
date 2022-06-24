@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-06-22 15:23:25
+ * @LastEditTime: 2022-06-24 16:35:01
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -92,11 +92,20 @@
             </uni-list-item>
           </uni-list>
           <!-- <view v-else-if="index === 3"> -->
-          <WaterFall v-else-if="index === 1" :list="werewolfs" :activeIndex="2" />
+          <!-- #ifdef H5 -->
+          <WaterFall v-if="index === 1" :list="werewolfs" :activeIndex="2" />
           <WaterFall v-else-if="index === 2" :list="scriptKills" :activeIndex="3"/>
           <WaterFall v-else-if="index === 3" :list="mountaineers" :activeIndex="4"/>
           <WaterFall v-else-if="index === 4" :list="travels" :activeIndex="5"/>
           <WaterFall v-else-if="index === 5" :list="videoList" :activeIndex="6"/>
+          <!-- #endif -->
+          <!-- #ifdef APP-PLUS || MP-WEIXIN -->
+          <WaterFallApp v-if="index === 1 && swiperIndex === index" :list="werewolfs" :activeIndex="2" :key="werewolfs"/>
+          <WaterFallApp v-else-if="index === 2 && swiperIndex === index" :list="scriptKills" :activeIndex="3" :key="scriptKills"/>
+          <WaterFallApp v-else-if="index === 3 && swiperIndex === index" :list="mountaineers" :activeIndex="4"/>
+          <WaterFallApp v-else-if="index === 4 && swiperIndex === index" :list="travels" :activeIndex="5"/>
+          <WaterFallApp v-else-if="index === 5 && swiperIndex === index" :list="videoList" :activeIndex="6"/>
+          <!-- #endif -->
           <!-- <WaterFall v-else-if="index === 6" :list="movies" :activeIndex="7"/> -->
           <!-- </view> -->
           <!-- <view v-else>待上线</view> -->
@@ -120,6 +129,7 @@ export default {
 import { ref, reactive, onMounted, computed } from "vue";
 import { getVideoList, getHobbyList } from "@/api/hobby.js";
 import WaterFall from "./WaterFall.vue";
+import WaterFallApp from "./WaterFallApp.vue";
 
 const list = ref([
   { title: "英语", content: [] },
@@ -161,6 +171,7 @@ const handleScroll = (e) => {
   console.log("current=", current);
 };
 const taggleNav = (index) => {
+  console.log('swiperIndex========================', index)
   swiperIndex.value = index;
 };
 const swiperChange = (e) => {

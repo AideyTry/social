@@ -32,9 +32,6 @@ const getComment = (params) => {
 const setLike = (params) => {
   return utils_request.request(`/communications/setLike`, "POST", params);
 };
-const getLike = (params) => {
-  return utils_request.request(`/communications/getLike`, "GET", params);
-};
 exports.deleteFollow = deleteFollow;
 exports.getComment = getComment;
 exports.getFans = getFans;
@@ -42,7 +39,6 @@ exports.getFansInfo = getFansInfo;
 exports.getFollow = getFollow;
 exports.getFollows = getFollows;
 exports.getFollowsInfo = getFollowsInfo;
-exports.getLike = getLike;
 exports.setComment = setComment;
 exports.setFollow = setFollow;
 exports.setLike = setLike;
