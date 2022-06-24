@@ -35,6 +35,8 @@ const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
     const goDetail = (item) => {
       console.log("item=", item);
       console.log("props===", props);
+      console.log("item.id========", item.id);
+      console.log("props.activeIndex=====", props.activeIndex);
       common_vendor.index.navigateTo({
         url: `/pages/index/HobbyDetailMountain?id=${item.id}&hobby=${props.activeIndex}`
       });
@@ -108,11 +110,14 @@ const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
     return (_ctx, _cache) => {
       return {
         a: common_vendor.f(props.list, (item, k0, i0) => {
-          return {
-            a: item.url,
-            b: common_vendor.o$1(($event) => loadImg($event, item)),
-            c: item.id
-          };
+          return common_vendor.e({
+            a: item.url
+          }, item.url ? {
+            b: item.url,
+            c: common_vendor.o$1(($event) => loadImg($event, item))
+          } : {}, {
+            d: item.id
+          });
         }),
         b: common_vendor.f(common_vendor.unref(waterfall), (list, k0, i0) => {
           return {

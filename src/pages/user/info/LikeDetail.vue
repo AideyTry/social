@@ -62,6 +62,7 @@ export default {
   },
   onLoad: function(options) {
     console.log("options===", options);
+    this.propsOptions = options
   },
   onReady: function(){
 
@@ -75,6 +76,8 @@ export default {
       poster: '',
       src: "", //视频源
     });
+
+    let propsOptions = ref(null)
 
     let info = ref([
       {
@@ -166,7 +169,7 @@ export default {
 
     onMounted(() => {
       console.log("userInfo===", userInfo);
-      initGetHobbyDetail({id: props.id, hobby: props.hobby});
+      initGetHobbyDetail({id: propsOptions.value.id, hobby: propsOptions.value.hobby});
     });
     return {
       followText,
@@ -175,7 +178,8 @@ export default {
       hobbyInfo,
       info,
       publishDate,
-      options
+      options,
+      propsOptions
     };
   },
 };

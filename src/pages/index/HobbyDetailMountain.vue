@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-04-15 16:59:35
+ * @LastEditTime: 2022-06-24 22:23:08
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -80,10 +80,12 @@ export default {
   },
   onLoad: function (options) {
     console.log("options===", options);
+    this.propsOptions = options
   },
   onReady: function () {},
-  setup(props) {
+  setup(props, context) {
     console.log("props=", props);
+    console.log('context==========', context)
     const store = useStore();
     const userInfo = computed(() => store.state.user.userInfo).value;
 
@@ -91,6 +93,8 @@ export default {
       poster: "",
       src: "", //视频源
     });
+
+    let propsOptions = ref(null)
 
     let info = ref([
       {
@@ -181,6 +185,7 @@ export default {
         obj
       );
       const { hobby } = obj;
+      //#ifdef H5
       const strateies = {
         hobby2: () =>
           uni.setNavigationBarTitle({
@@ -208,12 +213,53 @@ export default {
           }),
       };
       strateies[`hobby${hobby}`]();
+      //#endif
+
+      //#ifdef APP-PLUS || MP-WEIXIN
+      switch (hobby) {
+        case 2:
+          uni.setNavigationBarTitle({
+            title: "狼人杀",
+          });
+          break;
+        case 3:
+          uni.setNavigationBarTitle({
+            title: "剧本杀",
+          });
+          break;
+        case 4:
+          uni.setNavigationBarTitle({
+            title: "登山",
+          });
+          break;
+        case 5:
+          uni.setNavigationBarTitle({
+            title: "旅游",
+          });
+          break;
+        case 6:
+          uni.setNavigationBarTitle({
+            title: "视频",
+          });
+          break;
+        case 7:
+          uni.setNavigationBarTitle({
+            title: "电影",
+          });
+          break;
+        default:
+          uni.setNavigationBarTitle({
+            title: "狼人杀",
+          });
+      }
+      //#endif
     };
 
     onMounted(() => {
       console.log("userInfo===", userInfo);
-      onNavTitle(props);
-      initGetHobbyDetail({ id: props.id, hobby: props.hobby });
+      console.log('propsOptions===========', propsOptions)
+      onNavTitle(propsOptions.value);
+      initGetHobbyDetail({ id: propsOptions.value.id, hobby: propsOptions.value.hobby });
     });
     return {
       followText,
@@ -223,6 +269,7 @@ export default {
       info,
       publishDate,
       options,
+      propsOptions
     };
   },
 };

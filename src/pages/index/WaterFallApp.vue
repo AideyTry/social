@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-24 14:06:50
- * @LastEditTime: 2022-06-24 17:20:23
+ * @LastEditTime: 2022-06-24 17:57:51
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -13,6 +13,7 @@
         <image
           :src="item.url"
           @load="loadImg($event, item)"
+          v-if="item.url"
         ></image>
       </view>
     </view>
@@ -108,6 +109,8 @@ let waterfallImageWidth = ref(328); // 每一列宽度
 const goDetail = (item) => {
   console.log("item=", item);
   console.log("props===", props);
+  console.log('item.id========', item.id)
+  console.log('props.activeIndex=====', props.activeIndex)
   uni.navigateTo({
     url: `/pages/index/HobbyDetailMountain?id=${item.id}&hobby=${props.activeIndex}`,
   });

@@ -14,6 +14,7 @@ const _sfc_main = {
   },
   onLoad: function(options) {
     console.log("options===", options);
+    this.propsOptions = options;
   },
   onReady: function() {
   },
@@ -25,6 +26,7 @@ const _sfc_main = {
       poster: "",
       src: ""
     });
+    let propsOptions = common_vendor.ref(null);
     let info = common_vendor.ref([
       {
         content: "https://social-1308251497.cos.ap-guangzhou.myqcloud.com/images/4.jfif"
@@ -101,7 +103,7 @@ const _sfc_main = {
     };
     common_vendor.onMounted(() => {
       console.log("userInfo===", userInfo);
-      initGetHobbyDetail({ id: props.id, hobby: props.hobby });
+      initGetHobbyDetail({ id: propsOptions.value.id, hobby: propsOptions.value.hobby });
     });
     return {
       followText,
@@ -110,7 +112,8 @@ const _sfc_main = {
       hobbyInfo,
       info,
       publishDate,
-      options
+      options,
+      propsOptions
     };
   }
 };

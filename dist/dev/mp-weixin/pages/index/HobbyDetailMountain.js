@@ -14,17 +14,20 @@ const _sfc_main = {
   },
   onLoad: function(options) {
     console.log("options===", options);
+    this.propsOptions = options;
   },
   onReady: function() {
   },
-  setup(props) {
+  setup(props, context) {
     console.log("props=", props);
+    console.log("context==========", context);
     const store = common_vendor.useStore();
     const userInfo = common_vendor.computed$1(() => store.state.user.userInfo).value;
     const options = common_vendor.reactive({
       poster: "",
       src: ""
     });
+    let propsOptions = common_vendor.ref(null);
     let info = common_vendor.ref([
       {
         content: "https://social-1308251497.cos.ap-guangzhou.myqcloud.com/images/4.jfif"
@@ -100,32 +103,48 @@ const _sfc_main = {
     const onNavTitle = (obj) => {
       console.log("obj===================================================================================", obj);
       const { hobby } = obj;
-      const strateies = {
-        hobby2: () => common_vendor.index.setNavigationBarTitle({
-          title: "\u72FC\u4EBA\u6740"
-        }),
-        hobby3: () => common_vendor.index.setNavigationBarTitle({
-          title: "\u5267\u672C\u6740"
-        }),
-        hobby4: () => common_vendor.index.setNavigationBarTitle({
-          title: "\u767B\u5C71"
-        }),
-        hobby5: () => common_vendor.index.setNavigationBarTitle({
-          title: "\u65C5\u6E38"
-        }),
-        hobby6: () => common_vendor.index.setNavigationBarTitle({
-          title: "\u89C6\u9891"
-        }),
-        hobby7: () => common_vendor.index.setNavigationBarTitle({
-          title: "\u7535\u5F71"
-        })
-      };
-      strateies[`hobby${hobby}`]();
+      switch (hobby) {
+        case 2:
+          common_vendor.index.setNavigationBarTitle({
+            title: "\u72FC\u4EBA\u6740"
+          });
+          break;
+        case 3:
+          common_vendor.index.setNavigationBarTitle({
+            title: "\u5267\u672C\u6740"
+          });
+          break;
+        case 4:
+          common_vendor.index.setNavigationBarTitle({
+            title: "\u767B\u5C71"
+          });
+          break;
+        case 5:
+          common_vendor.index.setNavigationBarTitle({
+            title: "\u65C5\u6E38"
+          });
+          break;
+        case 6:
+          common_vendor.index.setNavigationBarTitle({
+            title: "\u89C6\u9891"
+          });
+          break;
+        case 7:
+          common_vendor.index.setNavigationBarTitle({
+            title: "\u7535\u5F71"
+          });
+          break;
+        default:
+          common_vendor.index.setNavigationBarTitle({
+            title: "\u72FC\u4EBA\u6740"
+          });
+      }
     };
     common_vendor.onMounted(() => {
       console.log("userInfo===", userInfo);
-      onNavTitle(props);
-      initGetHobbyDetail({ id: props.id, hobby: props.hobby });
+      console.log("propsOptions===========", propsOptions);
+      onNavTitle(propsOptions.value);
+      initGetHobbyDetail({ id: propsOptions.value.id, hobby: propsOptions.value.hobby });
     });
     return {
       followText,
@@ -134,7 +153,8 @@ const _sfc_main = {
       hobbyInfo,
       info,
       publishDate,
-      options
+      options,
+      propsOptions
     };
   }
 };
