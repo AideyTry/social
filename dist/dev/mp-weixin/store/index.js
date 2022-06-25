@@ -1,12 +1,2 @@
-"use strict";
-var common_vendor = require("../common/vendor.js");
-var store_module_user = require("./module/user.js");
-var store_module_modal = require("./module/modal.js");
-const store = common_vendor.createStore({
-  modules: {
-    user: store_module_user.user,
-    modal: store_module_modal.modal
-  }
-});
-exports.store = store;
+"use strict";var e=require("../common/vendor.js"),r=require("./module/user.js"),o=require("./module/modal.js");const s=e.createStore({modules:{user:r.user,modal:o.modal}});exports.store=s;
 //# sourceMappingURL=index.js.map

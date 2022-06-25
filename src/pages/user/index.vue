@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-05-16 20:38:54
+ * @LastEditTime: 2022-06-25 10:55:24
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -45,7 +45,7 @@
     <view>
       <InfoList :list="publishs" :activeIndex="activeIndex" />
     </view>
-    <button @click="onLogout" style="margin-top: 20rpx;">退出</button>
+    <button @click="onLogout" style="margin-top: 20rpx">退出</button>
     <view v-if="false">
       <button @click="onOpenIMLogout">OpenIM logout</button>
       <button @click="onDeleteConversation">Delete Conversicon</button>
@@ -56,7 +56,7 @@
 <script>
 import { getTotalIM } from "@/utils/storage.js";
 export default {
-  onShow: function() {
+  onShow: function () {
     if (getTotalIM() > 0) {
       uni.setTabBarBadge({
         index: 2,
@@ -91,7 +91,14 @@ const onLogout = () => {
     removeToken();
     resolve();
   }).then(() => {
+    //#ifdef H5
     location.reload();
+    //#endif
+    //#ifdef APP-PLUS || MP-WEIXIN
+    uni.reLaunch({
+      url: "/pages/login/index",
+    });
+    //#endif
   });
 };
 

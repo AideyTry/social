@@ -1,14 +1,2 @@
-"use strict";
-var common_vendor = require("../../common/vendor.js");
-const _sfc_main = {
-  data() {
-    return {};
-  },
-  methods: {}
-};
-function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {};
-}
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/myself/social/social/src/pages/hobby/index.vue"]]);
-wx.createPage(MiniProgramPage);
+"use strict";var e=require("../../common/vendor.js");const r={data(){return{}},methods:{}};function o(a,c,n,t,i,_){return{}}var s=e._export_sfc(r,[["render",o],["__file","C:/myself/social/social/src/pages/hobby/index.vue"]]);wx.createPage(s);
 //# sourceMappingURL=index.js.map

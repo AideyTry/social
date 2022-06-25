@@ -1,25 +1,2 @@
-"use strict";
-var common_vendor = require("../common/vendor.js");
-const tokenKey = "TOKEN";
-const tokenKeyIM = "TOKENIM";
-function getToken() {
-  return common_vendor.index.getStorageSync(tokenKey);
-}
-function setToken(token) {
-  return common_vendor.index.setStorageSync(tokenKey, token);
-}
-function removeToken() {
-  return common_vendor.index.removeStorageSync(tokenKey);
-}
-function getIMToken() {
-  return common_vendor.index.getStorageSync(tokenKeyIM);
-}
-function setIMToken(token) {
-  return common_vendor.index.setStorageSync(tokenKeyIM, token);
-}
-exports.getIMToken = getIMToken;
-exports.getToken = getToken;
-exports.removeToken = removeToken;
-exports.setIMToken = setIMToken;
-exports.setToken = setToken;
+"use strict";var e=require("../common/vendor.js");const o="TOKEN",t="TOKENIM";function r(){return e.index.getStorageSync(o)}function c(n){return e.index.setStorageSync(o,n)}function i(){return e.index.removeStorageSync(o)}function k(){return e.index.getStorageSync(t)}function u(n){return e.index.setStorageSync(t,n)}exports.getIMToken=k;exports.getToken=r;exports.removeToken=i;exports.setIMToken=u;exports.setToken=c;
 //# sourceMappingURL=auth.js.map

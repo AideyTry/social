@@ -1,20 +1,2 @@
-"use strict";
-var utils_request = require("../utils/request.js");
-const getVideoList = (params) => {
-  return utils_request.request(`/users/getVideoList`, "GET", params);
-};
-const videoDetail = (params) => {
-  return utils_request.request(`/users/getVideoDetail`, "GET", params);
-};
-const getHobbyList = (params) => {
-  console.log("params=", params);
-  return utils_request.request(`/files/getHobbyList`, "GET", params);
-};
-const getHobbyDetail = (params) => {
-  return utils_request.request(`/files/getHobbyDetail`, "GET", params);
-};
-exports.getHobbyDetail = getHobbyDetail;
-exports.getHobbyList = getHobbyList;
-exports.getVideoList = getVideoList;
-exports.videoDetail = videoDetail;
+"use strict";var t=require("../utils/request.js");const s=e=>t.request("/users/getVideoList","GET",e),i=e=>t.request("/users/getVideoDetail","GET",e),r=e=>(console.log("params=",e),t.request("/files/getHobbyList","GET",e)),o=e=>t.request("/files/getHobbyDetail","GET",e);exports.getHobbyDetail=o;exports.getHobbyList=r;exports.getVideoList=s;exports.videoDetail=i;
 //# sourceMappingURL=hobby.js.map

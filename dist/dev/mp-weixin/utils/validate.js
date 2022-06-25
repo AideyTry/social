@@ -1,21 +1,2 @@
-"use strict";
-const validateObjAttr = (obj) => {
-  console.log("obj=====", obj);
-  const arr = Object.keys(obj).map((key) => obj[key]);
-  console.log("arr===", arr);
-  return arr.every((element) => element || element === 0);
-};
-const validataGender = (obj) => {
-  console.log("obj===", obj);
-  console.log("obj['gender']=", obj["gender"]);
-  if (obj["gender"]) {
-    console.log("true");
-    return true;
-  } else {
-    console.log("false");
-    return false;
-  }
-};
-exports.validataGender = validataGender;
-exports.validateObjAttr = validateObjAttr;
+"use strict";const l=e=>{console.log("obj=====",e);const o=Object.keys(e).map(r=>e[r]);return console.log("arr===",o),o.every(r=>r||r===0)},t=e=>(console.log("obj===",e),console.log("obj['gender']=",e.gender),e.gender?(console.log("true"),!0):(console.log("false"),!1));exports.validataGender=t;exports.validateObjAttr=l;
 //# sourceMappingURL=validate.js.map

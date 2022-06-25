@@ -1,7 +1,2 @@
-"use strict";
-var utils_request = require("../utils/request.js");
-const loginWechat = (params) => {
-  return utils_request.request(`http://127.0.0.1:3000/users/loginWechat`, "GET", params);
-};
-exports.loginWechat = loginWechat;
+"use strict";var t=require("../utils/request.js");const s=e=>t.request("http://127.0.0.1:3000/users/loginWechat","GET",e);exports.loginWechat=s;
 //# sourceMappingURL=wechat.js.map

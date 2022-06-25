@@ -1,21 +1,2 @@
-"use strict";
-var common_vendor = require("../common/vendor.js");
-const totalKey = "totalIM";
-const userKey = "userinfo";
-function getTotalIM() {
-  return common_vendor.index.getStorageSync(totalKey);
-}
-function setTotalIM(data) {
-  return common_vendor.index.setStorageSync(totalKey, data);
-}
-function getStoreUserInfo() {
-  return common_vendor.index.getStorageSync(userKey);
-}
-function setStoreUserInfo(data) {
-  return common_vendor.index.setStorageSync(userKey, data);
-}
-exports.getStoreUserInfo = getStoreUserInfo;
-exports.getTotalIM = getTotalIM;
-exports.setStoreUserInfo = setStoreUserInfo;
-exports.setTotalIM = setTotalIM;
+"use strict";var e=require("../common/vendor.js");const n="totalIM",o="userinfo";function r(){return e.index.getStorageSync(n)}function s(t){return e.index.setStorageSync(n,t)}function c(){return e.index.getStorageSync(o)}function u(t){return e.index.setStorageSync(o,t)}exports.getStoreUserInfo=c;exports.getTotalIM=r;exports.setStoreUserInfo=u;exports.setTotalIM=s;
 //# sourceMappingURL=storage.js.map

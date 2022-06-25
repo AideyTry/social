@@ -1,11 +1,2 @@
-"use strict";
-var utils_request = require("../utils/request.js");
-const uploadImage = (params) => {
-  return utils_request.request(`/files/uploadImage`, "POST", params, "application/x-www-form-urlencoded");
-};
-const mergeFile = (params) => {
-  return utils_request.request(`/files/mergeFile`, "POST", params);
-};
-exports.mergeFile = mergeFile;
-exports.uploadImage = uploadImage;
+"use strict";var r=require("../utils/request.js");const u=e=>r.request("/files/uploadImage","POST",e,"application/x-www-form-urlencoded"),s=e=>r.request("/files/mergeFile","POST",e);exports.mergeFile=s;exports.uploadImage=u;
 //# sourceMappingURL=file.js.map

@@ -1,5 +1,2 @@
-"use strict";
-var common_vendor = require("../common/vendor.js");
-const openIM = new common_vendor.o();
-exports.openIM = openIM;
+"use strict";var o=require("../common/vendor.js");const e=new o.o;exports.openIM=e;
 //# sourceMappingURL=openIM.js.map
