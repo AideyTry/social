@@ -1,31 +1,63 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/index/HobbyDetailMountain",
-    "pages/index/VideoDetail",
     "pages/user/index",
     "pages/find/index",
     "pages/message/index",
+    "pages/login/index",
+    "pages/index/HobbyDetailMountain",
     "pages/message/Chat",
     "pages/hobby/index",
-    "pages/login/index",
-    "pages/user/info/index",
     "pages/user/info/Follow",
-    "pages/user/info/User",
-    "pages/user/info/Editor",
-    "pages/user/info/School",
-    "pages/user/gender/index",
-    "pages/user/info/PublicDetail",
-    "pages/user/info/EditDetail",
-    "pages/user/info/LikeDetail"
+    "pages/user/gender/index"
   ],
   "subPackages": [
     {
-      "root": "pagesUser",
+      "root": "pages/userInfo/infoIndex",
       "pages": [
-        "pages/user/info/index",
-        "pages/user/info/Editor",
-        "pages/user/info/School"
+        "InfoIndex"
+      ]
+    },
+    {
+      "root": "pages/userInfo/Editor",
+      "pages": [
+        "Editor"
+      ]
+    },
+    {
+      "root": "pages/userInfo/School",
+      "pages": [
+        "School"
+      ]
+    },
+    {
+      "root": "pages/userInfo/EditDetail",
+      "pages": [
+        "EditDetail"
+      ]
+    },
+    {
+      "root": "pages/userInfo/PublicDetail",
+      "pages": [
+        "PublicDetail"
+      ]
+    },
+    {
+      "root": "pages/userInfo/LikeDetail",
+      "pages": [
+        "LikeDetail"
+      ]
+    },
+    {
+      "root": "pages/userInfo/User",
+      "pages": [
+        "User"
+      ]
+    },
+    {
+      "root": "pages/hobby/EnglishDetail",
+      "pages": [
+        "EnglishDetail"
       ]
     }
   ],

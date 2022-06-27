@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:13
- * @LastEditTime: 2022-05-14 01:31:13
+ * @LastEditTime: 2022-06-27 23:35:27
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -52,10 +52,12 @@
           name="title"
           label-width="80"
         >
-          <uni-easyinput
-            v-model="title"
-            placeholder="请输入标题"
-          ></uni-easyinput>
+          <view style="width: 100%">
+            <uni-easyinput
+              v-model="title"
+              placeholder="请输入标题"
+            ></uni-easyinput>
+          </view>
         </uni-forms-item>
       </view>
       <view class="info-item">
@@ -130,13 +132,15 @@
           name="content"
           label-width="80"
         >
-          <uni-easyinput
-            type="textarea"
-            :maxlength="-1"
-            autoHeight
-            v-model="content"
-            placeholder="请输入正文内容"
-          ></uni-easyinput>
+          <view style="width: 100%">
+            <uni-easyinput
+              type="textarea"
+              :maxlength="-1"
+              autoHeight
+              v-model="content"
+              placeholder="请输入正文内容"
+            ></uni-easyinput>
+          </view>
         </uni-forms-item>
       </view>
     </uni-forms>
@@ -158,7 +162,7 @@
 <script>
 import { getTotalIM } from "@/utils/storage.js";
 export default {
-  onShow: function() {
+  onShow: function () {
     if (getTotalIM() > 0) {
       uni.setTabBarBadge({
         index: 2,
@@ -428,7 +432,7 @@ const sends = async (tempFile) => {
 const uploadVideo = () => {
   uni.chooseVideo({
     sourceType: ["camera", "album"],
-    success: function(res) {
+    success: function (res) {
       console.log("res===", res);
       src.value = res.tempFilePath;
       uploadBtn.value = true;
@@ -551,7 +555,7 @@ const onUploadImage = async () => {
     count: 6, //默认9
     sizeType: ["original", "compressed"], //可以指定是原图还是压缩图，默认二者都有
     sourceType: ["album"], //从相册选择
-    success: function(res) {
+    success: function (res) {
       onSelectImage(res);
     },
   });

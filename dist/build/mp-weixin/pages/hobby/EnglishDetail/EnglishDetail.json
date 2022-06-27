@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "English",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "video-player": "../../components/VideoPlayer",
+    "uni-list-item": "../../../uni_modules/uni-list/components/uni-list-item/uni-list-item",
+    "uni-list": "../../../uni_modules/uni-list/components/uni-list/uni-list"
+  }
+}
