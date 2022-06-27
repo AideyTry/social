@@ -129,7 +129,7 @@ export default {
     const onUpdate = (info) => {
       console.log("info==", info);
       uni.navigateTo({
-        url: `/pages/user/info/EditDetail?id=${info.id}&hobby=${info.hobby}`,
+        url: `/pages/userInfo/EditDetail/EditDetail?id=${info.id}&hobby=${info.hobby}`,
       });
     };
     const onDelete = (info) => {

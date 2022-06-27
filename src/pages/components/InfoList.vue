@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-06-22 14:07:03
+ * @LastEditTime: 2022-06-27 16:11:48
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -75,6 +75,7 @@ let infoList = ref([]);
 
 const goDetail = (item) => {
   console.log('item=', item)
+  //#ifdef APP-PLUS || H5
   if(props.activeIndex === 0){
     uni.navigateTo({
     url: `/pages/user/info/PublicDetail?id=${item.id}&hobby=${item.hobby}`
@@ -84,6 +85,18 @@ const goDetail = (item) => {
       url: `/pages/user/info/LikeDetail?id=${item.id}&hobby=${item.hobby}`
     });
   }
+  //#endif
+  //#ifdef MP-WEIXIN
+    if(props.activeIndex === 0){
+    uni.navigateTo({
+    url: `/pages/userInfo/PublicDetail/PublicDetail?id=${item.id}&hobby=${item.hobby}`
+  });
+  } else {
+    uni.navigateTo({
+      url: `/pages/userInfo/LikeDetail/LikeDetail?id=${item.id}&hobby=${item.hobby}`
+    });
+  }
+  //#endif
 }
 
 watch(

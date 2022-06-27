@@ -44,7 +44,6 @@
         }
       }
     },
-    //#ifdef APP-PLUS || H5
     {
       "path": "pages/index/HobbyDetailMountain",
       "style": {
@@ -66,14 +65,28 @@
       }
     },
     {
-      "path": "pages/user/info/index",
+      "path": "pages/user/info/Follow",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/user/info/Follow",
+      "path": "pages/user/gender/index",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "mp-weixin": {
+          "usingComponents": {}
+        },
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    //#ifdef APP-PLUS || H5
+    {
+      "path": "pages/user/info/index",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
@@ -98,19 +111,6 @@
       "style": {
         "navigationBarTitleText": "学校",
         "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/user/gender/index",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false,
-        "mp-weixin": {
-          "usingComponents": {}
-        },
-        "app-plus": {
-          "titleNView": false
-        }
       }
     },
     {
@@ -176,6 +176,57 @@
           "path": "School",
           "style": {
             "navigationBarTitleText": "学校",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/userInfo/EditDetail",
+      "pages": [
+        {
+          "path": "EditDetail",
+          "style": {
+            "app-plus": {
+              "titleNView": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/userInfo/PublicDetail",
+      "pages": [
+        {
+          "path": "PublicDetail",
+          "style": {
+            "app-plus": {
+              "titleNView": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/userInfo/LikeDetail",
+      "pages": [
+        {
+          "path": "LikeDetail",
+          "style": {
+            "app-plus": {
+              "titleNView": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/userInfo/User",
+      "pages": [
+        {
+          "path": "User",
+          "style": {
+            "navigationBarTitleText": "",
             "enablePullDownRefresh": false
           }
         }

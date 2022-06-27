@@ -1,0 +1,2 @@
+"use strict";var o=require("../../common/vendor.js");const n={props:{options:{type:Object,default:{}}},setup(t){const s=t,e=o.reactive({src:"",poster:""}),r=()=>{console.log("props.options=",s.options),e.src=s.options.src||"",e.poster=s.options.poster||""};return o.onMounted(()=>{r()}),(p,a)=>({a:o.unref(e).src,b:o.unref(e).poster})}};var c=o._export_sfc(n,[["__scopeId","data-v-7ac097a7"],["__file","C:/myself/social/social/src/pages/components/VideoPlayer.vue"]]);wx.createComponent(c);
+//# sourceMappingURL=VideoPlayer.js.map

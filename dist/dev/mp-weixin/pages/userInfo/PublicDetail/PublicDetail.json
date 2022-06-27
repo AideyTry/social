@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "comment": "../../components/Comment",
+    "video-player": "../../components/VideoPlayer"
+  }
+}

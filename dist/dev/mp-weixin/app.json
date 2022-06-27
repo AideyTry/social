@@ -4,7 +4,12 @@
     "pages/user/index",
     "pages/find/index",
     "pages/message/index",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/index/HobbyDetailMountain",
+    "pages/message/Chat",
+    "pages/hobby/index",
+    "pages/user/info/Follow",
+    "pages/user/gender/index"
   ],
   "subPackages": [
     {
@@ -23,6 +28,30 @@
       "root": "pages/userInfo/School",
       "pages": [
         "School"
+      ]
+    },
+    {
+      "root": "pages/userInfo/EditDetail",
+      "pages": [
+        "EditDetail"
+      ]
+    },
+    {
+      "root": "pages/userInfo/PublicDetail",
+      "pages": [
+        "PublicDetail"
+      ]
+    },
+    {
+      "root": "pages/userInfo/LikeDetail",
+      "pages": [
+        "LikeDetail"
+      ]
+    },
+    {
+      "root": "pages/userInfo/User",
+      "pages": [
+        "User"
       ]
     }
   ],
