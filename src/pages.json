@@ -231,6 +231,18 @@
           }
         }
       ]
+    },
+    {
+      "root": "pages/hobby/EnglishDetail",
+      "pages": [
+        {
+          "path": "EnglishDetail",
+          "style": {
+            "navigationBarTitleText": "English",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
     }
   ],
   //#endif

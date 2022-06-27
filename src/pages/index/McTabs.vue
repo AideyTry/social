@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-06-24 16:35:01
+ * @LastEditTime: 2022-06-27 17:35:59
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -78,7 +78,7 @@
                     ><text class="title">{{ item.title }}</text
                     ><view class="video"
                       ><uni-icons
-                        style="vertical-align: middle;"
+                        style="vertical-align: middle"
                         type="videocam"
                         size="20"
                         color="#999"
@@ -94,17 +94,51 @@
           <!-- <view v-else-if="index === 3"> -->
           <!-- #ifdef H5 -->
           <WaterFall v-if="index === 1" :list="werewolfs" :activeIndex="2" />
-          <WaterFall v-else-if="index === 2" :list="scriptKills" :activeIndex="3"/>
-          <WaterFall v-else-if="index === 3" :list="mountaineers" :activeIndex="4"/>
-          <WaterFall v-else-if="index === 4" :list="travels" :activeIndex="5"/>
-          <WaterFall v-else-if="index === 5" :list="videoList" :activeIndex="6"/>
+          <WaterFall
+            v-else-if="index === 2"
+            :list="scriptKills"
+            :activeIndex="3"
+          />
+          <WaterFall
+            v-else-if="index === 3"
+            :list="mountaineers"
+            :activeIndex="4"
+          />
+          <WaterFall v-else-if="index === 4" :list="travels" :activeIndex="5" />
+          <WaterFall
+            v-else-if="index === 5"
+            :list="videoList"
+            :activeIndex="6"
+          />
           <!-- #endif -->
           <!-- #ifdef APP-PLUS || MP-WEIXIN -->
-          <WaterFallApp v-if="index === 1 && swiperIndex === index" :list="werewolfs" :activeIndex="2" :key="werewolfs"/>
-          <WaterFallApp v-else-if="index === 2 && swiperIndex === index" :list="scriptKills" :activeIndex="3" :key="scriptKills"/>
-          <WaterFallApp v-else-if="index === 3 && swiperIndex === index" :list="mountaineers" :activeIndex="4"/>
-          <WaterFallApp v-else-if="index === 4 && swiperIndex === index" :list="travels" :activeIndex="5"/>
-          <WaterFallApp v-else-if="index === 5 && swiperIndex === index" :list="videoList" :activeIndex="6"/>
+          <WaterFallApp
+            v-if="index === 1 && swiperIndex === index"
+            :list="werewolfs"
+            :activeIndex="2"
+            :key="werewolfs"
+          />
+          <WaterFallApp
+            v-else-if="index === 2 && swiperIndex === index"
+            :list="scriptKills"
+            :activeIndex="3"
+            :key="scriptKills"
+          />
+          <WaterFallApp
+            v-else-if="index === 3 && swiperIndex === index"
+            :list="mountaineers"
+            :activeIndex="4"
+          />
+          <WaterFallApp
+            v-else-if="index === 4 && swiperIndex === index"
+            :list="travels"
+            :activeIndex="5"
+          />
+          <WaterFallApp
+            v-else-if="index === 5 && swiperIndex === index"
+            :list="videoList"
+            :activeIndex="6"
+          />
           <!-- #endif -->
           <!-- <WaterFall v-else-if="index === 6" :list="movies" :activeIndex="7"/> -->
           <!-- </view> -->
@@ -146,10 +180,10 @@ const list = ref([
     title: "旅游",
     content: [],
   },
-    {
+  {
     title: "视频",
     content: [],
-  }
+  },
 ]);
 let swiperIndex = ref(0);
 let navItemWidth = ref(0);
@@ -160,7 +194,7 @@ const strateies = {
   hobby2: (obj) => getScriptKill(obj),
   hobby3: (obj) => getMountaineers(obj),
   hobby4: (obj) => getTravel(obj),
-  hobby5: (obj) => getvideoList(obj)
+  hobby5: (obj) => getvideoList(obj),
   // hobby6: (obj) => getMovies(obj)
 };
 const handleScroll = (e) => {
@@ -171,7 +205,7 @@ const handleScroll = (e) => {
   console.log("current=", current);
 };
 const taggleNav = (index) => {
-  console.log('swiperIndex========================', index)
+  console.log("swiperIndex========================", index);
   swiperIndex.value = index;
 };
 const swiperChange = (e) => {
@@ -200,15 +234,15 @@ onMounted(() => {
   //#endif
 
   //#ifdef APP-PLUS || MP-WEIXIN
-   console.log('list====', list.value)
-   if(list.value.length > 0){
-      list.value.forEach(() => {
-          navItems.push({ width: 48 });
-   })
+  console.log("list====", list.value);
+  if (list.value.length > 0) {
+    list.value.forEach(() => {
+      navItems.push({ width: 48 });
+    });
     navItemWidth.value = navItems[swiperIndex.value].width;
     console.log("navItemWidth===", navItemWidth.value);
     getEnglishVideos({ pageNum: 1, pageSize: 10 });
-   }
+  }
   //#endif
 });
 const result = computed(() => `${navItemWidth.value}rpx`);
@@ -281,9 +315,16 @@ const onScroll = (e) => {
 
 const goDetail = (item) => {
   console.log("item===", item);
+  //#ifdef APP-PLUS || H5
   uni.navigateTo({
     url: `/pages/index/VideoDetail?id=${item.id}`,
   });
+  //#endif
+  //#ifdef MP-WEIXIN
+  uni.navigateTo({
+    url: `/pages/hobby/EnglishDetail/EnglishDetail?id=${item.id}`,
+  });
+  //#endif
 };
 
 // 登山

@@ -53,6 +53,12 @@
       "pages": [
         "User"
       ]
+    },
+    {
+      "root": "pages/hobby/EnglishDetail",
+      "pages": [
+        "EnglishDetail"
+      ]
     }
   ],
   "window": {
