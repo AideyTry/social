@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-06-25 10:55:24
+ * @LastEditTime: 2022-06-27 13:40:14
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -103,9 +103,16 @@ const onLogout = () => {
 };
 
 const onUserInfo = () => {
+  //#ifdef APP-PLUS || H5
   uni.navigateTo({
     url: "/pages/user/info/index",
   });
+  //#endif
+  //#ifdef MP-WEIXIN
+  uni.navigateTo({
+    url: "/pages/userInfo/infoIndex/InfoIndex",
+  });
+  //#endif
 };
 
 // fans

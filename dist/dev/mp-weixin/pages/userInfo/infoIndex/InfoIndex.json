@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "mancao-forms": "../../../uni_modules/uni-forms/components/uni-forms/uni-forms",
+    "mancao-forms-item": "../../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item",
+    "picker-region": "../../components/PickerRegion"
+  }
+}

@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-06-27 13:32:16
+ * @LastEditTime: 2022-06-27 14:48:54
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -132,8 +132,8 @@
 <script setup>
 import { computed, ref, reactive, watch } from "vue";
 import { useStore } from "vuex";
-import PickerRegion from "../../components/PickerRegion.vue";
-import { editUserInfo } from "../../../api/user";
+import PickerRegion from "@/pages/components/PickerRegion.vue";
+import { editUserInfo } from "@/api/user";
 import moment from "moment";
 
 const store = useStore();
@@ -143,7 +143,7 @@ let formData = reactive({
   avatar: userInfo.avatar,
   username: userInfo.username,
   gender: userInfo.gender,
-  birthday: moment(userInfo.birthday).format('YYYY-MM-DD'),
+  birthday: moment(userInfo.birthday).format("YYYY-MM-DD"),
   location: {
     provinceCode: userInfo.location && userInfo.location.provinceCode,
     cityCode: userInfo.location && userInfo.location.cityCode,
@@ -175,7 +175,7 @@ let rules = {
  * @Author:
  * @return {*}
  */
-uni.$on("schoolUpdate", function(data) {
+uni.$on("schoolUpdate", function (data) {
   formData.schoolName = data.schoolName;
 });
 
@@ -300,7 +300,7 @@ const onUpload = (item, index) => {
     }
     uni.showActionSheet({
       itemList: itemList,
-      success: function(res) {
+      success: function (res) {
         console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
         if (res.tapIndex === 0) {
           images[index] = images[0];
@@ -317,7 +317,7 @@ const onUpload = (item, index) => {
           images.splice(index, 1);
         }
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(res.errMsg);
       },
     });
@@ -360,10 +360,10 @@ const bindDateChange = (e) => {
 const changeGender = () => {
   uni.showActionSheet({
     itemList: ["男", "女"],
-    success: function(res) {
+    success: function (res) {
       console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
     },
-    fail: function(res) {
+    fail: function (res) {
       console.log(res.errMsg);
     },
   });
@@ -388,9 +388,16 @@ const onChangeHome = (obj) => {
 
 /* 选择学校 */
 const openSchool = () => {
+  //#ifdef APP-PLUS || H5
   uni.navigateTo({
     url: "/pages/user/info/School",
   });
+  //#endif
+  //#ifdef MP-WEIXIN
+  uni.navigateTo({
+    url: "/pages/userInfo/School/School",
+  });
+  //#endif
 };
 
 /* 职业 */

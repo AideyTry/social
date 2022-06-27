@@ -77,7 +77,7 @@ export default {
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import moment from "moment";
-import PickerRegion from "./PickerRegion.vue";
+import PickerRegion from "../../components/PickerRegion.vue";
 import openIM from "@/utils/openIM.js";
 import { getFrendInfo } from "@/api/user.js";
 import { getIMToken } from "@/utils/auth.js";

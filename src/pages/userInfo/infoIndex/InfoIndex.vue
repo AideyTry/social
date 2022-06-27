@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-22 16:09:06
- * @LastEditTime: 2022-06-27 13:31:23
+ * @LastEditTime: 2022-06-27 14:49:28
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -53,6 +53,7 @@
         >
       </view>
     </view>
+    <!-- #ifdef H5 || APP-PLUS-->
     <uni-forms>
       <uni-forms-item label="家乡">
         <PickerRegion
@@ -70,6 +71,26 @@
         <view>{{ userInfo.job || '暂未填写'}}</view>
       </uni-forms-item>
     </uni-forms>
+    <!-- #endif -->
+    <!-- #ifdef MP-WEIXIN -->
+    <mancao-forms>
+      <mancao-forms-item label="家乡">
+        <PickerRegion
+          isDisabled
+          :propsProvinceCode="
+            userInfo.hometown && userInfo.hometown.provinceCode
+          "
+          :propsCityCode="userInfo.hometown && userInfo.hometown.cityCode"
+        />
+      </mancao-forms-item>
+      <mancao-forms-item label="学校">
+        <view>{{ userInfo.schoolName || '暂未填写'}}</view>
+      </mancao-forms-item>
+      <mancao-forms-item label="职业">
+        <view>{{ userInfo.job || '暂未填写'}}</view>
+      </mancao-forms-item>
+    </mancao-forms>
+    <!-- #endif -->
     <button @click="inEditor">编辑资料</button>
   </view>
 </template>
@@ -92,8 +113,9 @@ export default {
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 import moment from "moment";
+import PickerRegion from "@/pages/components/PickerRegion.vue";
+
 const defaultAvatar = "/static/images/default_avatar.png";
-import PickerRegion from "../../components/PickerRegion.vue";
 
 const store = useStore();
 let userInfo = computed(() => store.state.user.userInfo).value;
@@ -194,9 +216,16 @@ const onUpload = (item, index) => {
 // 编辑资料
 const inEditor = () => {
   console.log("why");
+  //#ifdef APP-PLUS || H5
   uni.navigateTo({
     url: "/pages/user/info/Editor",
   });
+  //#endif
+  //#ifdef MP-WEIXIN
+  uni.navigateTo({
+    url: "/pages/userInfo/Editor/Editor",
+  });
+  //#endif
 };
 </script>
 

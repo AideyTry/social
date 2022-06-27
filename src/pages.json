@@ -8,18 +8,6 @@
       }
     },
     {
-      "path": "pages/index/HobbyDetailMountain",
-      "style": {
-        "navigationBarTitleText": "登山"
-      }
-    },
-    {
-      "path": "pages/index/VideoDetail",
-      "style": {
-        "navigationBarTitleText": "英语"
-      }
-    },
-    {
       "path": "pages/user/index",
       "style": {
         "navigationBarTitleText": "user",
@@ -44,6 +32,26 @@
       }
     },
     {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "mp-weixin": {
+          "usingComponents": {}
+        },
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    //#ifdef APP-PLUS || H5
+    {
+      "path": "pages/index/HobbyDetailMountain",
+      "style": {
+        "navigationBarTitleText": "登山"
+      }
+    },
+    {
       "path": "pages/message/Chat",
       "style": {
         "navigationBarTitleText": "",
@@ -55,19 +63,6 @@
       "style": {
         "navigationBarTitleText": "hobby",
         "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/login/index",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false,
-        "mp-weixin": {
-          "usingComponents": {}
-        },
-        "app-plus": {
-          "titleNView": false
-        }
       }
     },
     {
@@ -142,28 +137,43 @@
         }
       }
     }
+    //#endif
   ],
-  /*  #ifdef MP-WEIXIN  */
+  //#ifdef MP-WEIXIN
   "subPackages": [
     {
-      "root": "pagesUser",
+      "root": "pages/userInfo/infoIndex",
       "pages": [
         {
-          "path": "pages/user/info/index",
+          "path": "InfoIndex",
+          "style": {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false,
+            "usingComponents": {
+              "mancao-forms": "../../../uni_modules/uni-forms/components/uni-forms/uni-forms",
+              "mancao-forms-item": "../../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/userInfo/Editor",
+      "pages": [
+        {
+          "path": "Editor",
           "style": {
             "navigationBarTitleText": "",
             "enablePullDownRefresh": false
           }
-        },
+        }
+      ]
+    },
+    {
+      "root": "pages/userInfo/School",
+      "pages": [
         {
-          "path": "pages/user/info/Editor",
-          "style": {
-            "navigationBarTitleText": "",
-            "enablePullDownRefresh": false
-          }
-        },
-        {
-          "path": "pages/user/info/School",
+          "path": "School",
           "style": {
             "navigationBarTitleText": "学校",
             "enablePullDownRefresh": false
@@ -172,7 +182,7 @@
       ]
     }
   ],
-  /*  #endif  */
+  //#endif
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#3cc51f",

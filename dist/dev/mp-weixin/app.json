@@ -1,31 +1,28 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/index/HobbyDetailMountain",
-    "pages/index/VideoDetail",
     "pages/user/index",
     "pages/find/index",
     "pages/message/index",
-    "pages/message/Chat",
-    "pages/hobby/index",
-    "pages/login/index",
-    "pages/user/info/index",
-    "pages/user/info/Follow",
-    "pages/user/info/User",
-    "pages/user/info/Editor",
-    "pages/user/info/School",
-    "pages/user/gender/index",
-    "pages/user/info/PublicDetail",
-    "pages/user/info/EditDetail",
-    "pages/user/info/LikeDetail"
+    "pages/login/index"
   ],
   "subPackages": [
     {
-      "root": "pagesUser",
+      "root": "pages/userInfo/infoIndex",
       "pages": [
-        "pages/user/info/index",
-        "pages/user/info/Editor",
-        "pages/user/info/School"
+        "InfoIndex"
+      ]
+    },
+    {
+      "root": "pages/userInfo/Editor",
+      "pages": [
+        "Editor"
+      ]
+    },
+    {
+      "root": "pages/userInfo/School",
+      "pages": [
+        "School"
       ]
     }
   ],
