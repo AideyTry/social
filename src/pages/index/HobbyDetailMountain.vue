@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-02-25 14:59:08
- * @LastEditTime: 2022-06-24 22:23:08
+ * @LastEditTime: 2022-06-28 12:22:20
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -216,7 +216,7 @@ export default {
       //#endif
 
       //#ifdef APP-PLUS || MP-WEIXIN
-      switch (hobby) {
+      switch (Number(hobby)) {
         case 2:
           uni.setNavigationBarTitle({
             title: "狼人杀",
