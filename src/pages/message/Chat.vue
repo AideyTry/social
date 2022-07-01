@@ -30,7 +30,11 @@ export default {
       this.getConver()
     }, 1000)
   },
+  onLoad: function(options) {
+    this.propsOptions = options
+  },
   setup(props) {
+    let propsOptions = ref(null)
     let inputString = ref("");
     const messageInfo = ref([]);
 
@@ -54,7 +58,8 @@ export default {
         groupID: "", // 群聊ID，拉取群聊时传入，否则为“”
         startClientMsgID: "", // 上一次拉取的最后一条消息ID或空字符串,为空字符则从最新一条开始
         count: 10000, // 每次拉取条数
-        userID: props.userID, // 用户ID，拉取单聊时传入，否则为“”
+        // userID: props.userID, // 用户ID，拉取单聊时传入，否则为“”
+        userID: propsOptions.value.userID, // 用户ID，拉取单聊时传入，否则为“”
       };
       openIM
         .getHistoryMessageList(options)
@@ -80,7 +85,8 @@ export default {
         .createTextMessage(value)
         .then((res) => {
           const options = {
-            recvID: props.userID,
+            // recvID: props.userID,
+            recvID: propsOptions.value.userID,
             groupID: "",
             offlinePushInfo: offlinePushInfo,
             message: res.data,
@@ -125,11 +131,12 @@ export default {
       () => messageInfo,
       (count, prevCount) => {
         const selfMessages = count.value.filter(
-          (item) => item.sendID === props.userID
+          (item) => item.sendID === propsOptions.value.userID
         );
         const msgIDList = selfMessages.map((element) => element.clientMsgID);
         const options = {
-          userID: props.userID,
+          // userID: props.userID,
+          userID: propsOptions.value.userID,
           msgIDList,
         };
         openIM
@@ -137,7 +144,8 @@ export default {
           .then(({ data }) => {
             console.log("传入已读=", data);
             openIM.markC2CMessageAsRead({
-              userID: props.userID,
+              // userID: props.userID,
+              userID: propsOptions.value.userID,
               msgIDList: [],
             });
           })
@@ -151,7 +159,8 @@ export default {
     );
     onMounted(() => {
       uni.setNavigationBarTitle({
-        title: props.title,
+        // title: props.title,
+        title: propsOptions.value.title,
       });
       getConver();
       monitorOnRecv();
@@ -163,7 +172,8 @@ export default {
       messageInfo,
       onConfirm,
       currentDate,
-      getConver
+      getConver,
+      propsOptions
     };
   },
 };

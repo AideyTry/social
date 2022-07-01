@@ -7,7 +7,6 @@
     "pages/login/index",
     "pages/index/HobbyDetailMountain",
     "pages/message/Chat",
-    "pages/hobby/index",
     "pages/user/info/Follow",
     "pages/user/gender/index"
   ],
@@ -96,5 +95,6 @@
       "desc": "开发"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }
