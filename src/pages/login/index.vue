@@ -52,7 +52,9 @@
         </view>
       </form>
       <show-modal v-if="demoVisible" :title="'请选择账号'" :content="'请任意选择一个账号登录'" @close="onClose"></show-modal>
+      <!-- #ifdef H5 -->
       <vuew class="demo"><button class="demo-title" @click="openDemo">点击可使用演示账号登录</button></vuew>
+      <!-- #endif -->
       <!-- #endif -->
       <!-- #ifdef APP-PLUS -->
       <view class="cut-off-line row">
@@ -88,7 +90,7 @@
     </view>
 
     <!-- #ifdef MP-WEIXIN -->
-    <button
+    <!-- <button
       type="primary"
       open-type="openSetting"
       @getuserinfo="miniProLogin"
@@ -103,7 +105,7 @@
       class="auth-btn"
     >
       登录授权
-    </button>
+    </button> -->
 
     <!-- #endif -->
     <view class="gov-wraper"><uni-link class="gov" :showUnderLine="false" href="https://beian.miit.gov.cn/" text="粤ICP备2021179573号"></uni-link></view>
@@ -182,11 +184,11 @@ export default {
       );
       const params = e.detail.value;
       const that = this;
-      console.log("window.navigator=", window.navigator.userAgent);
-      window.navigator.__defineGetter__("userAgent", () => "myBroser");
-      setTimeout(() => {
-        console.log("window.navigator1=", window.navigator.userAgent);
-      }, 200);
+      // console.log("window.navigator=", window.navigator.userAgent);
+      // window.navigator.__defineGetter__("userAgent", () => "myBroser");
+      // setTimeout(() => {
+      //   console.log("window.navigator1=", window.navigator.userAgent);
+      // }, 200);
       codePhoneLogin(params).then((res) => {
         console.log("res========", res);
         const { code, token } = res.data;
