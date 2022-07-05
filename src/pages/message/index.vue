@@ -1,13 +1,13 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-05-12 10:48:07
+ * @LastEditTime: 2022-07-05 14:15:10
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <template>
-  <view>
+  <view class="message-wrapper">
     <view
       v-for="item in convers"
       :key="item.userID"
@@ -36,6 +36,10 @@
       <text class="conver-time">{{
         $filters.formatMsgDate(item.latestMsgSendTime)
       }}</text>
+    </view>
+    <view v-if="convers.length <= 0" class="empty">
+      <view>您还未发起聊天</view>
+      <view>快去关注兴趣爱好发布者一起聊天吧~！</view>
     </view>
   </view>
 </template>
@@ -152,6 +156,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.empty{
+  padding-top: 48rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #a0a0a0;
+}
 .conver {
   display: flex;
   justify-content: space-between;

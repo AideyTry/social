@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-01-16 13:32:17
- * @LastEditTime: 2022-06-27 17:35:59
+ * @LastEditTime: 2022-07-05 12:12:46
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -162,8 +162,12 @@ export default {
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import { getVideoList, getHobbyList } from "@/api/hobby.js";
+//#ifdef H5
 import WaterFall from "./WaterFall.vue";
+//#endif
+//#ifdef APP-PLUS || MP-WEIXIN
 import WaterFallApp from "./WaterFallApp.vue";
+//#endif
 
 const list = ref([
   { title: "英语", content: [] },

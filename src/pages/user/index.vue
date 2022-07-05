@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-06-27 13:40:14
+ * @LastEditTime: 2022-07-05 14:48:57
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -264,9 +264,10 @@ onMounted(() => {
 }
 .avatar-title {
   position: absolute;
-  left: 6%;
+  left: 50%;
   top: 50%;
   transform: translateY(-50%);
+  transform: translateX(-50%);
   font-size: 12rpx;
 }
 

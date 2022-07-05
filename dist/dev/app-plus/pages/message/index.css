@@ -110,6 +110,14 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.empty[data-v-716a8bf6] {
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #a0a0a0;
+}
 .conver[data-v-716a8bf6] {
   display: flex;
   justify-content: space-between;

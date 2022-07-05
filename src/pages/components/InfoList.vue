@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-03-01 13:17:37
- * @LastEditTime: 2022-06-27 16:11:48
+ * @LastEditTime: 2022-07-05 14:34:19
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -49,6 +49,7 @@
             ></image>
         </view>
       </view>
+      <view v-if="infoList.length <= 0" class="li empty">暂无数据</view>
     </view>
   </view>
 </template>
@@ -131,6 +132,12 @@ onMounted(() => {
       height: 100%;
     }
   }
+}
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #a0a0a0;
 }
 .publish-info {
   margin-left: 40rpx;
