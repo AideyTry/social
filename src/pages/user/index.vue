@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-07-05 14:48:57
+ * @LastEditTime: 2022-07-14 16:40:33
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -17,7 +17,13 @@
         <text class="avatar-title" v-if="!userInfo.avatar">请上传图片</text>
       </view>
       <view class="userinfo-detail">
-        <text>用户名：{{ userInfo.username }}</text>
+        <view class="title-wraper">
+          <text>用户名：{{ userInfo.username }}</text>
+          <view @click="onSetting" class="config-wraper">
+            <span class="iconfont"> &#xe68f; </span>
+            <text>设置</text>
+          </view>
+        </view>
         <view class="motto"
           ><text>签&nbsp;&nbsp;&nbsp;名：</text
           ><text>{{ userInfo.motto }}</text></view
@@ -45,7 +51,6 @@
     <view>
       <InfoList :list="publishs" :activeIndex="activeIndex" />
     </view>
-    <button @click="onLogout" style="margin-top: 20rpx">退出</button>
     <view v-if="false">
       <button @click="onOpenIMLogout">OpenIM logout</button>
       <button @click="onDeleteConversation">Delete Conversicon</button>
@@ -74,7 +79,6 @@ export default {
 <script setup>
 import { ref, computed, onMounted, watchEffect } from "vue";
 import { useStore } from "vuex";
-import { removeToken } from "../../utils/auth";
 import { getFollows, getFans } from "@/api/communication.js";
 import { getPublish, getMylikes } from "@/api/publish.js";
 
@@ -86,21 +90,12 @@ const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
 const userInfo = computed(() => store.state.user.userInfo).value;
 
-const onLogout = () => {
-  new Promise((resolve, reject) => {
-    removeToken();
-    resolve();
-  }).then(() => {
-    //#ifdef H5
-    location.reload();
-    //#endif
-    //#ifdef APP-PLUS || MP-WEIXIN
-    uni.reLaunch({
-      url: "/pages/login/index",
-    });
-    //#endif
+
+const onSetting = () => {
+  uni.navigateTo({
+    url: `/pages/user/setting/Setting`,
   });
-};
+}
 
 const onUserInfo = () => {
   //#ifdef APP-PLUS || H5
@@ -248,6 +243,16 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    .title-wraper{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .config-wraper{
+      background-color: #fafafa;
+      padding: 4rpx;
+      border-radius: 5%;
+    }
     .motto {
       display: flex;
     }

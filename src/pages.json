@@ -136,6 +136,20 @@
           "titleNView": false
         }
       }
+    },
+    {
+      "path": "pages/user/setting/Setting",
+      "style": {
+        "navigationBarTitleText": "设置",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/user/about/about",
+      "style": {
+        "navigationBarTitleText": "关于蔓草",
+        "enablePullDownRefresh": false
+      }
     }
     //#endif
   ],
