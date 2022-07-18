@@ -54,11 +54,12 @@ export default {
   }
   .description-wraper{
     padding: 30rpx 100rpx;
+    .description{
+        display: inline-block;
+        color: #363636;
+        font-size: 32rpx;
+        text-indent: 2em;
   }
-  .description{
-    color: #363636;
-    font-size: 32rpx;
-    text-decoration: 2em;
   }
 }
 </style>

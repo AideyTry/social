@@ -18,6 +18,7 @@
 <script>
 import { ref } from "vue";
 import { removeToken } from "@/utils/auth";
+import { deletedUser } from "@/api/user.js";
 export default {
   setup() {
     const onEdit = () => {
@@ -44,20 +45,63 @@ export default {
       });
       //#endif
     };
-    const onCancel = () => {};
+    const onCancel = () => {
+      uni.showModal({
+        title: "注销",
+        content: "注销账户将不存在，确认注销吗？",
+        success: function (res) {
+          if (res.confirm) {
+            deletedUser().then((res) => {
+              console.log("res==================================", res);
+              if (res.data.code === 200) {
+                uni.showToast({
+                  title: "注销成功",
+                  duration: 2000,
+                });
+                new Promise((resolve, reject) => {
+                  removeToken();
+                  resolve();
+                }).then(() => {
+                  //#ifdef H5
+                  location.reload();
+                  //#endif
+                  //#ifdef APP-PLUS || MP-WEIXIN
+                  uni.reLaunch({
+                    url: "/pages/login/index",
+                  });
+                  //#endif
+                });
+              }
+            });
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
+        },
+      });
+    };
     const onLogout = () => {
-      new Promise((resolve, reject) => {
-        removeToken();
-        resolve();
-      }).then(() => {
-        //#ifdef H5
-        location.reload();
-        //#endif
-        //#ifdef APP-PLUS || MP-WEIXIN
-        uni.reLaunch({
-          url: "/pages/login/index",
-        });
-        //#endif
+      uni.showModal({
+        title: "退出",
+        content: "确认退出当前登录吗？",
+        success: function (res) {
+          if (res.confirm) {
+            new Promise((resolve, reject) => {
+              removeToken();
+              resolve();
+            }).then(() => {
+              //#ifdef H5
+              location.reload();
+              //#endif
+              //#ifdef APP-PLUS || MP-WEIXIN
+              uni.reLaunch({
+                url: "/pages/login/index",
+              });
+              //#endif
+            });
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
+        },
       });
     };
     return {
