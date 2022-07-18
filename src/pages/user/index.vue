@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-07-14 16:40:33
+ * @LastEditTime: 2022-07-18 11:57:54
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -18,7 +18,7 @@
       </view>
       <view class="userinfo-detail">
         <view class="title-wraper">
-          <text>用户名：{{ userInfo.username }}</text>
+          <text class="username">用户名：{{ userInfo.username }}</text>
           <view @click="onSetting" class="config-wraper">
             <span class="iconfont"> &#xe68f; </span>
             <text>设置</text>
@@ -247,6 +247,10 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+    .username{
+      display: inline-block;
+      min-width: 360rpx;
     }
     .config-wraper{
       background-color: #fafafa;
