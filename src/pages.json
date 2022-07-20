@@ -150,6 +150,20 @@
         "navigationBarTitleText": "关于蔓草",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/protocol/Protocol",
+      "style": {
+        "navigationBarTitleText": "用户协议",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/privacy/Privacy",
+      "style": {
+        "navigationBarTitleText": "隐私政策",
+        "enablePullDownRefresh": false
+      }
     }
     //#endif
   ],

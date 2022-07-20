@@ -6,9 +6,7 @@
         src="../../static/images/login-bg.gif"
         mode=""
       ></image> -->
-      <image
-      class="image"
-      src="../../static/logo.png"></image>
+      <image class="image" src="../../static/logo.png"></image>
       <text class="logo-title">蔓草兴趣</text>
     </view>
     <view class="login">
@@ -33,7 +31,7 @@
           />
           <button
             class="code"
-            :disabled="(!sendCaptchaEnabled || codeVisible)"
+            :disabled="!sendCaptchaEnabled || codeVisible"
             @click="sendCaptcha"
           >
             {{ codeMessage
@@ -50,10 +48,30 @@
             登录
           </button>
         </view>
+        <mc-tooltip placement="top-start" :visible="tooltipVisible" content="请先勾选同意后再进行登录">
+        <view :class="{'protocol-wraper': true, shake: tooltipVisible}">
+          <radio-group @change="protocolChange">
+            <label>
+              <radio :value="protocolChecked" :checked="protocolChecked" />
+              <text class="agreement">我已阅读并同意</text>
+              <text class="protocol" @click.stop="goProtocol">用户协议</text>和<text class="privacy" @click.stop="goPrivacy">隐私政策</text>
+            </label>
+          </radio-group>
+        </view>
+        </mc-tooltip>
       </form>
-      <show-modal v-if="demoVisible" :title="'请选择账号'" :content="'请任意选择一个账号登录'" @close="onClose"></show-modal>
+      <show-modal
+        v-if="demoVisible"
+        :title="'请选择账号'"
+        :content="'请任意选择一个账号登录'"
+        @close="onClose"
+      ></show-modal>
       <!-- #ifdef H5 -->
-      <vuew class="demo"><button class="demo-title" @click="openDemo">点击可使用演示账号登录</button></vuew>
+      <vuew class="demo"
+        ><button class="demo-title" @click="openDemo">
+          点击可使用演示账号登录
+        </button></vuew
+      >
       <!-- #endif -->
       <!-- #endif -->
       <!-- #ifdef APP-PLUS -->
@@ -108,20 +126,29 @@
     </button> -->
 
     <!-- #endif -->
-    <view class="gov-wraper"><uni-link class="gov" :showUnderLine="false" href="https://beian.miit.gov.cn/" text="粤ICP备2021179573号"></uni-link></view>
+    <view class="gov-wraper"
+      ><uni-link
+        class="gov"
+        :showUnderLine="false"
+        href="https://beian.miit.gov.cn/"
+        text="粤ICP备2021179573号"
+      ></uni-link
+    ></view>
   </view>
 </template>
 <script>
 import { sendCode, codePhoneLogin } from "../../api/user.js";
 import { setToken } from "../../utils/auth.js";
-import ShowModal from '@/pages/components/ShowModal.vue';
+import ShowModal from "@/pages/components/ShowModal.vue";
+import mcTooltip from '@/pages/components/mcTooltip.vue'
 
 /*  #ifdef  MP-WEIXIN  */
 import { loginWechat } from "../../api/wechat";
 /*  #endif  */
 export default {
   components: {
-    ShowModal: ShowModal
+    ShowModal: ShowModal,
+    mcTooltip
   },
   data() {
     return {
@@ -132,10 +159,13 @@ export default {
       codeMessage: "获取验证码",
       counterTimer: 60,
       phoneNumber: null,
+      protocolChecked: false,
+      tooltipVisible: false,
+      timer: null
     };
   },
   methods: {
-    onInput: function(e) {
+    onInput: function (e) {
       console.log("input e=", e);
       if (/^1[3456789]\d{9}$/.test(e.detail.value)) {
         this.codeVisible = false;
@@ -144,7 +174,7 @@ export default {
         this.codeVisible = true;
       }
     },
-    onInputCode: function(e) {
+    onInputCode: function (e) {
       console.log("code=", e);
       if (/^\d{6}$/.test(e.detail.value)) {
         this.loginVisible = false;
@@ -152,7 +182,7 @@ export default {
         this.loginVisible = true;
       }
     },
-    sendCaptcha: function(e) {
+    sendCaptcha: function (e) {
       console.log("button e=", e);
       if (!this.sendCaptchaEnabled) {
         return;
@@ -177,13 +207,22 @@ export default {
         this.counterTimer--;
       }, 1000);
     },
-    formSubmit: function(e) {
+    formSubmit: function (e) {
       console.log("e=", e);
       console.log(
         "form发生了submit事件，携带数据为：" + JSON.stringify(e.detail.value)
       );
       const params = e.detail.value;
       const that = this;
+      if(!that.protocolChecked){
+        that.tooltipVisible = true
+        console.log('this.tooltipVisible===', that.tooltipVisible)
+        that.timer = setTimeout(() => {
+          that.tooltipVisible = false
+          console.log('this.tooltipVisible2222===', that.tooltipVisible)
+        }, 2000)
+        return
+      }
       // console.log("window.navigator=", window.navigator.userAgent);
       // window.navigator.__defineGetter__("userAgent", () => "myBroser");
       // setTimeout(() => {
@@ -194,6 +233,7 @@ export default {
         const { code, token } = res.data;
         if (code === 200) {
           console.log("成功");
+          that.timer = null
           setToken(token);
           that.$store.dispatch("user/GetUserInfo");
           uni.reLaunch({
@@ -202,38 +242,38 @@ export default {
         }
       });
     },
-    miniProLogin: function(e) {
+    miniProLogin: function (e) {
       console.log("e===", e);
       uni.login({
         provider: "weixin",
-        success: function(loginRes) {
+        success: function (loginRes) {
           console.log("loginRes=", loginRes.authResult);
         },
       });
     },
-    wechatLogin: function() {
+    wechatLogin: function () {
       uni.showToast({
         title: "待上线",
         duration: 2000,
       });
     },
-    qqLogin: function() {
+    qqLogin: function () {
       uni.showToast({
         title: "待上线",
         duration: 2000,
       });
     },
-    weiboLogin: function() {
+    weiboLogin: function () {
       uni.showToast({
         title: "待上线",
         duration: 2000,
       });
     },
-    getInfo: function(e) {
+    getInfo: function (e) {
       console.log("登录e=", e);
       uni.login({
         provider: "weixin",
-        success: function(loginRes) {
+        success: function (loginRes) {
           console.log("loginRes====", loginRes);
           const { code } = loginRes;
           loginWechat({
@@ -242,11 +282,28 @@ export default {
         },
       });
     },
-    openDemo: function(){
-      this.demoVisible = true
+    openDemo: function () {
+      this.demoVisible = true;
     },
-    onClose: function(){
-      this.demoVisible = false
+    onClose: function () {
+      this.demoVisible = false;
+    },
+    protocolChange: function (value) {
+      console.log("value===", value);
+      this.protocolChecked = !value.detail.value;
+      if(this.protocolChecked){
+        this.tooltipVisible = false
+      }
+    },
+    goProtocol: function(){
+      uni.navigateTo({
+        url: "/pages/protocol/Protocol",
+      });
+    },
+    goPrivacy: function(){
+      uni.navigateTo({
+        url: "/pages/privacy/Privacy",
+      });
     }
   },
 };
@@ -254,7 +311,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("../../static/iconfont/iconfont-mc/iconfont.css");
-.login-wraper{
+.login-wraper {
   background-color: #fdfdfd;
   position: relative;
   height: 100vh;
@@ -263,24 +320,24 @@ export default {
   height: 46px;
   line-height: 46px;
 }
-.image-wraper{
+.image-wraper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 100rpx 0;
-.image {
-  height: 180rpx;
-  width: 180rpx;
-  border-radius: 100%;
-}
-.logo-title{
-  margin-top: 6rpx;
-  font-size: 56rpx;
-  font-family: "Times New Roman", Times, serif;
-  color: #434343;
-  font-weight: 500;
-}
+  .image {
+    height: 180rpx;
+    width: 180rpx;
+    border-radius: 100%;
+  }
+  .logo-title {
+    margin-top: 6rpx;
+    font-size: 56rpx;
+    font-family: "Times New Roman", Times, serif;
+    color: #434343;
+    font-weight: 500;
+  }
 }
 
 .login {
@@ -302,8 +359,8 @@ export default {
   height: 68rpx;
   line-height: 68rpx;
 }
-uni-button::after{
-  border: none!important;
+uni-button::after {
+  border: none !important;
 }
 
 .uni-btn-v {
@@ -355,23 +412,56 @@ uni-button::after{
 .auth-btn {
   margin-top: 60rpx;
 }
-.gov-wraper{
+.gov-wraper {
   position: absolute;
   bottom: 100rpx;
   width: 100%;
 }
-.gov{
+.gov {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+::v-deep .uni-radio-input{
+	width: 16px;
+	height: 16px;
   }
+.protocol-wraper{
+  font-size: 24rpx;
+  color: #999;
+  .protocol, .privacy{
+    color: #0a8cd2;
+  }
+}
+	.shake{
+ 		animation-delay: 0s;
+	    animation-name: shock;
+	    animation-duration: .1s;
+	    animation-iteration-count: 3;
+	    animation-direction: normal;
+	    animation-timing-function: linear;
+	}
 
-.demo{
+	@keyframes shock {
+	    0% {
+	        margin-left: 0rpx;
+	        margin-right: 20rpx;
+	        margin-top: 0rpx;
+	    }
+	    100% {
+	        margin-left: 20rpx;
+	        margin-right: 0rpx;
+	        margin-top: 0rpx	;
+	    }
+	}
+
+.demo {
   display: flex;
   justify-content: center;
-  .demo-title{
-  background-color: #42b983;
-  color: #fff;
+  margin-top: 20rpx;
+  .demo-title {
+    background-color: #42b983;
+    color: #fff;
   }
 }
 </style>
