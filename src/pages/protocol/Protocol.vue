@@ -41,7 +41,7 @@
     </view>
     <view class="protocol-item">
       <text class="uni-text">
-        4、在用户注册登录及使用本服务时，为了向您提供更优质的服务，建议您补充完善个人资料。您提供的个人信息包括但不限于用户的性别、昵称、照片、出生日期、所在地、家乡、学校、职业；蔓草兴趣同意对这些信息的使用将受限于个人隐私信息相关法律和《蔓草兴趣用户隐私政策》的约束。
+        4、在用户注册登录及使用本服务时，为了向您提供更优质的服务，建议您补充完善个人资料。您提供的个人信息包括但不限于用户的性别、昵称、照片、出生日期、所在地、家乡、学校、职业；蔓草兴趣同意对这些信息的使用将受限于个人隐私信息相关法律和《蔓草兴趣隐私政策》的约束。
       </text>
     </view>
     <view class="protocol-item">
@@ -314,7 +314,7 @@
       </text>
     </view>
         <view class="protocol-item">
-      <uni-title class="h3" type="h3" title="蔓草兴趣备案网站及所属开发者联系方式"></uni-title>
+      <uni-title class="h3" type="h3" title="蔓草兴趣备案网站信息及所属开发者联系方式"></uni-title>
     </view>
             <view class="protocol-item">
       <text class="uni-text">

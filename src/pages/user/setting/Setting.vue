@@ -9,7 +9,7 @@
       <span class="iconfont"> &#xe662; </span>
     </view>
     <view class="logout-wraper">
-      <button @click="onCancel" class="cancel">账户注销</button>
+      <button @click="onCancel" class="cancel">帐户注销</button>
       <button @click="onLogout" class="logout">退出登录</button>
     </view>
   </view>
@@ -48,7 +48,7 @@ export default {
     const onCancel = () => {
       uni.showModal({
         title: "注销",
-        content: "注销账户将不存在，确认注销吗？",
+        content: "注销帐户将不存在，确认注销吗？",
         success: function (res) {
           if (res.confirm) {
             deletedUser().then((res) => {
