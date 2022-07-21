@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-04-21 10:01:43
+ * @LastEditTime: 2022-07-21 21:45:19
  * @LastEditors: Aiden(戴林波)
  * @Description:
  * @Email: jason_dlb@sina.cn
@@ -79,6 +79,16 @@ export default defineConfig(({ command, mode }) => {
           target: 'https://www.mancao.social/download',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/download/, '')
+        },
+        '^/server-upMog': {
+          target: 'http://localhost:8011/server/upMog',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/server-upMog/, '')
+        },
+        '^/server-upMyLog': {
+          target: 'http://localhost:8011/server/upMyLog',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/server-upMyLog/, '')
         },
       },
     },
