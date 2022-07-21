@@ -74,7 +74,7 @@
       >
       <!-- #endif -->
       <!-- #endif -->
-      <!-- #ifdef APP-PLUS -->
+      <!-- #ifdef MP-ALIPAY -->
       <view class="cut-off-line row">
         <view class="col-8 line-left"></view>
         <text>其他登录方式</text>
