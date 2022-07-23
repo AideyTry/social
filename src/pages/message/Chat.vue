@@ -14,34 +14,76 @@
 </template>
 
 <script>
-import { onMounted, computed, ref, watch, onUpdated, onBeforeUpdate } from "vue";
+import {
+  onMounted,
+  computed,
+  ref,
+  watch,
+  onUpdated,
+  onBeforeUpdate,
+} from "vue";
 import openIM from "@/utils/openIM.js";
 import { getIMToken } from "../../utils/auth.js";
 import { useStore } from "vuex";
 import ChatContent from "./ChatContent.vue";
-import { connectIM } from '@/utils/im.js'
+import { connectIM } from "@/utils/im.js";
 export default {
   components: {
     ChatContent,
   },
   onShow: function (showprops) {
-    this.currentDate = new Date() + Math.random()
+    this.currentDate = new Date() + Math.random();
     setTimeout(() => {
-      this.getConver()
-    }, 1000)
+      this.getConver();
+    }, 1000);
   },
-  onLoad: function(options) {
-    this.propsOptions = options
+  onLoad: function (options) {
+    this.propsOptions = options;
+  },
+  onNavigationBarButtonTap(e) {
+    console.log("button ... e=================", e);
+    const operations = this.operations;
+    uni.showActionSheet({
+      itemList: operations,
+      success: function (res) {
+        console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
+        if ((res.tapIndex + 1) === 1) {
+          uni.navigateTo({
+            url: "/pages/message/Inform",
+          });
+        } else {
+          uni.showModal({
+            title: "拉黑用户",
+            content: "拉黑后，您将不再收到对方的消息",
+            success: function (res) {
+              console.log('res=============', res)
+              if (res.confirm) {
+                console.log("用户点击确定");
+              } else if (res.cancel) {
+                console.log("用户点击取消");
+              }
+            },
+          });
+        }
+      },
+      fail: function (res) {
+        console.log(res.errMsg);
+      },
+    });
   },
   setup(props) {
-    let propsOptions = ref(null)
+    let propsOptions = ref(null);
     let inputString = ref("");
     const messageInfo = ref([]);
+    let operations = ref(["举报", "拉黑"]);
 
     const store = useStore();
 
-    console.log('store.state.user===========================================================================', store.getters['user/getUserInfo'])
-    const userInfo = computed(() => store.getters['user/getUserInfo']).value;
+    console.log(
+      "store.state.user===========================================================================",
+      store.getters["user/getUserInfo"]
+    );
+    const userInfo = computed(() => store.getters["user/getUserInfo"]).value;
 
     const monitorOnRecv = () => {
       openIM.on("OnRecvNewMessage", (data) => {
@@ -68,7 +110,7 @@ export default {
           messageInfo.value = [...JSON.parse(data).reverse()];
         })
         .catch((err) => {
-          console.log('err 000000000000000000000000000000000000000000=', err)
+          console.log("err 000000000000000000000000000000000000000000=", err);
         });
     };
     const onConfirm = (event) => {
@@ -110,20 +152,20 @@ export default {
     /**
      * @description: 已读监听
      * @param {*}
-     * @Author: 
+     * @Author:
      * @return {*}
-     */    
+     */
     const asRead = () => {
       openIM.on("OnRecvC2CReadReceipt", (data) => {
-        JSON.parse(data.data).map(cr => {
-          cr.msgIDList.map(crt => {
-            messageInfo.value.find(ms => {
-              if(ms.clientMsgID === crt){
-                ms.isRead = true
+        JSON.parse(data.data).map((cr) => {
+          cr.msgIDList.map((crt) => {
+            messageInfo.value.find((ms) => {
+              if (ms.clientMsgID === crt) {
+                ms.isRead = true;
               }
-            })
-          })
-        })
+            });
+          });
+        });
       });
     };
 
@@ -164,16 +206,17 @@ export default {
       });
       getConver();
       monitorOnRecv();
-      asRead()
+      asRead();
     });
-    let currentDate = ref('')
+    let currentDate = ref("");
     return {
       inputString,
       messageInfo,
       onConfirm,
       currentDate,
       getConver,
-      propsOptions
+      propsOptions,
+      operations,
     };
   },
 };
