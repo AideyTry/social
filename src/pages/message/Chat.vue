@@ -43,13 +43,15 @@ export default {
   onNavigationBarButtonTap(e) {
     console.log("button ... e=================", e);
     const operations = this.operations;
+    const propsOptions = this.propsOptions
     uni.showActionSheet({
       itemList: operations,
       success: function (res) {
         console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
         if ((res.tapIndex + 1) === 1) {
+          console.log('propsOptions.value.userID=====', propsOptions.userID)
           uni.navigateTo({
-            url: "/pages/message/Inform",
+            url: `/pages/message/Inform?account=${propsOptions.userID}`,
           });
         } else {
           uni.showModal({

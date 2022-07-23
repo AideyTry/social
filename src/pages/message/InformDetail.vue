@@ -133,12 +133,18 @@ export default {
       );
       console.log("resultImages result=", resultImages);
       const params = {
+        account: propsOptions.value.account,
         title: title.value,
         content: inputInform.value,
-        images: resultImages
-      }
+        images: resultImages,
+      };
       sendInform(params).then((data) => {
-        console.log("data======", data);
+        if (data.data.code === 200) {
+          uni.showToast({
+            title: data.data.msg,
+            duration: 2000,
+          });
+        }
       });
     };
     onMounted(() => {

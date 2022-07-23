@@ -39,16 +39,22 @@
   </view>
 </template>
 <script>
+import { ref } from "vue";
 export default {
+  onLoad: function (options) {
+    this.propsOptions = options;
+  },
   setup() {
+    let propsOptions = ref(null);
     const goInform = (title) => {
-          uni.navigateTo({
-    url: `/pages/message/InformDetail?title=${title}`,
-  });
-    }
+      uni.navigateTo({
+        url: `/pages/message/InformDetail?title=${title}&account=${propsOptions.value.account}`,
+      });
+    };
     return {
-        goInform
-    }
+      propsOptions,
+      goInform,
+    };
   },
 };
 </script>
