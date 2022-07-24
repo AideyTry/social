@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-07-05 14:15:10
+ * @LastEditTime: 2022-07-24 11:07:13
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -66,7 +66,7 @@ export default {
     const goChat = (item) => {
       console.log("item=", item);
       uni.navigateTo({
-        url: `/pages/message/Chat?userID=${item.userID}&title=${item.showName}`,
+        url: `/pages/message/Chat?userID=${item.userID}&title=${item.showName}&conversationID=${item.conversationID}`,
       });
     };
     const getAllConversationList = () => {

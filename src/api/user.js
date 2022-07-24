@@ -1,7 +1,7 @@
 /*
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:41:15
- * @LastEditTime: 2022-07-23 15:24:48
+ * @LastEditTime: 2022-07-24 11:33:43
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -50,6 +50,10 @@ export const deletedUser = () => {
 export const sendInform = (params) => {
 	console.log('params=e==', params)
 	return request(`/users/sendInform`,'POST',JSON.stringify(params))
+}
+
+export const shielded = (params) => {
+	return request(`/users/shielded`,'POST',JSON.stringify(params))
 }
 
 // 账号案例

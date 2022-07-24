@@ -27,6 +27,7 @@ import { getIMToken } from "../../utils/auth.js";
 import { useStore } from "vuex";
 import ChatContent from "./ChatContent.vue";
 import { connectIM } from "@/utils/im.js";
+import { shielded } from "@/api/user.js";
 export default {
   components: {
     ChatContent,
@@ -43,24 +44,39 @@ export default {
   onNavigationBarButtonTap(e) {
     console.log("button ... e=================", e);
     const operations = this.operations;
-    const propsOptions = this.propsOptions
+    const propsOptions = this.propsOptions;
     uni.showActionSheet({
       itemList: operations,
       success: function (res) {
         console.log("选中了第" + (res.tapIndex + 1) + "个按钮");
-        if ((res.tapIndex + 1) === 1) {
-          console.log('propsOptions.value.userID=====', propsOptions.userID)
+        if (res.tapIndex + 1 === 1) {
+          console.log("propsOptions.value.userID=====", propsOptions.userID);
           uni.navigateTo({
             url: `/pages/message/Inform?account=${propsOptions.userID}`,
           });
         } else {
           uni.showModal({
-            title: "拉黑用户",
-            content: "拉黑后，您将不再收到对方的消息",
+            title: "屏蔽用户",
+            content: "屏蔽后，您将不再收到对方的消息",
             success: function (res) {
-              console.log('res=============', res)
+              console.log("res=============", res);
               if (res.confirm) {
                 console.log("用户点击确定");
+                console.log(
+                  "propsOptions.conversationID===",
+                  propsOptions.conversationID
+                );
+                const params = {
+                  shieldedParty: propsOptions.userID
+                }
+                shielded(params).then((data) => {
+                  if (data.data.code === 200) {
+                    uni.showToast({
+                      title: data.data.msg,
+                      duration: 2000,
+                    });
+                  }
+                });
               } else if (res.cancel) {
                 console.log("用户点击取消");
               }
@@ -77,7 +93,7 @@ export default {
     let propsOptions = ref(null);
     let inputString = ref("");
     const messageInfo = ref([]);
-    let operations = ref(["举报", "拉黑"]);
+    let operations = ref(["举报", "屏蔽"]);
 
     const store = useStore();
 
