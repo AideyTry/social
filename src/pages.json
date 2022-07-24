@@ -11,7 +11,7 @@
       "path": "pages/user/index",
       "style": {
         "navigationBarTitleText": "user",
-        "enablePullDownRefresh": true,
+        "enablePullDownRefresh": false,
         "app-plus": {
           "titleNView": false
         }
