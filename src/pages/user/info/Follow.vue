@@ -53,6 +53,7 @@ export default {
     // 关注
     let isFlollow = ref(false);
     let followText = ref("关注");
+    let followTitle = ref('')
     const following = (info) => {
       if (isFlollow.value) {
         uni.showModal({
@@ -112,6 +113,7 @@ export default {
         uni.setNavigationBarTitle({
           title: "关注",
         }),
+        followTitle.value = '关注'
           getFollowsInfo(params).then((data) => {
             if (data.data.code === 200) {
               infoList.value = data.data.followsInfo;
@@ -126,6 +128,7 @@ export default {
         uni.setNavigationBarTitle({
           title: "粉丝",
         }),
+                followTitle.value = '粉丝'
           getFansInfo(params).then((data) => {
             console.log("getFansInfo===", data);
             if (data.data.code === 200) {
@@ -144,12 +147,12 @@ export default {
       console.log("info======", info);
       //#ifdef APP-PLUS || H5
       uni.navigateTo({
-        url: `/pages/user/info/User?id=${info.user_id}`,
+        url: `/pages/user/info/User?id=${info.user_id}&title=${followTitle.value}`,
       });
       //#endif
       //#ifdef MP-WEIXIN
       uni.navigateTo({
-        url: `/pages/userInfo/User/User?id=${info.user_id}`,
+        url: `/pages/userInfo/User/User?id=${info.user_id}&title=${followTitle.value}`,
       });
       //#endif
     };

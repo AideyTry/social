@@ -107,7 +107,7 @@ const getFrend = () => {
     if (res.data.code === 200) {
       userInfo.value = res.data.data;
       age.value = ref(moment().diff(userInfo.value.birthday, "years"));
-      getShieleds()
+      getShieleds();
     }
   });
 };
@@ -117,7 +117,7 @@ const getShieleds = () => {
   const params = {
     shielding_party: userInfo.value.phone,
   };
-  console.log('params=============', params)
+  console.log("params=============", params);
   getShieled(params).then((data) => {
     console.log("data============", data);
     if (data.data.code === 200 && data.data.flag === 1) {
@@ -175,7 +175,10 @@ const goChat = () => {
 
 onMounted(() => {
   console.log("props===", props);
-  getFrend();
+  uni.setNavigationBarTitle({
+    title: props.title,
+  }),
+    getFrend();
   // getShieleds();
 });
 </script>
