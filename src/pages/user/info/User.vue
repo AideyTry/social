@@ -79,7 +79,7 @@ import { ref, reactive, onMounted, computed } from "vue";
 import moment from "moment";
 import PickerRegion from "../../components/PickerRegion.vue";
 import openIM from "@/utils/openIM.js";
-import { getFrendInfo } from "@/api/user.js";
+import { getFrendInfo, getShieled } from "@/api/user.js";
 import { getIMToken } from "@/utils/auth.js";
 import { useStore } from "vuex";
 
@@ -91,12 +91,11 @@ const props = defineProps({
 });
 
 let userInfo = ref({});
-let age = ref('')
+let age = ref("");
+let forbidden = ref(false);
 
-
-
-    const store = useStore();
-    const getUserInfo = computed(() => store.state.user.userInfo).value;
+const store = useStore();
+const getUserInfo = computed(() => store.state.user.userInfo).value;
 
 // 获取好友信息
 const getFrend = () => {
@@ -108,6 +107,23 @@ const getFrend = () => {
     if (res.data.code === 200) {
       userInfo.value = res.data.data;
       age.value = ref(moment().diff(userInfo.value.birthday, "years"));
+      getShieleds()
+    }
+  });
+};
+
+// 获取被屏蔽列表
+const getShieleds = () => {
+  const params = {
+    shielding_party: userInfo.value.phone,
+  };
+  console.log('params=============', params)
+  getShieled(params).then((data) => {
+    console.log("data============", data);
+    if (data.data.code === 200 && data.data.flag === 1) {
+      forbidden.value = true;
+    } else {
+      forbidden.value = false;
     }
   });
 };
@@ -122,13 +138,20 @@ const onPreviewImage = (item, index) => {
 
 // 聊天
 const goChat = () => {
+  if (forbidden.value) {
+    uni.showToast({
+      title: "对不起，该用户已屏蔽了您，您不能给该用户发送信息",
+      duration: 3000,
+    });
+    return;
+  }
   const token = getIMToken();
-  console.log('token===', token)
-  console.log('userInfo.value.phone===', userInfo.value.phone)
-    uni.navigateTo({
+  console.log("token===", token);
+  console.log("userInfo.value.phone===", userInfo.value.phone);
+  uni.navigateTo({
     url: `/pages/message/Chat?userID=${userInfo.value.phone}&title=${userInfo.value.username}`,
   });
-  return
+  return;
   const config = {
     userID: getUserInfo.phone,
     token,
@@ -153,6 +176,7 @@ const goChat = () => {
 onMounted(() => {
   console.log("props===", props);
   getFrend();
+  // getShieleds();
 });
 </script>
 
