@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:50:38
- * @LastEditTime: 2022-07-24 11:07:13
+ * @LastEditTime: 2022-07-25 00:35:56
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -39,7 +39,7 @@
     </view>
     <view v-if="convers.length <= 0" class="empty">
       <view>您还未发起聊天</view>
-      <view>快去关注兴趣爱好发布者一起聊天吧~！</view>
+      <view class="empty-content">可以去关注兴趣爱好发布者，然后到“我的”模块中点击关注，进入关注的用户或者粉丝一起聊天吧~！</view>
     </view>
   </view>
 </template>
@@ -163,6 +163,9 @@ export default {
   justify-content: center;
   align-items: center;
   color: #a0a0a0;
+  .empty-content{
+    text-indent:2em;
+  }
 }
 .conver {
   display: flex;
