@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:52:36
- * @LastEditTime: 2022-07-24 17:19:47
+ * @LastEditTime: 2022-07-24 17:29:23
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -73,13 +73,11 @@ export default {
       });
     }
   },
-  	onPullDownRefresh() {
-        this.getFollowsData();
-      this.getFansData();
-		setTimeout(function () {
-			uni.stopPullDownRefresh();
-		}, 1000);
-	}
+  onPullDownRefresh() {
+    this.getFollowsData();
+    this.getFansData();
+    uni.stopPullDownRefresh();
+  },
 };
 </script>
 
@@ -97,12 +95,11 @@ const defaultAvatar = "/static/images/default_avatar.png";
 const store = useStore();
 const userInfo = computed(() => store.state.user.userInfo).value;
 
-
 const onSetting = () => {
   uni.navigateTo({
     url: `/pages/user/setting/Setting`,
   });
-}
+};
 
 const onUserInfo = () => {
   //#ifdef APP-PLUS || H5
@@ -250,16 +247,16 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    .title-wraper{
+    .title-wraper {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .username{
+    .username {
       display: inline-block;
       min-width: 360rpx;
     }
-    .config-wraper{
+    .config-wraper {
       background-color: #fafafa;
       padding: 4rpx;
       border-radius: 5%;
