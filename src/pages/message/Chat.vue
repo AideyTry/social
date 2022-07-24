@@ -27,7 +27,7 @@ import { getIMToken } from "../../utils/auth.js";
 import { useStore } from "vuex";
 import ChatContent from "./ChatContent.vue";
 import { connectIM } from "@/utils/im.js";
-import { shielded } from "@/api/user.js";
+import { shielded, getShieled } from "@/api/user.js";
 export default {
   components: {
     ChatContent,
@@ -66,9 +66,13 @@ export default {
                   "propsOptions.conversationID===",
                   propsOptions.conversationID
                 );
+                // const conversationID = propsOptions.conversationID
+                // openIM.deleteConversation(conversationID,({data}) => {
+                //   console.log('data================', data)
+                // })
                 const params = {
-                  shieldedParty: propsOptions.userID
-                }
+                  shieldedParty: propsOptions.userID,
+                };
                 shielded(params).then((data) => {
                   if (data.data.code === 200) {
                     uni.showToast({
@@ -94,6 +98,7 @@ export default {
     let inputString = ref("");
     const messageInfo = ref([]);
     let operations = ref(["举报", "屏蔽"]);
+    const forbidden = ref(false);
 
     const store = useStore();
 
@@ -131,7 +136,32 @@ export default {
           console.log("err 000000000000000000000000000000000000000000=", err);
         });
     };
-    const onConfirm = (event) => {
+
+    // 获取被屏蔽列表
+    const getShieleds = async(account) => {
+      const params = {
+        shielding_party: account,
+      };
+      console.log("params=============", params);
+      return await getShieled(params).then((data) => {
+        console.log("data============", data);
+        if (data.data.code === 200 && data.data.flag === 1) {
+          forbidden.value = true;
+        } else {
+          forbidden.value = false;
+        }
+        return forbidden.value
+      });
+    };
+    const onConfirm = async (event) => {
+      const r = await getShieleds(propsOptions.value.userID);
+      if (r) {
+        uni.showToast({
+          title: "对不起，该用户已屏蔽了您，您不能给该用户发送信息",
+          duration: 3000,
+        });
+        return;
+      }
       const { value } = event.detail;
       inputString.value = value;
       const offlinePushInfo = {
