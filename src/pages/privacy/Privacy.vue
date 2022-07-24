@@ -1,7 +1,7 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2022-07-20 13:24:29
- * @LastEditTime: 2022-07-21 09:56:38
+ * @LastEditTime: 2022-07-24 16:23:39
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
@@ -168,7 +168,7 @@
     <view class="protocol-item">
       <uni-title
         type="h3"
-        title="注：《隐私政策》自2022年7月21日首次发布并生效实施。"
+        title="注：《隐私政策》自2022年7月25日首次发布并生效实施。"
       ></uni-title>
     </view>
   </view>
