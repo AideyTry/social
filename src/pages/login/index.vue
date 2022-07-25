@@ -48,16 +48,21 @@
             登录
           </button>
         </view>
-        <mc-tooltip placement="top-start" :visible="tooltipVisible" content="请先勾选同意后再进行登录">
-        <view :class="{'protocol-wraper': true, shake: tooltipVisible}">
-          <radio-group @change="protocolChange">
-            <label>
-              <radio :value="protocolChecked" :checked="protocolChecked" />
-              <text class="agreement">我已阅读并同意</text>
-              <text class="protocol" @click.stop="goProtocol">用户协议</text>和<text class="privacy" @click.stop="goPrivacy">隐私政策</text>
-            </label>
-          </radio-group>
-        </view>
+        <mc-tooltip
+          placement="top-start"
+          :visible="tooltipVisible"
+          content="请先勾选同意后再进行登录"
+        >
+          <view :class="{ 'protocol-wraper': true, shake: tooltipVisible }">
+            <radio-group @change="protocolChange">
+              <label>
+                <radio :value="protocolChecked" :checked="protocolChecked" />
+                <text class="agreement">我已阅读并同意</text>
+                <text class="protocol" @click.stop="goProtocol">用户协议</text
+                >和<text class="privacy" @click.stop="goPrivacy">隐私政策</text>
+              </label>
+            </radio-group>
+          </view>
         </mc-tooltip>
       </form>
       <show-modal
@@ -74,6 +79,16 @@
       >
       <!-- #endif -->
       <!-- #endif -->
+      <view class="QR-code">
+        <view class="android-code">
+          <view class="code-title"><text>Android</text></view>
+          <image src="/static/wechat_mini.jpg" class="avatar"></image>
+        </view>
+          <view class="wechat-code">
+            <view class="code-title"><text>微信小程序体验版</text></view>
+          <image src="/static/wechat_mini.jpg" class="avatar"></image>
+        </view>
+      </view>
       <!-- #ifdef MP-ALIPAY -->
       <view class="cut-off-line row">
         <view class="col-8 line-left"></view>
@@ -140,7 +155,7 @@
 import { sendCode, codePhoneLogin } from "../../api/user.js";
 import { setToken } from "../../utils/auth.js";
 import ShowModal from "@/pages/components/ShowModal.vue";
-import mcTooltip from '@/pages/components/mcTooltip.vue'
+import mcTooltip from "@/pages/components/mcTooltip.vue";
 
 /*  #ifdef  MP-WEIXIN  */
 import { loginWechat } from "../../api/wechat";
@@ -148,7 +163,7 @@ import { loginWechat } from "../../api/wechat";
 export default {
   components: {
     ShowModal: ShowModal,
-    mcTooltip
+    mcTooltip,
   },
   data() {
     return {
@@ -161,7 +176,7 @@ export default {
       phoneNumber: null,
       protocolChecked: false,
       tooltipVisible: false,
-      timer: null
+      timer: null,
     };
   },
   methods: {
@@ -214,14 +229,14 @@ export default {
       );
       const params = e.detail.value;
       const that = this;
-      if(!that.protocolChecked){
-        that.tooltipVisible = true
-        console.log('this.tooltipVisible===', that.tooltipVisible)
+      if (!that.protocolChecked) {
+        that.tooltipVisible = true;
+        console.log("this.tooltipVisible===", that.tooltipVisible);
         that.timer = setTimeout(() => {
-          that.tooltipVisible = false
-          console.log('this.tooltipVisible2222===', that.tooltipVisible)
-        }, 2000)
-        return
+          that.tooltipVisible = false;
+          console.log("this.tooltipVisible2222===", that.tooltipVisible);
+        }, 2000);
+        return;
       }
       // console.log("window.navigator=", window.navigator.userAgent);
       // window.navigator.__defineGetter__("userAgent", () => "myBroser");
@@ -233,7 +248,7 @@ export default {
         const { code, token } = res.data;
         if (code === 200) {
           console.log("成功");
-          that.timer = null
+          that.timer = null;
           setToken(token);
           that.$store.dispatch("user/GetUserInfo");
           uni.reLaunch({
@@ -291,20 +306,20 @@ export default {
     protocolChange: function (value) {
       console.log("value===", value);
       this.protocolChecked = !value.detail.value;
-      if(this.protocolChecked){
-        this.tooltipVisible = false
+      if (this.protocolChecked) {
+        this.tooltipVisible = false;
       }
     },
-    goProtocol: function(){
+    goProtocol: function () {
       uni.navigateTo({
         url: "/pages/protocol/Protocol",
       });
     },
-    goPrivacy: function(){
+    goPrivacy: function () {
       uni.navigateTo({
         url: "/pages/privacy/Privacy",
       });
-    }
+    },
   },
 };
 </script>
@@ -422,38 +437,57 @@ uni-button::after {
   justify-content: center;
   width: 100%;
 }
-::v-deep .uni-radio-input{
-	width: 16px;
-	height: 16px;
-  }
-.protocol-wraper{
+::v-deep .uni-radio-input {
+  width: 16px;
+  height: 16px;
+}
+.protocol-wraper {
   font-size: 24rpx;
   color: #999;
-  .protocol, .privacy{
+  .protocol,
+  .privacy {
     color: #0a8cd2;
   }
 }
-	.shake{
- 		animation-delay: 0s;
-	    animation-name: shock;
-	    animation-duration: .1s;
-	    animation-iteration-count: 3;
-	    animation-direction: normal;
-	    animation-timing-function: linear;
-	}
+.shake {
+  animation-delay: 0s;
+  animation-name: shock;
+  animation-duration: 0.1s;
+  animation-iteration-count: 3;
+  animation-direction: normal;
+  animation-timing-function: linear;
+}
 
-	@keyframes shock {
-	    0% {
-	        margin-left: 0rpx;
-	        margin-right: 20rpx;
-	        margin-top: 0rpx;
-	    }
-	    100% {
-	        margin-left: 20rpx;
-	        margin-right: 0rpx;
-	        margin-top: 0rpx	;
-	    }
-	}
+@keyframes shock {
+  0% {
+    margin-left: 0rpx;
+    margin-right: 20rpx;
+    margin-top: 0rpx;
+  }
+  100% {
+    margin-left: 20rpx;
+    margin-right: 0rpx;
+    margin-top: 0rpx;
+  }
+}
+
+  .QR-code{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30rpx;
+    .code-title{
+      display: flex;
+    justify-content: center;
+    }
+    .wechat-code, .android-code{
+      width: 320rpx;
+      height: 240rpx;
+      image{
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 
 .demo {
   display: flex;

@@ -1,16 +1,16 @@
 <!--
  * @Author: Aiden(戴林波)
  * @Date: 2021-12-17 17:33:16
- * @LastEditTime: 2022-07-21 17:24:07
+ * @LastEditTime: 2022-07-25 20:25:41
  * @LastEditors: Aiden(戴林波)
  * @Description: 
  * @Email: jason_dlb@sina.cn
 -->
 <script>
 import { getToken } from "./utils/auth.js";
-import "./utils/webmonitor.mp.min.js"
+// import "./utils/webmonitor.mp.min.js"
 export default {
-  ...uni.webfunny({
+  // ...uni.webfunny({
   onLaunch: function () {
     console.log("App Launch");
     if (!getToken()) {
@@ -30,7 +30,7 @@ export default {
   onHide: function () {
     console.log("App Hide");
   }
-  })
+  // })
 };
 </script>
 
