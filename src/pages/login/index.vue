@@ -82,7 +82,7 @@
       <view class="QR-code">
         <view class="android-code">
           <view class="code-title"><text>Android</text></view>
-          <image src="/static/wechat_mini.jpg" class="avatar"></image>
+          <image src="/static/android_mancao.png" class="avatar"></image>
         </view>
           <view class="wechat-code">
             <view class="code-title"><text>微信小程序体验版</text></view>
@@ -481,10 +481,10 @@ uni-button::after {
     }
     .wechat-code, .android-code{
       width: 320rpx;
-      height: 240rpx;
+      height: 320rpx;
       image{
-        width: 100%;
-        height: 100%;
+        width: 320rpx;
+        height: 320rpx;
       }
     }
   }
