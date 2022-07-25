@@ -2,8 +2,8 @@
     "name" : "蔓草兴趣",
     "appid" : "__UNI__15CCA6A",
     "description" : "蔓草兴趣，主要分享个人兴趣爱好",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "0.0.1",
+    "versionCode" : 105,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {

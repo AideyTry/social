@@ -6,6 +6,13 @@
   "description": "社交软件",
   "glyphs": [
     {
+      "icon_id": "666885",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e68f",
+      "unicode_decimal": 59023
+    },
+    {
       "icon_id": "577309",
       "name": "关闭1",
       "font_class": "guanbi1",
