@@ -72,7 +72,7 @@
         @close="onClose"
       ></show-modal>
       <!-- #ifdef H5 -->
-      <vuew class="demo"
+      <vuew v-if="false" class="demo"
         ><button class="demo-title" @click="openDemo">
           点击可使用演示账号登录
         </button></vuew
